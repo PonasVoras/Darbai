@@ -14,16 +14,19 @@ function remove_numbers($letters){
 }
 
 /**
- * @param array
- * @return array
+ * @param string
+ * @return string
  * function retrieves user input
  *
  */
 
+
 function user_input(){
-    $test_string = "mistranslate";
+    global $argv;
+    $test_string = $argv[1];
     return $test_string;
 }
+
 
 /**
  *
@@ -220,23 +223,11 @@ function sort_patterns(){
 
 function hyphenate(){
     $odds = array("1", "3", "5");
+    $evens = array("0", "2", "4");
     $hyphens = str_replace($odds, '-', sort_patterns());
-    $hyphen = explode('-', $hyphens);
-    $hyphenated = [];
-    foreach ($hyphen as $item){
-        $i = 0;
-        $max_numbers = max(preg_split('/[a-zA-Z]+/', $item));
-        $item_raw = preg_split('/\d/', $item);
-        while ( $i++ <= $max_numbers -1){
-            $item_raw[$i] = ' '.$item_raw[$i];
-        }
-        $imploded_items = implode("", $item_raw);
-        array_push($hyphenated,$imploded_items);
-    }
-    print_r(implode('-', $hyphenated));
+    $hyphens = str_replace($evens, ' ', $hyphens);
+    print_r($hyphens);
 }
-
-//Calling functions
 
 
 
