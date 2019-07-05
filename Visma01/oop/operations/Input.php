@@ -1,8 +1,12 @@
 <?php
 
-namespace user_input;
+namespace operations;
 
-class User_input{
+class Input{
+
+    function __construct(){
+        echo __CLASS__. 'has been initiated';
+    }
 
 }
 
