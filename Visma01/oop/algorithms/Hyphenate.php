@@ -28,3 +28,14 @@ class Hyphenate
         return $this->prop1 . "<br />";
     }
 }
+
+/*
+ *
+ * function hyphenate(){
+    $odds = array("1", "3", "5");
+    $evens = array("0", "2", "4");
+    $hyphens = str_replace($odds, '-', sort_patterns());
+    $hyphens = str_replace($evens, ' ', $hyphens);
+    print_r($hyphens);
+}
+ */
