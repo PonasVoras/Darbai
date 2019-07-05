@@ -1,6 +1,23 @@
 <?php
 include "get_values.php";
 
+
+
+
+/**
+ * @param string
+ * @return string
+ * function retrieves user input
+ *
+ */
+
+
+function hyphens(){
+    global $values;
+    return $values;
+}
+
+
 /**
  * @param array
  * @return array
@@ -36,7 +53,6 @@ function user_input(){
  */
 
 function sort_by_dot(){
-    global $values;
     $find_back_array = [];
     $find_back_array_key = [];
     $find_front_array = [];
@@ -44,7 +60,7 @@ function sort_by_dot(){
     $find_middle_array = [];
     $find_middle_array_key = [];
 
-    $no_numbers_array = array_map('remove_numbers', $values);
+    $no_numbers_array = array_map('remove_numbers', hyphens());
 
     foreach ($no_numbers_array as $key => $value){
         if ((strrpos($value, "e." ) === false) && (strrpos(strrev($value), "m." ) === false)) {
@@ -84,7 +100,6 @@ function sort_by_dot(){
  */
 
 function find_front() {
-    global $values;
     $front_array = [];
     $i =0;
 
@@ -97,7 +112,7 @@ function find_front() {
         //echo "Itteration results for " . $search_word . " are : ". $i . " ->>>" . "\n";
         if(in_array($search_word, $find_front_array_stripped)){
             $key = array_search($search_word, $find_front_array_stripped);
-            array_push($front_array, $values[sort_by_dot()['front_key_array'][$key]]);
+            array_push($front_array, hyphens()[sort_by_dot()['front_key_array'][$key]]);
         }
     }
     return $front_array;
@@ -111,7 +126,6 @@ function find_front() {
  */
 
 function find_middle(){
-    global $values;
     $middle_array = [];
     $i =-1;
 
@@ -126,7 +140,7 @@ function find_middle(){
             $search_word = (substr(user_input(), $j, $i));
             if (in_array($search_word, $find_middle_array_stripped)) {
                 $key = array_search($search_word, $find_middle_array_stripped);
-                array_push($middle_array, $values[sort_by_dot()['middle_key_array'][$key]]);
+                array_push($middle_array, hyphens()[sort_by_dot()['middle_key_array'][$key]]);
                 //echo "\n"."Itteration results for " . $search_word . " are : " . $i . " ->";s
             }
 
@@ -143,7 +157,6 @@ function find_middle(){
  */
 
 function find_back() {
-    global $values;
     $back_array = [];
     $i =0;
 
@@ -157,7 +170,7 @@ function find_back() {
         //echo "Itteration results for " . $search_word . " are : ". $i . " ->>>" . "\n";
         if(in_array($search_word, $find_back_array_stripped_revved)){
             $key = array_search($search_word, $find_back_array_stripped_revved);
-            array_push($back_array, $values[sort_by_dot()['back_key_array'][$key]]);
+            array_push($back_array, hyphens()[sort_by_dot()['back_key_array'][$key]]);
         }
     }
 
@@ -224,9 +237,9 @@ function sort_patterns(){
 function hyphenate(){
     $odds = array("1", "3", "5");
     $evens = array("0", "2", "4");
-    $hyphens = str_replace($odds, '-', sort_patterns());
-    $hyphens = str_replace($evens, ' ', $hyphens);
-    print_r($hyphens);
+    $hyphenated = str_replace($odds, '-', sort_patterns());
+    $hyphenated = str_replace($evens, ' ', $hyphenated);
+    print_r($hyphenated);
 }
 
 
