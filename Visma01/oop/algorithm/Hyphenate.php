@@ -8,7 +8,7 @@ $end_timing = microtime(true);
 print_r("\nExecution :". ($end_timing - $start_timing));
 print_r("\n"."_____________________________________________");*/
 
-namespace Test;
+namespace hyphenate;
 
 class Hyphenate
 {

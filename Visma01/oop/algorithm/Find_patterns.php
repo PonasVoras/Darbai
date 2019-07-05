@@ -1,6 +1,6 @@
 <?php
 
-namespace Test;
+namespace find_patterns;
 
 class Find_patterns
 
