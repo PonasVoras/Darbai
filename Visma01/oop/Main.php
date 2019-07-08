@@ -1,13 +1,15 @@
 <?php
 
-namespace index;
+namespace main;
 
-require "operations/Read_data.php";
+//Files are being called from root
+require "oop/operations/Input.php";
+require "oop/operations/Output.php";
 
-use operations\Read_data;
+use operations\InputChoice;
+use operations\Output;
 
-
-class Index{
+class Main{
     function __construct(){
         echo __CLASS__.' has been initiated';
     }
@@ -19,33 +21,25 @@ class Index{
         $handle = fopen ("php://stdin","r");
         $line = fgets($handle);
 
-        //obj instantiation
-        $readData = new Read_data();
-
-        //variables for functions
-        $readFile = $readData->read_data("./oop/data/data.txt");
-
         switch (trim($line)){
             case '-w':
                 echo "Word for hyphenation algorithm: ";
                 $handle = fopen ("php://stdin","r");
-                $line = fgets($handle);
-                echo $line . "Later\n";
+                $word = fgets($handle);
+                $hyphenatedWord = InputChoice::wordHyphenation($word);
+                Output::outputToCli($hyphenatedWord);
+                echo "It has been done";
                 exit;
             case '-p':
                 echo "Filename with paragraph (must be inside data/ directory): ";
                 $handle = fopen ("php://stdin","r");
-                $line = fgets($handle);
-                echo $line . "Later\n";
+                $fileName = fgets($handle);
+                $hyphenatedParagraph = InputChoice::paragraphHyphenation($fileName);
+                $outputFile = 'oop/output/hyphenatedParagraph.txt';
+                Output::outputToFile($outputFile ,$hyphenatedParagraph);
                 exit;
 
             case '':
-                echo "File was read, it has : ";
-                echo var_dump($readFile);
-                echo "values";
-                exit;
-            default :
-                echo "\n";
                 echo "Wrong input. Aborting.\n";
         }
         fclose($handle);

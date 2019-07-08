@@ -1,6 +1,6 @@
 <?php
 
-namespace find_patterns;
+namespace algorithm;
 
 class Find_patterns
 

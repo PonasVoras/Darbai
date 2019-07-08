@@ -1,6 +1,6 @@
 <?php
 
-namespace sort_patterns;
+namespace algorithm;
 
 class Sort_patterns {
 
@@ -8,7 +8,6 @@ class Sort_patterns {
 
 
 /*
- *
  * function sort_patterns(){
     $sort_array = array_merge(find_front(), find_middle(), find_back());
     $sort_array_stripped = preg_replace('/\s/', '', $sort_array);

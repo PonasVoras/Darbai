@@ -9,13 +9,13 @@
  *
  *  functional 'Word to hyphenate' :
  *      'Word to hyphenate', takes a value
- *      sends a value to index.php
+ *      sends a value to start_up.php
  *
  */
 
-include "./oop/Index.php";
+include "./oop/Main.php";
 
-use index\Index;
+use main\Main;
 
-Index::main();
+Main::main();
 

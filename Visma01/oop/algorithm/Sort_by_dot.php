@@ -1,9 +1,10 @@
 <?php
 
-namespace sort_by_dot;
+namespace algorithm;
 
 class Sort_by_dot{
 
+    
 }
 
 /*

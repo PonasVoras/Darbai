@@ -1,14 +1,10 @@
 <?php
 
-namespace remove_numbers;
+namespace algorithm;
 
-class Remove_numbers{
-
+class RemoveNumbers{
+    public function removeNumbers(string $pattern): string {
+        $patternWithoutNumbers = preg_replace('/\d/', '', $pattern);
+        return $patternWithoutNumbers;
+    }
 }
-
-/*
- * function remove_numbers($letters){
-    $no_numbers = preg_replace('/\d/', '', $letters);
-    return ($no_numbers);
-}
- */

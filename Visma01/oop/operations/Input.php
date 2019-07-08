@@ -2,18 +2,20 @@
 
 namespace operations;
 
-class Input{
+require "oop/algorithm/Hyphenate.php";
+require "oop/algorithm/HyphenateParagraph.php";
 
-    function __construct(){
-        echo __CLASS__. 'has been initiated';
+use algorithm\Hyphenate;
+use algorithm\HyphenateParagraph;
+
+class InputChoice {
+    public static function wordHyphenation(string $word):string {
+        $hyphenationAlgorithm = new Hyphenate($word);
+        return $hyphenationAlgorithm->final();
     }
 
+    public static function paragraphHyphenation(string $fileName):array {
+        $hyphenatedParagraph = new HyphenateParagraph($fileName);
+        return $hyphenatedParagraph->final();
+    }
 }
-
-/*
- * function user_input(){
-    global $argv;
-    $test_string = $argv[1];
-    return $test_string;
-}
- */
