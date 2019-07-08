@@ -2,14 +2,25 @@
 
 namespace algorithm;
 
+use operations\File;
+
 class Sort_patterns {
+    public $possiblePatterns;
+    public $allPatternsNumberless;
+    private $word;
+
+    public function __construct(string $word){
+        $this->possiblePatterns = File::ReadFromFile("oop/data/possible_patterns.txt");
+        $this->word = $word;
+
+    }
 
 }
 
 
 /*
  * function sort_patterns(){
-    $sort_array = array_merge(find_front(), find_middle(), find_back());
+
     $sort_array_stripped = preg_replace('/\s/', '', $sort_array);
     $test_string_split = str_split(user_input());
     $test_string_numbers_split = [];

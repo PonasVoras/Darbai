@@ -3,8 +3,8 @@
 namespace algorithm;
 
 class RemoveNumbers{
-    public function removeNumbers(string $pattern): string {
-        $patternWithoutNumbers = preg_replace('/\d/', '', $pattern);
+    public function removeNumbers(string $allPatterns): string {
+        $patternWithoutNumbers = preg_replace('/\d/', '', $allPatterns);
         return $patternWithoutNumbers;
     }
 }

@@ -2,19 +2,34 @@
 
 namespace algorithm;
 
+require "oop/algorithm/Find_patterns.php";
+require "oop/algorithm/Find_patterns.php";
+
+use algorithm\Sort_patterns;
+use algorithm\Find_patterns;
+
+
 class Hyphenate {
     private $word;
     private $wordWithNumbers;
+    private $possiblePatternArray = [];
+
     //it is important to set wordWithNumbers to our words with numbers
     //finals return value gets printed, we don't have to touch it
 
     public function __construct(string $word){
         $this->word = $word;
-
+        $this->find_patterns($this->word);
     }
 
-    public function sorting(){
+    public function find_patterns(){
+        $findPatterns = new Find_patterns($this->word);
+        $this->possiblePatternArray = $findPatterns->finalPatternArray();
+    }
 
+    public function sort_patterns(){
+        $sortPatterns = new Sort_patterns($this->word);
+        $this->wordWithNumbers = $sortPatterns->
     }
 
     public function final():string {
