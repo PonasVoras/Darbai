@@ -15,7 +15,7 @@ class Output{
     public static function outputToFile(string $fileName, array $hyphenatedParagraph) {
         $file_operation = File::WriteToFile($fileName, $hyphenatedParagraph);
         if ($file_operation !== 0 ) {
-            echo "Hyphenated paragraph can be found in hyphenatedParagraph.txt it weights :" . $file_operation . " bytes \n";
+            echo "Hyphenated paragraph/sentence can be found in hyphenatedParagraph.txt it weights :" . $file_operation . " bytes \n";
         }
         else {
             echo "It should work next time";

@@ -36,10 +36,10 @@ class Main{
                 echo "\nExecution time : " . $executionTime->executionTime();
                 exit;
             case '-p':
-                echo "Filename with paragraph (must be inside data/ directory): ";
+                echo "Filename with paragraphs (must be inside data/paragraph.txt directory) press Enter to hyphenate";
                 $handle = fopen ("php://stdin","r");
-                $fileName = fgets($handle);
-                $hyphenatedParagraph = Input::paragraphHyphenation($fileName);
+                fgets($handle);
+                $hyphenatedParagraph = Input::paragraphHyphenation();
                 $outputFile = 'oop/output/hyphenatedParagraph.txt';
                 Output::outputToFile($outputFile ,$hyphenatedParagraph);
                 exit;

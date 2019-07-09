@@ -14,8 +14,8 @@ class Input {
         return $hyphenationAlgorithm->final();
     }
 
-    public static function paragraphHyphenation(string $fileName):array {
-        $hyphenatedParagraph = new HyphenateParagraph($fileName);
+    public static function paragraphHyphenation():array {
+        $hyphenatedParagraph = new HyphenateParagraph();
         return $hyphenatedParagraph->final();
     }
 }
