@@ -2,6 +2,8 @@
 
 namespace algorithm;
 
+use operations\File;
+
 class HyphenateParagraph {
     private $fileName;
     private $wordWithNumbers;
@@ -11,6 +13,9 @@ class HyphenateParagraph {
     public function __construct(string $fileName){
         $this->fileName = $fileName;
     }
+
+    //replace if not letter with ''
+    //
 
     public function sorting(){
 

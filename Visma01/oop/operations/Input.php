@@ -8,7 +8,7 @@ require "oop/algorithm/HyphenateParagraph.php";
 use algorithm\Hyphenate;
 use algorithm\HyphenateParagraph;
 
-class InputChoice {
+class Input {
     public static function wordHyphenation(string $word):string {
         $hyphenationAlgorithm = new Hyphenate($word);
         return $hyphenationAlgorithm->final();

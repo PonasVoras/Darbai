@@ -6,7 +6,7 @@ namespace main;
 require "oop/operations/Input.php";
 require "oop/operations/Output.php";
 
-use operations\InputChoice;
+use operations\Input;
 use operations\Output;
 
 class Main{
@@ -26,15 +26,15 @@ class Main{
                 echo "Word for hyphenation algorithm: ";
                 $handle = fopen ("php://stdin","r");
                 $word = fgets($handle);
-                $hyphenatedWord = InputChoice::wordHyphenation($word);
+                $hyphenatedWord = Input::wordHyphenation($word);
                 Output::outputToCli($hyphenatedWord);
-                echo "It has been done";
+                echo "\n It has been done";
                 exit;
             case '-p':
                 echo "Filename with paragraph (must be inside data/ directory): ";
                 $handle = fopen ("php://stdin","r");
                 $fileName = fgets($handle);
-                $hyphenatedParagraph = InputChoice::paragraphHyphenation($fileName);
+                $hyphenatedParagraph = Input::paragraphHyphenation($fileName);
                 $outputFile = 'oop/output/hyphenatedParagraph.txt';
                 Output::outputToFile($outputFile ,$hyphenatedParagraph);
                 exit;

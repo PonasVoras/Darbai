@@ -2,8 +2,8 @@
 
 namespace algorithm;
 
-require "oop/algorithm/Find_patterns.php";
-require "oop/algorithm/Sort_patterns.php";
+require "oop/algorithm/FindPatterns.php";
+require "oop/algorithm/SortPatterns.php";
 
 use algorithm\Find_patterns;
 use algorithm\Sort_patterns;
@@ -11,7 +11,7 @@ use algorithm\Sort_patterns;
 
 class Hyphenate {
     private $word;
-    private $wordWithNumbers;
+    public $wordWithNumbers;
 
     //it is important to set wordWithNumbers to our words with numbers
     //finals return value gets printed, we don't have to touch it
@@ -19,26 +19,26 @@ class Hyphenate {
 
     public function __construct(string $word){
         $this->word = $word;
+        $this->find_patterns();
         $this->sort_patterns();
     }
 
     public function find_patterns(){
-        new Find_patterns($this->word);
+        new FindPatterns($this->word);
     }
 
     public function sort_patterns(){
-        $sortPatterns = new Sort_patterns($this->word);
-        $this->wordWithNumbers = $sortPatterns->finalWordWithNumbers();
+        $sortPatterns = new SortPatterns($this->word);
+        $this->wordWithNumbers = $sortPatterns->sort_patterns();
     }
 
     public function final():string {
         $wordWithNumbers = $this->wordWithNumbers;
-        //$wordWithNumbers = "m2i0s1t4r";
         $odds = array("1", "3", "5");
         $evens = array("0", "2", "4");
         $hyphenatedWord = str_replace($odds, '-', $wordWithNumbers);
-        //$hyphenatedWord = str_replace($odds, '-', sort_patterns());
         $hyphenatedWord = str_replace($evens, ' ', $hyphenatedWord);
+        print_r($hyphenatedWord);
         return $hyphenatedWord;
     }
 
