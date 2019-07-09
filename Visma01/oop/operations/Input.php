@@ -2,8 +2,7 @@
 
 namespace operations;
 
-require "oop/algorithm/Hyphenate.php";
-require "oop/algorithm/HyphenateParagraph.php";
+
 
 use algorithm\Hyphenate;
 use algorithm\HyphenateParagraph;

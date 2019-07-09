@@ -195,6 +195,7 @@ class Logger implements LoggerInterface
     private function interpolate(string $message, array $context = array()): string
     {
         foreach ($context as $key => $value) {
+            print_r($context);
             if (!is_array($value) && !is_object($value) || method_exists($value, '__toString')) {
                 $message = str_replace('{' . $key . '}', $value, $message);
             }

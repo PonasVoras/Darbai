@@ -2,10 +2,6 @@
 
 namespace algorithm;
 
-require "oop/algorithm/FindPatterns.php";
-require "oop/algorithm/SortPatterns.php";
-
-
 class Hyphenate
 {
     public $wordWithNumbers;

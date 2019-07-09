@@ -2,24 +2,18 @@
 
 namespace main;
 
-//Files are being called from root
-require "oop/operations/Input.php";
-require "oop/operations/Output.php";
-require "oop/operations/ExecutionCalculator.php";
-require "oop/log/LoggerInterface.php";
-
 use operations\ExecutionCalculator;
 use operations\Input;
 use operations\Output;
 
 class Main
 {
-    function __construct()
+    public function __construct()
     {
-        echo __CLASS__ . ' has been initiated';
+        $this->main();
     }
 
-    public static function main()
+    public function main()
     {
         //UI setup
         echo "Hyphenation\n";

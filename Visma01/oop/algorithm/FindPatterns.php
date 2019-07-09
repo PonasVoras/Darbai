@@ -2,8 +2,6 @@
 
 namespace algorithm;
 
-require "oop/algorithm/RemoveNumbers.php";
-
 use operations\File;
 
 class FindPatterns

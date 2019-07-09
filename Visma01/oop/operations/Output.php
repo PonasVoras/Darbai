@@ -2,8 +2,6 @@
 
 namespace operations;
 
-require "oop/operations/File.php";
-
 class Output
 {
 
