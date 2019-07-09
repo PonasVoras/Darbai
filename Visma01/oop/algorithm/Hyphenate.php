@@ -38,29 +38,7 @@ class Hyphenate {
         $evens = array("0", "2", "4");
         $hyphenatedWord = str_replace($odds, '-', $wordWithNumbers);
         $hyphenatedWord = str_replace($evens, ' ', $hyphenatedWord);
-        print_r($hyphenatedWord);
         return $hyphenatedWord;
     }
 
 }
-
-/*                echo "File was read, it has : ";
-                echo var_dump($readFile);
-                echo "values";
-                exit;
-            default :
-                echo "\n";*/
-/*include 'algorithm.php';*/
-
-/*print_r("_____________________________________________"  . "\n");
-$start_timing = microtime(true);
-hyphenate();
-$end_timing = microtime(true);
-print_r("\nExecution :". ($end_timing - $start_timing));
-print_r("\n"."_____________________________________________");*/
-
-/*    //obj instantiation
-    $readData = new Read_data();
-
-    //variables for functions
-    $readFile = $readData->read_data("./oop/data/data.txt");*/

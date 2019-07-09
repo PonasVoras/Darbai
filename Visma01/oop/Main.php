@@ -5,9 +5,11 @@ namespace main;
 //Files are being called from root
 require "oop/operations/Input.php";
 require "oop/operations/Output.php";
+require "oop/operations/ExecutionCalculator.php";
 
 use operations\Input;
 use operations\Output;
+use operations\ExecutionCalculator;
 
 class Main{
     function __construct(){
@@ -26,9 +28,12 @@ class Main{
                 echo "Word for hyphenation algorithm: ";
                 $handle = fopen ("php://stdin","r");
                 $word = fgets($handle);
+                $executionTime = new ExecutionCalculator();
+                $executionTime->start();
                 $hyphenatedWord = Input::wordHyphenation($word);
                 Output::outputToCli($hyphenatedWord);
-                echo "\n It has been done";
+                $executionTime->end();
+                echo "\nExecution time : " . $executionTime->executionTime();
                 exit;
             case '-p':
                 echo "Filename with paragraph (must be inside data/ directory): ";
@@ -38,7 +43,6 @@ class Main{
                 $outputFile = 'oop/output/hyphenatedParagraph.txt';
                 Output::outputToFile($outputFile ,$hyphenatedParagraph);
                 exit;
-
             case '':
                 echo "Wrong input. Aborting.\n";
         }
