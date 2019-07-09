@@ -1,9 +1,10 @@
 <?php
 
 
-
 namespace log;
 
+use DateTime;
+use operations\File;
 
 class Logger implements LoggerInterface
 {
@@ -13,15 +14,17 @@ class Logger implements LoggerInterface
     private $logToFile = true;
 
 
-    public function setLogToScreen(bool $logToScreen){
+    public function setLogToScreen(bool $logToScreen)
+    {
         $this->logToScreen = $logToScreen;
     }
 
-    public function setLogToFile(bool $logToFile){
+    public function setLogToFile(bool $logToFile)
+    {
         $this->logToFile = $logToFile;
     }
 
-    // TODO : makeMessage class; writeToFile class;
+    // TODO : makeMessage class;
 
     /**
      * System is unusable.
@@ -162,6 +165,41 @@ class Logger implements LoggerInterface
                 print_r('Bad log level');
                 break;
         }
+    }
+
+    private function writeToFile(string $message): void
+    {
+        if ($this->logToFile) {
+//            $writeToFile = new File();
+//            $writeToFile->w;
+            print_r($message);
+        }
+        $this->logToScreenIfNeeded($message);
+    }
+
+    private function logToScreenIfNeeded(string $message): void
+    {
+        if ($this->logToScreen) {
+            print_r($message);
+        }
+    }
+
+    private function makeMessage(string $level, string $message, array $context = array())
+    {
+        $levelUpperCase = strtoupper($level);
+        $dateTimeStr = (new DateTime())->format('Y-m-d H:i:s,u');
+        $message = $this->interpolate($message, $context);
+        return "$dateTimeStr [$levelUpperCase]: $message\n";
+    }
+
+    private function interpolate(string $message, array $context = array()): string
+    {
+        foreach ($context as $key => $value) {
+            if (!is_array($value) && !is_object($value) || method_exists($value, '__toString')) {
+                $message = str_replace('{' . $key . '}', $value, $message);
+            }
+        }
+        return $message;
     }
 
 

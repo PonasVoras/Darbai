@@ -2,6 +2,9 @@
 
 namespace log;
 
+use SplFileObject;
+use DateTime;
+
 /**
  * Describes a logger-aware instance.
  */
