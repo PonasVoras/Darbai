@@ -2,6 +2,7 @@
 
 namespace algorithm;
 
-interface RemoveInterface{
+interface RemoveInterface
+{
     public function removeSpaces(array $allPatterns): array;
 }

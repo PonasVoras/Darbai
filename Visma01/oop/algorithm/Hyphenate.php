@@ -5,30 +5,32 @@ namespace algorithm;
 require "oop/algorithm/FindPatterns.php";
 require "oop/algorithm/SortPatterns.php";
 
-use algorithm\FindPatterns;
-use algorithm\SortPatterns;
 
-
-class Hyphenate {
-    private $word;
+class Hyphenate
+{
     public $wordWithNumbers;
+    private $word;
 
-    public function __construct(string $word){
+    public function __construct(string $word)
+    {
         $this->word = str_replace(' ', '', $word);
-        $this->find_patterns();
-        $this->sort_patterns();
+        $this->findPatterns();
+        $this->sortPatterns();
     }
 
-    public function find_patterns(){
+    public function findPatterns()
+    {
         new FindPatterns($this->word);
     }
 
-    public function sort_patterns(){
+    public function sortPatterns()
+    {
         $sortPatterns = new SortPatterns($this->word);
-        $this->wordWithNumbers = $sortPatterns->sort_patterns();
+        $this->wordWithNumbers = $sortPatterns->sortPatterns();
     }
 
-    public function final():string {
+    public function final(): string
+    {
         $wordWithNumbers = $this->wordWithNumbers;
         //var_dump($wordWithNumbers);
         $odds = array("1", "3", "5");

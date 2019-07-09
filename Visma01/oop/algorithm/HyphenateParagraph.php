@@ -4,25 +4,28 @@ namespace algorithm;
 
 use operations\File;
 
-class HyphenateParagraph {
-    private $words =[];
+class HyphenateParagraph
+{
+    private $words = [];
     private $hyphenatedWords = [];
-    private $result =[];
-
-
-    public function __construct(){
+    private $result = [];
+    
+    public function __construct()
+    {
         $this->extractWords();
         $this->hyphenateParagraph();
     }
 
-    public function extractWords() {
-        $rawParagraph = File::ReadFromFile("oop/data/paragraph.txt");
+    public function extractWords()
+    {
+        $rawParagraph = File::readFromFile("oop/data/paragraph.txt");
         $paragraphSplit[] = preg_split("/[\s,.]/", $rawParagraph[0]);
         $this->words = $paragraphSplit[0];
     }
 
-    public function hyphenateParagraph() {
-        foreach ($this->words as $key => $value){
+    public function hyphenateParagraph()
+    {
+        foreach ($this->words as $key => $value) {
             if (!preg_match('/[^A-Za-z0-9]/', $value)) {
                 $hyphenationAlgorithm = new Hyphenate($value);
                 array_push($this->hyphenatedWords, $hyphenationAlgorithm->final());
@@ -33,7 +36,8 @@ class HyphenateParagraph {
         $this->result[] = implode(" ", $this->hyphenatedWords);
     }
 
-    public function final():array {
+    public function final(): array
+    {
         return $this->result;
     }
 
