@@ -13,16 +13,17 @@ class Main
     public function __construct()
     {
         $this->main();
+        // TODO paduoti loggerio objekta i konstruktoriu
     }
 
     public function main()
     {
-        //UI setup
+        // Config
         $config = new Config();
         $logger = new Logger();
         $config->applyLoggerConfig($logger); //setts true to log to file, and gives the logger object
         $logger->info('Program started');
-
+        //UI setup
         echo "Hyphenation\n";
         echo "What would you like to hyphenate (-w/-p) :";
         $handle = fopen("php://stdin", "r");

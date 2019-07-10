@@ -22,8 +22,6 @@ class Config
                 'logFile',
                 'configFile'))) {
                 $this->makeConfigFile();
-            } else {
-                $this->makeConfigFile();
             }
         }
     }

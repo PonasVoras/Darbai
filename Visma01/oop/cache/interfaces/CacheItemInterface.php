@@ -2,7 +2,7 @@
 
 namespace cache\interfaces;
 
-interface CacheInterface
+interface CacheItemInterface
 {
     /**
      * Fetches a value from the cache.
