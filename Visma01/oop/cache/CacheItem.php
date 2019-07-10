@@ -4,6 +4,7 @@ namespace cache;
 
 use cache\interfaces\CacheItemInterface;
 use InvalidArgumentException;
+use Traversable;
 use function file_exists;
 
 class CacheItem implements CacheItemInterface
@@ -83,7 +84,7 @@ class CacheItem implements CacheItemInterface
     {
         $path = $this->getPath($key);
         $dir = dirname($path);
-        if (! file_exists($dir)) {
+        if (!file_exists($dir)) {
             // ensure that the parent path exists:
             $this->mkdir($dir);
         }
@@ -122,7 +123,7 @@ class CacheItem implements CacheItemInterface
         $success = true;
         $paths = $this->listPaths();
         foreach ($paths as $path) {
-            if (! unlink($path)) {
+            if (!unlink($path)) {
                 $success = false;
             }
         }
@@ -132,20 +133,181 @@ class CacheItem implements CacheItemInterface
 
     public function getMultiple($keys, $default = null)
     {
+        if (!is_array($keys) && !$keys instanceof Traversable) {
+            throw new InvalidArgumentException("keys must be either of type array or Traversable");
+        }
+        $values = [];
+        foreach ($keys as $key) {
+            $values[$key] = $this->get($key) ?: $default;
+        }
+        return $values;
     }
 
 
     public function setMultiple($values, $ttl = null)
     {
+        if (! is_array($values) && ! $values instanceof Traversable) {
+            throw new InvalidArgumentException("keys must be either of type array or Traversable");
+        }
+        $ok = true;
+        foreach ($values as $key => $value) {
+            if (is_int($key)) {
+                $key = (string) $key;
+            }
+            $this->validateKey($key);
+            $ok = $this->set($key, $value, $ttl) && $ok;
+        }
+        return $ok;
     }
 
 
     public function deleteMultiple($keys)
     {
+        if (! is_array($keys) && ! $keys instanceof Traversable) {
+            throw new InvalidArgumentException("keys must be either of type array or Traversable");
+        }
+        $ok = true;
+        foreach ($keys as $key) {
+            $this->validateKey($key);
+            $ok = $ok && $this->delete($key);
+        }
+        return $ok;
     }
 
 
     public function has($key)
     {
+        return $this->get($key, $this) !== $this;
     }
+
+    public function increment($key, $step = 1)
+    {
+        $path = $this->getPath($key);
+        $dir = dirname($path);
+        if (! file_exists($dir)) {
+            $this->mkdir($dir); // ensure that the parent path exists
+        }
+        $lock_path = $dir . DIRECTORY_SEPARATOR . ".lock"; // allows max. 256 client locks at one time
+        $lock_handle = fopen($lock_path, "w");
+        flock($lock_handle, LOCK_EX);
+        $value = $this->get($key, 0) + $step;
+        $ok = $this->set($key, $value);
+        flock($lock_handle, LOCK_UN);
+        return $ok ? $value : false;
+    }
+
+    public function decrement($key, $step = 1)
+    {
+        return $this->increment($key, -$step);
+    }
+
+    /**
+     * Clean up expired cache-files.
+     *
+     * This method is outside the scope of the PSR-16 cache concept, and is specific to
+     * this implementation, being a file-cache.
+     *
+     * In scenarios with dynamic keys (such as Session IDs) you should call this method
+     * periodically - for example from a scheduled daily cron-job.
+     *
+     * @return void
+     */
+    public function cleanExpired()
+    {
+        $now = $this->getTime();
+        $paths = $this->listPaths();
+        foreach ($paths as $path) {
+            if ($now > filemtime($path)) {
+                @unlink($path);
+            }
+        }
+    }
+
+    /**
+     * For a given cache key, obtain the absolute file path
+     *
+     * @param string $key
+     *
+     * @return string absolute path to cache-file
+     *
+     * @throws InvalidArgumentException if the specified key contains a character reserved by PSR-16
+     */
+    protected function getPath($key)
+    {
+        $this->validateKey($key);
+        $hash = hash("sha256", $key);
+        return $this->cache_path
+            . DIRECTORY_SEPARATOR
+            . strtoupper($hash[0])
+            . DIRECTORY_SEPARATOR
+            . strtoupper($hash[1])
+            . DIRECTORY_SEPARATOR
+            . substr($hash, 2);
+    }
+
+    /**
+     * @return int current timestamp
+     */
+    protected function getTime()
+    {
+        return time();
+    }
+
+    /**
+     * @return Generator|string[]
+     */
+    protected function listPaths()
+    {
+        $iterator = new RecursiveDirectoryIterator(
+            $this->cache_path,
+            FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS
+        );
+        $iterator = new RecursiveIteratorIterator($iterator);
+        foreach ($iterator as $path) {
+            if (is_dir($path)) {
+                continue; // ignore directories
+            }
+            yield $path;
+        }
+    }
+
+    /**
+     * @param string $key
+     *
+     * @throws InvalidArgumentException
+     */
+    protected function validateKey($key)
+    {
+        if (! is_string($key)) {
+            $type = is_object($key) ? get_class($key) : gettype($key);
+            throw new InvalidArgumentException("invalid key type: {$type} given");
+        }
+        if ($key === "") {
+            throw new InvalidArgumentException("invalid key: empty string given");
+        }
+        if ($key === null) {
+            throw new InvalidArgumentException("invalid key: null given");
+        }
+        if (preg_match(self::PSR16_RESERVED, $key, $match) === 1) {
+            throw new InvalidArgumentException("invalid character in key: {$match[0]}");
+        }
+    }
+
+
+    /**
+     * Recursively create directories and apply permission mask
+     *
+     * @param string $path absolute directory path
+     */
+    private function mkdir($path)
+    {
+        $parent_path = dirname($path);
+        if (!file_exists($parent_path)) {
+            $this->mkdir($parent_path); // recursively create parent dirs first
+        }
+        mkdir($path);
+        chmod($path, $this->dir_mode);
+    }
+
+
 }
