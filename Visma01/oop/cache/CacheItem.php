@@ -58,11 +58,11 @@ class CacheItem implements CacheItemInterface
     public function get($key, $default = null)
     {
         $path = $this->getPath($key);
-        $expires_at = @filemtime($path);
-        if ($expires_at === false) {
+        $expiresAt = @filemtime($path);
+        if ($expiresAt === false) {
             return $default; // file not found
         }
-        if ($this->getTime() >= $expires_at) {
+        if ($this->getTime() >= $expiresAt) {
             @unlink($path); // file expired
             return $default;
         }
@@ -88,26 +88,26 @@ class CacheItem implements CacheItemInterface
             // ensure that the parent path exists:
             $this->mkdir($dir);
         }
-        $temp_path = $this->cache_path . DIRECTORY_SEPARATOR . uniqid('', true);
+        $tempPath = $this->cachePath . DIRECTORY_SEPARATOR . uniqid('', true);
         if (is_int($ttl)) {
-            $expires_at = $this->getTime() + $ttl;
+            $expiresAt = $this->getTime() + $ttl;
         } elseif ($ttl instanceof DateInterval) {
-            $expires_at = date_create_from_format("U", $this->getTime())->add($ttl)->getTimestamp();
+            $expiresAt = date_create_from_format("U", $this->getTime())->add($ttl)->getTimestamp();
         } elseif ($ttl === null) {
-            $expires_at = $this->getTime() + $this->default_ttl;
+            $expiresAt = $this->getTime() + $this->defaultTtl;
         } else {
             throw new InvalidArgumentException("invalid TTL: " . print_r($ttl, true));
         }
-        if (false === @file_put_contents($temp_path, serialize($value))) {
+        if (false === @file_put_contents($tempPath, serialize($value))) {
             return false;
         }
-        if (false === @chmod($temp_path, $this->file_mode)) {
+        if (false === @chmod($tempPath, $this->file_mode)) {
             return false;
         }
-        if (@touch($temp_path, $expires_at) && @rename($temp_path, $path)) {
+        if (@touch($tempPath, $expiresAt) && @rename($tempPath, $path)) {
             return true;
         }
-        @unlink($temp_path);
+        @unlink($tempPath);
         return false;
     }
 
@@ -187,12 +187,12 @@ class CacheItem implements CacheItemInterface
         if (! file_exists($dir)) {
             $this->mkdir($dir); // ensure that the parent path exists
         }
-        $lock_path = $dir . DIRECTORY_SEPARATOR . ".lock"; // allows max. 256 client locks at one time
-        $lock_handle = fopen($lock_path, "w");
-        flock($lock_handle, LOCK_EX);
+        $lockPath = $dir . DIRECTORY_SEPARATOR . ".lock"; // allows max. 256 client locks at one time
+        $lockHandle = fopen($lockPath, "w");
+        flock($lockHandle, LOCK_EX);
         $value = $this->get($key, 0) + $step;
         $ok = $this->set($key, $value);
-        flock($lock_handle, LOCK_UN);
+        flock($lockHandle, LOCK_UN);
         return $ok ? $value : false;
     }
 
@@ -236,7 +236,7 @@ class CacheItem implements CacheItemInterface
     {
         $this->validateKey($key);
         $hash = hash("sha256", $key);
-        return $this->cache_path
+        return $this->cachePath
             . DIRECTORY_SEPARATOR
             . strtoupper($hash[0])
             . DIRECTORY_SEPARATOR
@@ -259,7 +259,7 @@ class CacheItem implements CacheItemInterface
     protected function listPaths()
     {
         $iterator = new RecursiveDirectoryIterator(
-            $this->cache_path,
+            $this->cachePath,
             FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS
         );
         $iterator = new RecursiveIteratorIterator($iterator);
