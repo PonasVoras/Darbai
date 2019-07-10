@@ -6,26 +6,18 @@ namespace log;
 use DateTime;
 use operations\File;
 use log\interfaces\LoggerInterface;
+use InvalidArgumentException;
 
 class Logger implements LoggerInterface
 {
 
-    private $fileName = "hyphenation.log";
-    private $logToScreen = false;
+    private $fileName = "oop/log/log.log";
     private $logToFile = true;
-
-
-    public function setLogToScreen(bool $logToScreen)
-    {
-        $this->logToScreen = $logToScreen;
-    }
 
     public function setLogToFile(bool $logToFile)
     {
         $this->logToFile = $logToFile;
     }
-
-    // TODO : makeMessage class;
 
     /**
      * System is unusable.
@@ -36,7 +28,7 @@ class Logger implements LoggerInterface
      */
     public function emergency(string $message, array $context = array()): void
     {
-        $message = $this->makeMessage(LogLevel::EMERGENCY, $message, $context);
+        $message = $this->makeMessage(LogLvl::EMERGENCY, $message, $context);
         $this->writeToFile($message);
     }
 
@@ -52,7 +44,7 @@ class Logger implements LoggerInterface
      */
     public function alert(string $message, array $context = array()): void
     {
-        $message = $this->makeMessage(LogLevel::ALERT, $message, $context);
+        $message = $this->makeMessage(LogLvl::ALERT, $message, $context);
         $this->writeToFile($message);
     }
 
@@ -67,7 +59,7 @@ class Logger implements LoggerInterface
      */
     public function critical(string $message, array $context = array()): void
     {
-        $message = $this->makeMessage(LogLevel::CRITICAL, $message, $context);
+        $message = $this->makeMessage(LogLvl::CRITICAL, $message, $context);
         $this->writeToFile($message);
     }
 
@@ -81,7 +73,7 @@ class Logger implements LoggerInterface
      */
     public function error(string $message, array $context = array()): void
     {
-        $message = $this->makeMessage(LogLevel::ERROR, $message, $context);
+        $message = $this->makeMessage(LogLvl::ERROR, $message, $context);
         $this->writeToFile($message);
     }
 
@@ -97,7 +89,7 @@ class Logger implements LoggerInterface
      */
     public function warning(string $message, array $context = array()): void
     {
-        $message = $this->makeMessage(LogLevel::WARNING, $message, $context);
+        $message = $this->makeMessage(LogLvl::WARNING, $message, $context);
         $this->writeToFile($message);
     }
 
@@ -112,7 +104,7 @@ class Logger implements LoggerInterface
      */
     public function info(string $message, array $context = array()): void
     {
-        $message = $this->makeMessage(LogLevel::INFO, $message, $context);
+        $message = $this->makeMessage(LogLvl::INFO, $message, $context);
         $this->writeToFile($message);
     }
 
@@ -125,7 +117,7 @@ class Logger implements LoggerInterface
      */
     public function debug(string $message, array $context = array()): void
     {
-        $message = $this->makeMessage(LogLevel::DEBUG, $message, $context);
+        $message = $this->makeMessage(LogLvl::DEBUG, $message, $context);
         $this->writeToFile($message);
     }
 
@@ -140,30 +132,29 @@ class Logger implements LoggerInterface
     public function log(string $level, $message, array $context = array()): void
     {
         switch ($level) {
-            case LogLevel::EMERGENCY:
+            case LogLvl::EMERGENCY:
                 $this->emergency($message, $context);
                 break;
-            case LogLevel::ALERT:
+            case LogLvl::ALERT:
                 $this->alert($message, $context);
                 break;
-            case LogLevel::CRITICAL:
+            case LogLvl::CRITICAL:
                 $this->critical($message, $context);
                 break;
-            case LogLevel::ERROR:
+            case LogLvl::ERROR:
                 $this->error($message, $context);
                 break;
-            case LogLevel::WARNING:
+            case LogLvl::WARNING:
                 $this->warning($message, $context);
                 break;
-            case LogLevel::INFO:
+            case LogLvl::INFO:
                 $this->info($message, $context);
                 break;
-            case LogLevel::DEBUG:
+            case LogLvl::DEBUG:
                 $this->debug($message, $context);
                 break;
             default:
-                //throw new InvalidArgumentException('Bad Log Level');
-                print_r('Bad log level');
+                throw new InvalidArgumentException('Bad Log Level');
                 break;
         }
     }
@@ -171,17 +162,7 @@ class Logger implements LoggerInterface
     private function writeToFile(string $message): void
     {
         if ($this->logToFile) {
-//            $writeToFile = new File();
-//            $writeToFile->w;
-            print_r($message);
-        }
-        $this->logToScreenIfNeeded($message);
-    }
-
-    private function logToScreenIfNeeded(string $message): void
-    {
-        if ($this->logToScreen) {
-            print_r($message);
+            File::writeToFileString($this->fileName, $message);
         }
     }
 

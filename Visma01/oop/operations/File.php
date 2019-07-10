@@ -10,8 +10,19 @@ class File
         return true;
     }
 
+    public static function writeToFileString(string $fileName, string $data): bool
+    {
+        file_put_contents($fileName, $data);
+        return true;
+    }
+
     public static function readFromFile(string $fileName): array
     {
         return file($fileName);
+    }
+
+    public static function readFromFileString(string $fileName): string
+    {
+        return file_get_contents($fileName);
     }
 }

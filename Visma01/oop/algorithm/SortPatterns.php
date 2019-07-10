@@ -1,8 +1,6 @@
 <?php
 
 namespace algorithm;
-require "oop/algorithm/RemoveSpaces.php";
-require "oop/algorithm/RemoveDots.php";
 
 use operations\File;
 
