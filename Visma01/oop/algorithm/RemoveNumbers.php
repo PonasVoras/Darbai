@@ -2,9 +2,11 @@
 
 namespace algorithm;
 
-class RemoveNumbers
+use algorithm\interfaces\RemoveInterface;
+
+class RemoveNumbers implements RemoveInterface
 {
-    public function removeNumbers(array $allPatterns): array
+    public function remove(array $allPatterns): array
     {
         $patternWithoutNumbers = preg_replace('/\d/', '', $allPatterns);
         $patternWithoutNumbers = preg_replace('/\s/', '', $patternWithoutNumbers);

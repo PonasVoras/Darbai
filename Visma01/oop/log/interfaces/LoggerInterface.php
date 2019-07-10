@@ -1,6 +1,6 @@
 <?php
 
-namespace log;
+namespace log\interfaces;
 
 /**
  * Describes a logger instance.

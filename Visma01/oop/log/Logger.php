@@ -5,6 +5,7 @@ namespace log;
 
 use DateTime;
 use operations\File;
+use log\interfaces\LoggerInterface;
 
 class Logger implements LoggerInterface
 {

@@ -17,7 +17,7 @@ class FindPatterns
         $this->word = $word;
         $this->allPatterns = File::readFromFile("oop/data/data.txt");
         $removeNumbers = new RemoveNumbers();
-        $this->allPatternsNumberless = $removeNumbers->removeNumbers($this->allPatterns); // nice array with no numbers, trimmed
+        $this->allPatternsNumberless = $removeNumbers->remove($this->allPatterns); // nice array with no numbers, trimmed
         $this->possiblePatterns();
     }
 

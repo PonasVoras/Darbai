@@ -2,12 +2,11 @@
 
 namespace algorithm;
 
-require "oop/algorithm/RemoveInterface.php";
-
+use algorithm\interfaces\RemoveInterface;
 
 class RemoveSpaces implements RemoveInterface
 {
-    public function removeSpaces(array $allPatterns): array
+    public function remove(array $allPatterns): array
     {
         $patternWithoutSpaces = preg_replace('/\s/', '', $allPatterns);
         return $patternWithoutSpaces;

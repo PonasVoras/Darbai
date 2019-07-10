@@ -2,6 +2,9 @@
 
 namespace cache;
 
-class CacheImplementation{
+use cache\interfaces\CacheInterface;
+
+class CacheImplementation implements CacheInterface
+{
 
 }

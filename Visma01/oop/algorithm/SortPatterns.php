@@ -23,9 +23,9 @@ class SortPatterns
         $removeSpaces = new RemoveSpaces();
         $removeDots = new RemoveDots();
         $removeNumbers = new RemoveNumbers();
-        $possiblePatternsModified = $removeSpaces->removeSpaces($this->possiblePatterns);
-        $possiblePatternsModified = $removeDots->removeDots($possiblePatternsModified);
-        $possiblePatternsModifiedNumberless = $removeNumbers->removeNumbers($possiblePatternsModified);
+        $possiblePatternsModified = $removeSpaces->remove($this->possiblePatterns);
+        $possiblePatternsModified = $removeDots->remove($possiblePatternsModified);
+        $possiblePatternsModifiedNumberless = $removeNumbers->remove($possiblePatternsModified);
         $wordNumbersSplit = array_fill(0, strlen($this->word), "0");
         $wordSplit = str_split(trim($this->word, "\n"));
         $j = 0;
