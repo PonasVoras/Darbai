@@ -2,8 +2,8 @@
 
 namespace Algorithm;
 
-use Operations\File;
 use Algorithm\Utils\Remove;
+use Operations\File;
 
 class FindPatterns
 {
@@ -61,13 +61,14 @@ class FindPatterns
                 }
             }
         }
-        $this->finalPatternArray();
     }
 
     public function finalPatternArray()
     {
         if (File::writeToFile("oop/Output/possible_patterns.txt", $this->possiblePatterns)) {
             //print_r("Patterns saved");
+            //log to file here
+
         } else {
             print_r("Final pattern file is not well");
         }

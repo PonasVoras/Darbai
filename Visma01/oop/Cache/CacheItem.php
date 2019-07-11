@@ -25,19 +25,19 @@ class CacheItem implements CacheItemInterface
     /**
      * @var string
      */
-    private $cachePath;
+    private $cachePath ;
     /**
      * @var int
      */
-    private $defaultTtl;
+    private $defaultTtl=86400;
     /**
      * @var int
      */
-    private $dirMode;
+    private $dirMode = 0775;
     /**
      * @var int
      */
-    private $fileMode;
+    private $fileMode = 0664;
 
     /**
      * @param string $cachePath absolute root path of Cache-file folder
@@ -45,13 +45,15 @@ class CacheItem implements CacheItemInterface
      * @param int $dirMode permission mode for created dirs
      * @param int $fileMode permission mode for created files
      */
-    public function __construct($cachePath, $defaultTtl, $dirMode = 0775, $fileMode = 0664)
+    public function __construct(string $cachePath)
     {
-        $this->defaultTtl = $defaultTtl;
-        $this->dirMode = $dirMode;
-        $this->fileMode = $fileMode;
+        //$this->defaultTtl = $defaultTtl;
+        //$this->dirMode = $this->dirMode;
+        //$this->fileMode = $this->fileMode;
+        $this->cachePath = $cachePath;
         if (!file_exists($cachePath) && file_exists(dirname($cachePath))) {
             $this->mkdir($cachePath); // ensure that the parent path exists
+            print_r("mkdir");
         }
         $path = realpath($cachePath);
         if ($path === false) {
@@ -68,6 +70,7 @@ class CacheItem implements CacheItemInterface
         $path = $this->getPath($key);
         $expiresAt = @filemtime($path);
         if ($expiresAt === false) {
+            print_r("file not found \n");
             return $default; // file not found
         }
         if ($this->getTime() >= $expiresAt) {
@@ -95,6 +98,9 @@ class CacheItem implements CacheItemInterface
         if (!file_exists($dir)) {
             // ensure that the parent path exists:
             $this->mkdir($dir);
+            print_r("filename does exist");
+        } else {
+            print_r("file exists");
         }
         $tempPath = $this->cachePath . DIRECTORY_SEPARATOR . uniqid('', true);
         if (is_int($ttl)) {
@@ -138,75 +144,9 @@ class CacheItem implements CacheItemInterface
         return $success;
     }
 
-
-    public function getMultiple(iterable $keys, $default = null):iterable
-    {
-        if (!is_array($keys) && !$keys instanceof Traversable) {
-            throw new InvalidArgumentException("keys must be either of type array or Traversable");
-        }
-        $values = [];
-        foreach ($keys as $key) {
-            $values[$key] = $this->get($key) ?: $default;
-        }
-        return $values;
-    }
-
-
-    public function setMultiple(iterable $values, $ttl = null):bool
-    {
-        if (! is_array($values) && ! $values instanceof Traversable) {
-            throw new InvalidArgumentException("keys must be either of type array or Traversable");
-        }
-        $ok = true;
-        foreach ($values as $key => $value) {
-            if (is_int($key)) {
-                $key = (string) $key;
-            }
-            $this->validateKey($key);
-            $ok = $this->set($key, $value, $ttl) && $ok;
-        }
-        return $ok;
-    }
-
-
-    public function deleteMultiple(iterable $keys):bool
-    {
-        if (! is_array($keys) && ! $keys instanceof Traversable) {
-            throw new InvalidArgumentException("keys must be either of type array or Traversable");
-        }
-        $ok = true;
-        foreach ($keys as $key) {
-            $this->validateKey($key);
-            $ok = $ok && $this->delete($key);
-        }
-        return $ok;
-    }
-
-
     public function has(string $key):bool
     {
         return $this->get($key, $this) !== $this;
-    }
-
-    public function increment($key, $step = 1)
-    {
-        $path = $this->getPath($key);
-        $dir = dirname($path);
-        if (! file_exists($dir)) {
-            $this->mkdir($dir); // ensure that the parent path exists
-        }
-        $lockPath = $dir . DIRECTORY_SEPARATOR . ".lock"; // allows max. 256 client locks at one time
-        $lockHandle = fopen($lockPath, "w");
-        flock($lockHandle, LOCK_EX);
-        $value = $this->get($key, 0) + $step;
-        $ok = $this->set($key, $value);
-        flock($lockHandle, LOCK_UN);
-        return $ok ? $value : false;
-    }
-
-    public function decrement($key, $step = 1)
-    {
-        return $this->increment($key, -$step);
     }
 
     /**
@@ -220,7 +160,7 @@ class CacheItem implements CacheItemInterface
      *
      * @return void
      */
-    public function cleanExpired()
+    public function cleanExpired():void
     {
         $now = $this->getTime();
         $paths = $this->listPaths();
@@ -240,10 +180,12 @@ class CacheItem implements CacheItemInterface
      *
      * @throws InvalidArgumentException if the specified key contains a character reserved by PSR-16
      */
-    protected function getPath($key)
+
+    protected function getPath(string $key):string
     {
         $this->validateKey($key);
         $hash = hash("sha256", $key);
+        print_r($hash . "\n");
         return $this->cachePath
             . DIRECTORY_SEPARATOR
             . strtoupper($hash[0])
@@ -253,39 +195,33 @@ class CacheItem implements CacheItemInterface
             . substr($hash, 2);
     }
 
+//    protected function getPath(string $key):string
+//    {
+//        $this->validateKey($key);
+//        $returnPath = $this->cachePath
+//                . DIRECTORY_SEPARATOR
+//                . $key;
+//        print_r($returnPath);
+//        return $returnPath;
+//    }
+
     /**
      * @return int current timestamp
      */
-    protected function getTime()
+    protected function getTime():int
     {
         return time();
     }
 
-    /**
-     * @return Generator|string[]
-     */
-    protected function listPaths()
-    {
-        $iterator = new RecursiveDirectoryIterator(
-            $this->cachePath,
-            FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS
-        );
-        $iterator = new RecursiveIteratorIterator($iterator);
-        foreach ($iterator as $path) {
-            if (is_dir($path)) {
-                continue; // ignore directories
-            }
-            yield $path;
-        }
-    }
 
     /**
      * @param string $key
      *
      * @throws InvalidArgumentException
      */
-    protected function validateKey($key)
+    protected function validateKey(string $key)
     {
+        print_r("Key for validation" . $key . "\n");
         if (! is_string($key)) {
             $type = is_object($key) ? get_class($key) : gettype($key);
             throw new InvalidArgumentException("invalid key type: {$type} given");
@@ -307,9 +243,11 @@ class CacheItem implements CacheItemInterface
      *
      * @param string $path absolute directory path
      */
-    private function mkdir($path)
+    //private function mkdir(string $this->path)
+    public function mkdir($path)
     {
         $parentPath = dirname($path);
+        print_r($parentPath);
         if (!file_exists($parentPath)) {
             $this->mkdir($parentPath); // recursively create parent dirs first
         }

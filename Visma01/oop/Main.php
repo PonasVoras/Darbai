@@ -30,12 +30,14 @@ class Main
         $line = fgets($handle);
 
         switch (trim($line)) {
-            case '-w':
+            case '':
+            //case '-w':
                 echo "Word for hyphenation Algorithm: ";
                 $handle = fopen("php://stdin", "r");
                 $word = fgets($handle);
                 $executionTime = new ExecutionCalculator();
                 $executionTime->start();
+                $word = 'mistranslate';
                 $hyphenatedWord = Input::wordHyphenation($word);
                 Output::outputToCli($hyphenatedWord);
                 $executionTime->end();
@@ -49,8 +51,8 @@ class Main
                 $outputFile = 'oop/Output/hyphenatedParagraph.txt';
                 Output::outputToFile($outputFile, $hyphenatedParagraph);
                 exit;
-            case '':
-                echo "Wrong input. Aborting.\n";
+            /*case '':
+                echo "Wrong input. Aborting.\n";*/
         }
         fclose($handle);
     }
