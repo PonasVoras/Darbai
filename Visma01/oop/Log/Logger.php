@@ -11,7 +11,7 @@ use InvalidArgumentException;
 class Logger implements LoggerInterface
 {
 
-    private $fileName = "oop/Log/Log.Log";
+    private $fileName = "oop/Log/Log.log";
     private $logToFile = true;
 
     public function setLogToFile(bool $logToFile)

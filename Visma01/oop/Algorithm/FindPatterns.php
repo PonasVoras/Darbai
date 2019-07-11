@@ -24,7 +24,6 @@ class FindPatterns
 
     private function possiblePatterns()
     {
-
         $first_rev = substr($this->word, strlen($this->word) - 2, 1);
         $first = substr($this->word, 0, 1);
         foreach ($this->allPatternsNumberless as $key => $value) {

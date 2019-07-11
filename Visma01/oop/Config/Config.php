@@ -9,8 +9,8 @@ use RuntimeException;
 class Config
 {
     private $logToFile = true;
-    private $logFile = 'oop/Log/Log.Log';
-    private $configFile = 'oop/Config/Config.json';
+    private $logFile = 'oop/Log/log.Log';
+    private $configFile = 'oop/Config/config.json';
 
     public function __construct()
     {

@@ -1,9 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-include "./Oop/Main.php";
+include "./oop/Main.php";
 
-require('Oop/Config/AutoLoader.php');
+require('oop/Config/AutoLoader.php');
 config\AutoLoader::autoInclude();
 
 new Main\Main();
