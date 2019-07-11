@@ -1,11 +1,9 @@
 <?php
 
-namespace operations;
+namespace Operations;
 
-
-
-use algorithm\Hyphenate;
-use algorithm\HyphenateParagraph;
+use Algorithm\Hyphenate;
+use Algorithm\HyphenateParagraph;
 
 class Input
 {

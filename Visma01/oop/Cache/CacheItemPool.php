@@ -1,9 +1,9 @@
 <?php
 
-namespace cache;
+namespace Cache;
 
-use cache\interfaces\CacheItemPoolInterface;
-use cache\interfaces\CacheItemInterface;
+use Cache\Interfaces\CacheItemPoolInterface;
+use Cache\Interfaces\CacheItemInterface;
 
 class CacheItemPool implements  CacheItemPoolInterface
 {

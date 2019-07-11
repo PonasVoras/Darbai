@@ -1,6 +1,6 @@
 <?php
 
-namespace algorithm;
+namespace Algorithm;
 
 class Hyphenate
 {

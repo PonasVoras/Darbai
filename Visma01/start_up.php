@@ -1,10 +1,10 @@
 #!/usr/bin/env php
 <?php
 
-include "./oop/Main.php";
+include "./Oop/Main.php";
 
-require ('oop/config/AutoLoader.php');
+require('Oop/Config/AutoLoader.php');
 config\AutoLoader::autoInclude();
 
-new main\Main();
-new config\Config();
+new Main\Main();
+new Config\Config();

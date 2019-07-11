@@ -1,8 +1,9 @@
 <?php
 
-namespace algorithm;
+namespace Algorithm;
 
-use operations\File;
+use Operations\File;
+use Algorithm\Utils\Remove;
 
 class FindPatterns
 {
@@ -15,9 +16,9 @@ class FindPatterns
     public function __construct(string $word)
     {
         $this->word = $word;
-        $this->allPatterns = File::readFromFile("oop/data/data.txt");
-        $removeNumbers = new RemoveNumbers();
-        $this->allPatternsNumberless = $removeNumbers->remove($this->allPatterns); // nice array with no numbers, trimmed
+        $this->allPatterns = File::readFromFile("oop/Data/Data.txt");
+        $removeNumbers = new Remove();
+        $this->allPatternsNumberless = $removeNumbers->removeNumbers($this->allPatterns); // nice array with no numbers, trimmed
         $this->possiblePatterns();
     }
 
@@ -66,7 +67,7 @@ class FindPatterns
 
     public function finalPatternArray()
     {
-        if (File::writeToFile("oop/output/possible_patterns.txt", $this->possiblePatterns)) {
+        if (File::writeToFile("oop/Output/possible_patterns.txt", $this->possiblePatterns)) {
             //print_r("Patterns saved");
         } else {
             print_r("Final pattern file is not well");

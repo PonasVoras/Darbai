@@ -1,7 +1,7 @@
 <?php
 
 
-namespace log;
+namespace Log;
 
 
 class LogLvl

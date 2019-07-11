@@ -1,8 +1,9 @@
 <?php
 
-namespace algorithm;
+namespace Algorithm;
 
-use operations\File;
+use Algorithm\Utils\Remove;
+use Operations\File;
 
 class SortPatterns
 {
@@ -11,19 +12,17 @@ class SortPatterns
 
     public function __construct(string $word)
     {
-        $this->possiblePatterns = File::readFromFile("oop/output/possible_patterns.txt");
+        $this->possiblePatterns = File::readFromFile("oop/Output/possible_patterns.txt");
         $this->word = $word;
         $this->sortPatterns();
     }
 
     public function sortPatterns(): string
     {
-        $removeSpaces = new RemoveSpaces();
-        $removeDots = new RemoveDots();
-        $removeNumbers = new RemoveNumbers();
-        $possiblePatternsModified = $removeSpaces->remove($this->possiblePatterns);
-        $possiblePatternsModified = $removeDots->remove($possiblePatternsModified);
-        $possiblePatternsModifiedNumberless = $removeNumbers->remove($possiblePatternsModified);
+        $remove = new Remove();
+        $possiblePatternsModified = $remove->removeSpaces($this->possiblePatterns);
+        $possiblePatternsModified = $remove->removeDots($possiblePatternsModified);
+        $possiblePatternsModifiedNumberless = $remove->removeNumbers($possiblePatternsModified);
         $wordNumbersSplit = array_fill(0, strlen($this->word), "0");
         $wordSplit = str_split(trim($this->word, "\n"));
         $j = 0;

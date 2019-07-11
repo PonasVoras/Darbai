@@ -1,8 +1,8 @@
 <?php
 
-namespace algorithm;
+namespace Algorithm;
 
-use operations\File;
+use Operations\File;
 
 class HyphenateParagraph
 {
@@ -18,7 +18,7 @@ class HyphenateParagraph
 
     public function extractWords()
     {
-        $rawParagraph = File::readFromFile("oop/data/paragraph.txt");
+        $rawParagraph = File::readFromFile("oop/Data/paragraph.txt");
         $paragraphSplit[] = preg_split("/[\s,.]/", $rawParagraph[0]);
         $this->words = $paragraphSplit[0];
     }

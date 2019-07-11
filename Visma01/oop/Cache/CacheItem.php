@@ -1,8 +1,8 @@
 <?php
 
-namespace cache;
+namespace Cache;
 
-use cache\interfaces\CacheItemInterface;
+use Cache\Interfaces\CacheItemInterface;
 use InvalidArgumentException;
 use Traversable;
 use function file_exists;
@@ -32,7 +32,7 @@ class CacheItem implements CacheItemInterface
     private $fileMode;
 
     /**
-     * @param string $cachePath absolute root path of cache-file folder
+     * @param string $cachePath absolute root path of Cache-file folder
      * @param int $defaultTtl default time-to-live (in seconds)
      * @param int $dirMode permission mode for created dirs
      * @param int $fileMode permission mode for created files
@@ -47,10 +47,10 @@ class CacheItem implements CacheItemInterface
         }
         $path = realpath($cachePath);
         if ($path === false) {
-            throw new InvalidArgumentException("cache path does not exist: {$cachePath}");
+            throw new InvalidArgumentException("Cache path does not exist: {$cachePath}");
         }
         if (!is_writable($path . DIRECTORY_SEPARATOR)) {
-            throw new InvalidArgumentException("cache path is not writable: {$cachePath}");
+            throw new InvalidArgumentException("Cache path is not writable: {$cachePath}");
         }
         $this->cachePath = $path;
     }
@@ -202,10 +202,10 @@ class CacheItem implements CacheItemInterface
     }
 
     /**
-     * Clean up expired cache-files.
+     * Clean up expired Cache-files.
      *
-     * This method is outside the scope of the PSR-16 cache concept, and is specific to
-     * this implementation, being a file-cache.
+     * This method is outside the scope of the PSR-16 Cache concept, and is specific to
+     * this implementation, being a file-Cache.
      *
      * In scenarios with dynamic keys (such as Session IDs) you should call this method
      * periodically - for example from a scheduled daily cron-job.
@@ -224,11 +224,11 @@ class CacheItem implements CacheItemInterface
     }
 
     /**
-     * For a given cache key, obtain the absolute file path
+     * For a given Cache key, obtain the absolute file path
      *
      * @param string $key
      *
-     * @return string absolute path to cache-file
+     * @return string absolute path to Cache-file
      *
      * @throws InvalidArgumentException if the specified key contains a character reserved by PSR-16
      */

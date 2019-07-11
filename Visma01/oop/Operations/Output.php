@@ -1,6 +1,6 @@
 <?php
 
-namespace operations;
+namespace Operations;
 
 class Output
 {

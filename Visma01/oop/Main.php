@@ -1,12 +1,12 @@
 <?php
 
-namespace main;
+namespace Main;
 
-use operations\ExecutionCalculator;
-use log\Logger;
-use config\Config;
-use operations\Input;
-use operations\Output;
+use Operations\ExecutionCalculator;
+use Log\Logger;
+use Config\Config;
+use Operations\Input;
+use Operations\Output;
 
 class Main
 {
@@ -21,7 +21,7 @@ class Main
         // Config
         $config = new Config();
         $logger = new Logger();
-        $config->applyLoggerConfig($logger); //setts true to log to file, and gives the logger object
+        $config->applyLoggerConfig($logger); //setts true to Log to file, and gives the logger object
         $logger->info('Program started');
         //UI setup
         echo "Hyphenation\n";
@@ -31,7 +31,7 @@ class Main
 
         switch (trim($line)) {
             case '-w':
-                echo "Word for hyphenation algorithm: ";
+                echo "Word for hyphenation Algorithm: ";
                 $handle = fopen("php://stdin", "r");
                 $word = fgets($handle);
                 $executionTime = new ExecutionCalculator();
@@ -42,11 +42,11 @@ class Main
                 echo "\nExecution time : " . $executionTime->executionTime();
                 exit;
             case '-p':
-                echo "Filename with paragraphs (must be inside data/paragraph.txt directory) press Enter to hyphenate";
+                echo "Filename with paragraphs (must be inside Data/paragraph.txt directory) press Enter to hyphenate";
                 $handle = fopen("php://stdin", "r");
                 fgets($handle);
                 $hyphenatedParagraph = Input::paragraphHyphenation();
-                $outputFile = 'oop/output/hyphenatedParagraph.txt';
+                $outputFile = 'oop/Output/hyphenatedParagraph.txt';
                 Output::outputToFile($outputFile, $hyphenatedParagraph);
                 exit;
             case '':

@@ -1,17 +1,17 @@
 <?php
 
 
-namespace log;
+namespace Log;
 
 use DateTime;
-use operations\File;
-use log\interfaces\LoggerInterface;
+use Operations\File;
+use Log\Interfaces\LoggerInterface;
 use InvalidArgumentException;
 
 class Logger implements LoggerInterface
 {
 
-    private $fileName = "oop/log/log.log";
+    private $fileName = "oop/Log/Log.Log";
     private $logToFile = true;
 
     public function setLogToFile(bool $logToFile)

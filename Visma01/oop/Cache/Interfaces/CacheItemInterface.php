@@ -1,16 +1,16 @@
 <?php
 
-namespace cache\interfaces;
+namespace Cache\Interfaces;
 
 interface CacheItemInterface
 {
     /**
-     * Fetches a value from the cache.
+     * Fetches a value from the Cache.
      *
-     * @param string $key     The unique key of this item in the cache.
+     * @param string $key     The unique key of this item in the Cache.
      * @param mixed  $default Default value to return if the key does not exist.
      *
-     * @return mixed The value of the item from the cache, or $default in case of cache miss.
+     * @return mixed The value of the item from the Cache, or $default in case of Cache miss.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   MUST be thrown if the $key string is not a legal value.
@@ -18,7 +18,7 @@ interface CacheItemInterface
     public function get($key, $default = null);
 
     /**
-     * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
+     * Persists Data in the Cache, uniquely referenced by a key with an optional expiration TTL time.
      *
      * @param string                 $key   The key of the item to store.
      * @param mixed                  $value The value of the item to store. Must be serializable.
@@ -34,9 +34,9 @@ interface CacheItemInterface
     public function set($key, $value, $ttl = null);
 
     /**
-     * Delete an item from the cache by its unique key.
+     * Delete an item from the Cache by its unique key.
      *
-     * @param string $key The unique cache key of the item to delete.
+     * @param string $key The unique Cache key of the item to delete.
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      *
@@ -46,14 +46,14 @@ interface CacheItemInterface
     public function delete($key);
 
     /**
-     * Wipes clean the entire cache's keys.
+     * Wipes clean the entire Cache's keys.
      *
      * @return bool True on success and false on failure.
      */
     public function clear();
 
     /**
-     * Obtains multiple cache items by their unique keys.
+     * Obtains multiple Cache items by their unique keys.
      *
      * @param iterable $keys    A list of keys that can obtained in a single operation.
      * @param mixed    $default Default value to return for keys that do not exist.
@@ -67,7 +67,7 @@ interface CacheItemInterface
     public function getMultiple($keys, $default = null);
 
     /**
-     * Persists a set of key => value pairs in the cache, with an optional TTL.
+     * Persists a set of key => value pairs in the Cache, with an optional TTL.
      *
      * @param iterable               $values A list of key => value pairs for a multiple-set operation.
      * @param null|int|\DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and
@@ -83,7 +83,7 @@ interface CacheItemInterface
     public function setMultiple($values, $ttl = null);
 
     /**
-     * Deletes multiple cache items in a single operation.
+     * Deletes multiple Cache items in a single operation.
      *
      * @param iterable $keys A list of string-based keys to be deleted.
      *
@@ -96,14 +96,14 @@ interface CacheItemInterface
     public function deleteMultiple($keys);
 
     /**
-     * Determines whether an item is present in the cache.
+     * Determines whether an item is present in the Cache.
      *
-     * NOTE: It is recommended that has() is only to be used for cache warming type purposes
-     * and not to be used within your live applications operations for get/set, as this method
+     * NOTE: It is recommended that has() is only to be used for Cache warming type purposes
+     * and not to be used within your live applications Operations for get/set, as this method
      * is subject to a race condition where your has() will return true and immediately after,
      * another script can remove it, making the state of your app out of date.
      *
-     * @param string $key The cache item key.
+     * @param string $key The Cache item key.
      *
      * @return bool
      *

@@ -1,16 +1,16 @@
 <?php
 
-namespace config;
+namespace Config;
 
-use log\Logger;
-use operations\File;
+use Log\Logger;
+use Operations\File;
 use RuntimeException;
 
 class Config
 {
     private $logToFile = true;
-    private $logFile = 'oop/log/log.log';
-    private $configFile = 'oop/config/config.json';
+    private $logFile = 'oop/Log/Log.Log';
+    private $configFile = 'oop/Config/Config.json';
 
     public function __construct()
     {
@@ -52,7 +52,7 @@ class Config
         );
         //var_dump($jsonConfig);
         if (!File::writeToFileString($this->configFile, json_encode($jsonConfig))) {
-            throw new RuntimeException("Cannot create default config file !");
+            throw new RuntimeException("Cannot create default Config file !");
         }
     }
 
