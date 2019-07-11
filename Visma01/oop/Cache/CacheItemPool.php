@@ -28,9 +28,4 @@ class CacheItemPool implements  CacheItemPoolInterface
 
     public function save(CacheItemInterface $item){}
 
-
-    public function saveDeferred(CacheItemInterface $item){}
-
-
-    public function commit(){}
 }

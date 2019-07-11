@@ -7,6 +7,14 @@ use InvalidArgumentException;
 use Traversable;
 use function file_exists;
 
+use DateInterval;
+use FilesystemIterator;
+use Generator;
+use function gettype;
+use function is_int;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+
 class CacheItem implements CacheItemInterface
 {
     /**
@@ -55,7 +63,7 @@ class CacheItem implements CacheItemInterface
         $this->cachePath = $path;
     }
 
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         $path = $this->getPath($key);
         $expiresAt = @filemtime($path);
@@ -80,7 +88,7 @@ class CacheItem implements CacheItemInterface
         return $value;
     }
 
-    public function set($key, $value, $ttl = null)
+    public function set(string $key, $value, $ttl = null):bool
     {
         $path = $this->getPath($key);
         $dir = dirname($path);
@@ -101,7 +109,7 @@ class CacheItem implements CacheItemInterface
         if (false === @file_put_contents($tempPath, serialize($value))) {
             return false;
         }
-        if (false === @chmod($tempPath, $this->file_mode)) {
+        if (false === @chmod($tempPath, $this->fileMode)) {
             return false;
         }
         if (@touch($tempPath, $expiresAt) && @rename($tempPath, $path)) {
@@ -111,14 +119,14 @@ class CacheItem implements CacheItemInterface
         return false;
     }
 
-    public function delete($key)
+    public function delete(string $key):bool
     {
         $this->validateKey($key);
         $path = $this->getPath($key);
         return !file_exists($path) || @unlink($path);
     }
 
-    public function clear()
+    public function clear():bool
     {
         $success = true;
         $paths = $this->listPaths();
@@ -131,7 +139,7 @@ class CacheItem implements CacheItemInterface
     }
 
 
-    public function getMultiple($keys, $default = null)
+    public function getMultiple(iterable $keys, $default = null):iterable
     {
         if (!is_array($keys) && !$keys instanceof Traversable) {
             throw new InvalidArgumentException("keys must be either of type array or Traversable");
@@ -144,7 +152,7 @@ class CacheItem implements CacheItemInterface
     }
 
 
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple(iterable $values, $ttl = null):bool
     {
         if (! is_array($values) && ! $values instanceof Traversable) {
             throw new InvalidArgumentException("keys must be either of type array or Traversable");
@@ -161,7 +169,7 @@ class CacheItem implements CacheItemInterface
     }
 
 
-    public function deleteMultiple($keys)
+    public function deleteMultiple(iterable $keys):bool
     {
         if (! is_array($keys) && ! $keys instanceof Traversable) {
             throw new InvalidArgumentException("keys must be either of type array or Traversable");
@@ -175,7 +183,7 @@ class CacheItem implements CacheItemInterface
     }
 
 
-    public function has($key)
+    public function has(string $key):bool
     {
         return $this->get($key, $this) !== $this;
     }
@@ -301,12 +309,12 @@ class CacheItem implements CacheItemInterface
      */
     private function mkdir($path)
     {
-        $parent_path = dirname($path);
-        if (!file_exists($parent_path)) {
-            $this->mkdir($parent_path); // recursively create parent dirs first
+        $parentPath = dirname($path);
+        if (!file_exists($parentPath)) {
+            $this->mkdir($parentPath); // recursively create parent dirs first
         }
         mkdir($path);
-        chmod($path, $this->dir_mode);
+        chmod($path, $this->dirMode);
     }
 
 

@@ -112,22 +112,10 @@ interface CacheItemPoolInterface
     public function save(CacheItemInterface $item);
 
     /**
-     * Sets a Cache item to be persisted later.
-     *
-     * @param CacheItemInterface $item
-     *   The Cache item to save.
-     *
-     * @return bool
-     *   False if the item could not be queued or if a commit was attempted and failed. True otherwise.
-     */
-    public function saveDeferred(CacheItemInterface $item);
-
-    /**
      * Persists any deferred Cache items.
      *
      * @return bool
      *   True if all not-yet-saved items were successfully saved or there were none. False otherwise.
      */
-    public function commit();
 }
 
