@@ -47,9 +47,6 @@ class CacheItem implements CacheItemInterface
      */
     public function __construct(string $cachePath)
     {
-        //$this->defaultTtl = $defaultTtl;
-        //$this->dirMode = $this->dirMode;
-        //$this->fileMode = $this->fileMode;
         $this->cachePath = $cachePath;
         if (!file_exists($cachePath) && file_exists(dirname($cachePath))) {
             $this->mkdir($cachePath); // ensure that the parent path exists
@@ -70,7 +67,7 @@ class CacheItem implements CacheItemInterface
         $path = $this->getPath($key);
         $expiresAt = @filemtime($path);
         if ($expiresAt === false) {
-            print_r("file not found \n");
+            //print_r("file not found \n");
             return $default; // file not found
         }
         if ($this->getTime() >= $expiresAt) {
@@ -98,7 +95,7 @@ class CacheItem implements CacheItemInterface
         if (!is_dir($dir)) {
             // ensure that the parent path exists:
             $this->mkdir($dir);
-            print_r("filename does exist");
+            //print_r("filename does exist");
         }
         $tempPath = $this->cachePath . DIRECTORY_SEPARATOR . uniqid('', true);
         if (is_int($ttl)) {
@@ -237,7 +234,7 @@ class CacheItem implements CacheItemInterface
      */
     protected function validateKey(string $key)
     {
-        print_r("Key for validation" . $key . "\n");
+        //print_r("Key for validation" . $key . "\n");
         if (! is_string($key)) {
             $type = is_object($key) ? get_class($key) : gettype($key);
             throw new InvalidArgumentException("invalid key type: {$type} given");

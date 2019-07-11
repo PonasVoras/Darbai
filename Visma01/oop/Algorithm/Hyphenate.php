@@ -45,7 +45,6 @@ class Hyphenate
         if ($cache->has(2)) {
             $cachedWords = $cache->get(1);
             $cachedWordsCount = $cache->get( 2);
-
             $cache->set($cachedWordsCount + 1, $hyphenatedWord);
             $cache->set(1, $cachedWords . " " . $this->word); //appends
             $cache->set(2, $cachedWordsCount +1);
@@ -58,9 +57,9 @@ class Hyphenate
 
 
 
-        print_r("First thing" . $cache->get(2));
+        //print_r("First thing" . $cache->get(2));
         //var_dump($cache->get(1), " ");
-        var_dump(explode(" ",$cache->get(1)));
+        //var_dump(explode(" ",$cache->get(1)));
 
         return $hyphenatedWord;
     }

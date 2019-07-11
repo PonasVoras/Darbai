@@ -38,7 +38,7 @@ class Main
                 $word = fgets($handle);
                 $executionTime = new ExecutionCalculator();
                 $executionTime->start();
-                $word = 'mistranslate';
+                //$word = 'hello';
                 $hyphenatedWord = Input::wordHyphenation($word);
                 Output::outputToCli($hyphenatedWord);
                 $executionTime->end();
