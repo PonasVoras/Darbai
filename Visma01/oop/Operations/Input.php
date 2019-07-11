@@ -11,11 +11,23 @@ class Input
     public static function wordHyphenation(string $word): string
     {
         $cache = new CacheItem("oop/Cache/CacheFiles/Patterns");
-        print_r($cache->get(1));
-        //print_r($cache->mkdir());
-        $hyphenationAlgorithm = new Hyphenate($word);
-        $hyphenatedWord = $hyphenationAlgorithm->final();
+        if ($cache->has(1)){
+            $hyphenatedWords = explode(" ",$cache->get(1));
+            $hyphenatedWordKey = array_search($word, $hyphenatedWords);
+            if ($hyphenatedWordKey !== false){
+                $hyphenatedWord = $cache->get($hyphenatedWordKey + 3);
+                print_r("Found it, loaded from cache \n");
+            } else{
+                print_r("No match in cache");
+            }
+        } else {
+            print_r("Cache empty");
+            $hyphenationAlgorithm = new Hyphenate($word);
+            $hyphenatedWord = $hyphenationAlgorithm->final();
+
+        }
         return $hyphenatedWord;
+
     }
 
     public static function paragraphHyphenation(): array

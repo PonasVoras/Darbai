@@ -95,12 +95,10 @@ class CacheItem implements CacheItemInterface
     {
         $path = $this->getPath($key);
         $dir = dirname($path);
-        if (!file_exists($dir)) {
+        if (!is_dir($dir)) {
             // ensure that the parent path exists:
             $this->mkdir($dir);
             print_r("filename does exist");
-        } else {
-            print_r("file exists");
         }
         $tempPath = $this->cachePath . DIRECTORY_SEPARATOR . uniqid('', true);
         if (is_int($ttl)) {
@@ -132,6 +130,46 @@ class CacheItem implements CacheItemInterface
         return !file_exists($path) || @unlink($path);
     }
 
+    /**
+     * @return Generator|string[]
+     */
+    protected function listPaths()
+    {
+        $iterator = new RecursiveDirectoryIterator(
+            $this->cachePath,
+            FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS
+        );
+        $iterator = new RecursiveIteratorIterator($iterator);
+        foreach ($iterator as $path) {
+            if (is_dir($path)) {
+                continue; // ignore directories
+            }
+            yield $path;
+        }
+    }
+
+    /**
+     * Clean up expired cache-files.
+     *
+     * This method is outside the scope of the PSR-16 cache concept, and is specific to
+     * this implementation, being a file-cache.
+     *
+     * In scenarios with dynamic keys (such as Session IDs) you should call this method
+     * periodically - for example from a scheduled daily cron-job.
+     *
+     * @return void
+     */
+    public function cleanExpired()
+    {
+        $now = $this->getTime();
+        $paths = $this->listPaths();
+        foreach ($paths as $path) {
+            if ($now > filemtime($path)) {
+                @unlink($path);
+            }
+        }
+    }
+
     public function clear():bool
     {
         $success = true;
@@ -144,31 +182,10 @@ class CacheItem implements CacheItemInterface
         return $success;
     }
 
+
     public function has(string $key):bool
     {
         return $this->get($key, $this) !== $this;
-    }
-
-    /**
-     * Clean up expired Cache-files.
-     *
-     * This method is outside the scope of the PSR-16 Cache concept, and is specific to
-     * this implementation, being a file-Cache.
-     *
-     * In scenarios with dynamic keys (such as Session IDs) you should call this method
-     * periodically - for example from a scheduled daily cron-job.
-     *
-     * @return void
-     */
-    public function cleanExpired():void
-    {
-        $now = $this->getTime();
-        $paths = $this->listPaths();
-        foreach ($paths as $path) {
-            if ($now > filemtime($path)) {
-                @unlink($path);
-            }
-        }
     }
 
     /**
@@ -185,7 +202,6 @@ class CacheItem implements CacheItemInterface
     {
         $this->validateKey($key);
         $hash = hash("sha256", $key);
-        print_r($hash . "\n");
         return $this->cachePath
             . DIRECTORY_SEPARATOR
             . strtoupper($hash[0])
@@ -243,11 +259,9 @@ class CacheItem implements CacheItemInterface
      *
      * @param string $path absolute directory path
      */
-    //private function mkdir(string $this->path)
-    public function mkdir($path)
+    private function mkdir($path)
     {
         $parentPath = dirname($path);
-        print_r($parentPath);
         if (!file_exists($parentPath)) {
             $this->mkdir($parentPath); // recursively create parent dirs first
         }

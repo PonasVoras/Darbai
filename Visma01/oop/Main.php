@@ -34,6 +34,7 @@ class Main
             //case '-w':
                 echo "Word for hyphenation Algorithm: ";
                 $handle = fopen("php://stdin", "r");
+                // TODO CLEAR CACHE
                 $word = fgets($handle);
                 $executionTime = new ExecutionCalculator();
                 $executionTime->start();

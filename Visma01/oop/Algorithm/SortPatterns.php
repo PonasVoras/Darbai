@@ -3,7 +3,6 @@
 namespace Algorithm;
 
 use Algorithm\Utils\Remove;
-use Cache\CacheItem;
 use Operations\File;
 
 class SortPatterns
@@ -52,10 +51,6 @@ class SortPatterns
         }
 
         $result = implode('', $wordSplit) . "0";
-
-        $cache = new CacheItem("oop/Cache/CacheFiles/Patterns");
-        $cache->set(2, $result);
-
         return $result;
     }
 }
