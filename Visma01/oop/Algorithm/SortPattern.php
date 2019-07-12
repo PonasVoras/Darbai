@@ -5,7 +5,7 @@ namespace Algorithm;
 use Algorithm\Utils\Remove;
 use Operations\File;
 
-class SortPatterns
+class SortPattern
 {
     public $possiblePatterns = [];
     private $word;
@@ -14,10 +14,10 @@ class SortPatterns
     {
         $this->possiblePatterns = File::readFromFile("oop/Output/possible_patterns.txt");
         $this->word = $word;
-        $this->sortPatterns();
+        $this->sortPattern();
     }
 
-    public function sortPatterns(): string
+    public function sortPattern(): string
     {
         $remove = new Remove();
         $possiblePatternsModified = $remove->removeSpaces($this->possiblePatterns);
@@ -41,7 +41,6 @@ class SortPatterns
                         $wordNumbersSplit[$key + $patternPlace - $wasNumber] = $value;
                     }
                     $wasNumber++;
-
                 }
             }
         }

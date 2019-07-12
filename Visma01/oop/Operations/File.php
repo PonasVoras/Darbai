@@ -12,8 +12,8 @@ class File
 
     public static function writeToFileString(string $fileName, string $data): bool
     {
-        $current =file_get_contents($fileName);
-        $current .=$data;
+        $current = file_get_contents($fileName);
+        $current .= $data;
         file_put_contents($fileName, $current);
         return true;
     }

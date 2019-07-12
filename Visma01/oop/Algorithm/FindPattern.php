@@ -5,7 +5,7 @@ namespace Algorithm;
 use Algorithm\Utils\Remove;
 use Operations\File;
 
-class FindPatterns
+class FindPattern
 {
     const MAX_PATTERN_LENGTH = 7;
     public $allPatterns;
@@ -19,10 +19,10 @@ class FindPatterns
         $this->allPatterns = File::readFromFile("oop/Data/Data.txt");
         $removeNumbers = new Remove();
         $this->allPatternsNumberless = $removeNumbers->removeNumbers($this->allPatterns); // nice array with no numbers, trimmed
-        $this->possiblePatterns();
+        $this->possiblePattern();
     }
 
-    private function possiblePatterns()
+    private function possiblePattern()
     {
         $first_rev = substr($this->word, strlen($this->word) - 2, 1);
         $first = substr($this->word, 0, 1);

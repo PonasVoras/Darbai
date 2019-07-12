@@ -14,15 +14,6 @@ class Logger implements LoggerInterface
     private $fileName = "oop/Log/Log.log";
     private $logToFile = true;
     private $colorFormats = array(
-        // styles
-        // italic and blink may not work depending of your terminal
-        'bold' => "\033[1m%s\033[0m",
-        'dark' => "\033[2m%s\033[0m",
-        'italic' => "\033[3m%s\033[0m",
-        'underline' => "\033[4m%s\033[0m",
-        'blink' => "\033[5m%s\033[0m",
-        'reverse' => "\033[7m%s\033[0m",
-        'concealed' => "\033[8m%s\033[0m",
         // foreground colors
         'black' => "\033[30m%s\033[0m",
         'red' => "\033[31m%s\033[0m",

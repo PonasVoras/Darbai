@@ -12,19 +12,19 @@ class Hyphenate
     public function __construct(string $word)
     {
         $this->word = str_replace(' ', '', $word);
-        $this->findPatterns();
-        $this->sortPatterns();
+        $this->findPattern();
+        $this->sortPattern();
     }
 
-    public function findPatterns()
+    public function findPattern()
     {
-        new FindPatterns($this->word);
+        new FindPattern($this->word);
     }
 
-    public function sortPatterns()
+    public function sortPattern()
     {
-        $sortPatterns = new SortPatterns($this->word);
-        $this->wordWithNumbers = $sortPatterns->sortPatterns();
+        $sortPatterns = new SortPattern($this->word);
+        $this->wordWithNumbers = $sortPatterns->sortPattern();
     }
 
     public function final(): string

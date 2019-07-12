@@ -15,6 +15,7 @@ class Main
         $config = new Config();
         $logger = new Logger();
         $config->applyLoggerConfig($logger); //setts true to Log to file, and gives the logger object
+
         $logger->info('Program started');
     }
 
