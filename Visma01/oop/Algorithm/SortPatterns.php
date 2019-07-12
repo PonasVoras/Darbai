@@ -27,12 +27,13 @@ class SortPatterns
         $wordSplit = str_split(trim($this->word, "\n"));
         $j = 0;
 
+        //var_dump($possiblePatternsModified);
         foreach ($possiblePatternsModified as $key => $value) {
             $patternNr = $key;
             $patternPlace = strrpos($this->word, $possiblePatternsModifiedNumberless[$patternNr]);
             $possiblePattern = $possiblePatternsModified[$patternNr];
             $possiblePatternSplit = str_split($possiblePattern);
-
+            //var_dump($possiblePatternSplit);
             $wasNumber = 0;
             foreach ($possiblePatternSplit as $key => $value) {
                 if (is_numeric($value) && $patternPlace !== 0 && $patternPlace < strlen($this->word) - 2) {

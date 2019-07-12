@@ -9,6 +9,7 @@ class UserInterface
 {
     public function userInterface(){
         $logger = new Logger();
+
         //UI setup
         echo "Hyphenation\n";
         echo "What would you like to hyphenate (-w/-p) :";
@@ -21,7 +22,6 @@ class UserInterface
                 $word = fgets($handle);
                 $executionTime = new ExecutionCalculator();
                 $executionTime->start();
-                //$word = 'hello';
                 $hyphenatedWord = InputHandler::wordHyphenation($word);
                 Output::outputToCli($hyphenatedWord);
                 $executionTime->end();

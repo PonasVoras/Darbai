@@ -55,8 +55,6 @@ class Hyphenate
             $cache->set(3, $hyphenatedWord);
         }
 
-
-
         //print_r("First thing" . $cache->get(2));
         //var_dump($cache->get(1), " ");
         //var_dump(explode(" ",$cache->get(1)));
