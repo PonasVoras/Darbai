@@ -3,8 +3,12 @@
 
 
 ``` sh
-start by : php start_up.php
-# there are going to be options provided
+start by : php HyphenationApp.php
+# there are going to be cache options provided
+Options : 
+	-y, for cleaning the cache
+	-n, for not cleaning the cache
+# there are going to be hyphenation options provided
 Options : 
 	-w, for word
 	-p, for paragraph
