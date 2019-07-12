@@ -180,6 +180,27 @@ class CacheItem implements CacheItemInterface
         return $success;
     }
 
+    public function saveHyphenatedWordInCache(string $hyphenatedWord, string $word){
+        // key 1 stores words with space
+        // key 2 stores amount of numbers
+        // key 3... in stores hyphenated words
+        if ($this->has(2)) {
+            $cachedWords = $this->get(1);
+            $cachedWordsCount = $this->get(2);
+            $this->set($cachedWordsCount + 1, $hyphenatedWord);
+            $this->set(1, $cachedWords . " " . $word); //appends
+            $this->set(2, $cachedWordsCount + 1);
+            print_r("WORDSSS");
+            var_dump($cachedWords);
+            var_dump($cachedWordsCount + 1, $hyphenatedWord);
+        } else {
+            $this->clear();
+            $this->set(1, $word);
+            $this->set(2, 1);
+            $this->set(3, $hyphenatedWord);
+        }
+
+    }
 
     public function has(string $key):bool
     {

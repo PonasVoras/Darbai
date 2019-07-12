@@ -332,3 +332,137 @@ t2019-07-11 12:25:55,964195 [INFO]: Program started
 2019-07-12 17:08:16,427561 [INFO]: Hyphenation successful :frame-work finished in : 0.034857034683228
 2019-07-12 17:10:56,477806 [INFO]: Program started
 2019-07-12 17:11:04,677768 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.04407000541687
+2019-07-12 17:23:18,884859 [INFO]: Program started
+2019-07-12 17:23:29,103988 [INFO]: Hyphenation successful :mistranslate
+ finished in : 0.00059318542480469
+2019-07-12 17:23:53,689023 [INFO]: Program started
+2019-07-12 17:24:06,500727 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.044235944747925
+2019-07-12 17:24:52,476449 [INFO]: Program started
+2019-07-12 17:25:02,751892 [INFO]: Hyphenation successful :mistranslate
+ finished in : 0.00055313110351562
+2019-07-12 17:26:28,124905 [INFO]: Program started
+2019-07-12 17:26:39,111473 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.041471004486084
+2019-07-12 17:26:54,388694 [INFO]: Program started
+2019-07-12 17:27:02,377093 [INFO]: Hyphenation successful :hyphen-ate finished in : 0.037080049514771
+2019-07-12 17:33:43,168200 [INFO]: Program started
+2019-07-12 17:33:51,875915 [INFO]: Hyphenation successful :mistranslate
+ hyphenate
+ finished in : 0.0005640983581543
+2019-07-12 17:34:29,967375 [INFO]: Program started
+2019-07-12 17:34:38,755053 [INFO]: Hyphenation successful :mistranslate
+ hyphenate
+ finished in : 0.00056099891662598
+2019-07-12 17:35:52,589657 [INFO]: Program started
+2019-07-12 17:36:04,643461 [INFO]: Hyphenation successful :hel-lo finished in : 0.025221824645996
+2019-07-12 17:36:06,832861 [INFO]: Program started
+2019-07-12 17:36:13,925872 [INFO]: Hyphenation successful :net-work finished in : 0.029733896255493
+2019-07-12 17:39:26,810425 [INFO]: Program started
+2019-07-12 17:39:36,220238 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.045217037200928
+2019-07-12 17:39:37,795318 [INFO]: Program started
+2019-07-12 17:39:44,287689 [INFO]: Hyphenation successful :mistranslate
+ finished in : 0.00059604644775391
+2019-07-12 17:39:57,067990 [INFO]: Program started
+2019-07-12 17:40:04,555136 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.044923067092896
+2019-07-12 17:40:20,324038 [INFO]: Program started
+2019-07-12 17:40:33,088253 [INFO]: Hyphenation successful :mistranslate
+ finished in : 0.00050902366638184
+2019-07-12 17:41:52,786709 [INFO]: Program started
+2019-07-12 17:42:02,117664 [INFO]: Hyphenation successful :mistranslate
+ finished in : 0.00064706802368164
+2019-07-12 17:42:22,676124 [INFO]: Program started
+2019-07-12 17:42:32,978377 [INFO]: Hyphenation successful :hel-lo finished in : 0.024528980255127
+2019-07-12 17:42:41,114203 [INFO]: Program started
+2019-07-12 17:42:50,156600 [INFO]: Hyphenation successful :net-work finished in : 0.031405925750732
+2019-07-12 17:45:26,405260 [INFO]: Program started
+2019-07-12 17:45:43,306631 [INFO]: Hyphenation successful :frame-work finished in : 0.033585071563721
+2019-07-12 17:46:14,668060 [INFO]: Program started
+2019-07-12 17:46:35,584263 [INFO]: Hyphenation successful :source finished in : 0.029470920562744
+2019-07-12 17:47:05,324586 [INFO]: Program started
+2019-07-12 17:47:11,577896 [INFO]: Hyphenation successful :log finished in : 0.018518924713135
+2019-07-12 17:47:56,718003 [INFO]: Program started
+2019-07-12 17:48:05,762269 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.039741039276123
+2019-07-12 17:48:15,757848 [INFO]: Program started
+2019-07-12 17:48:25,551140 [INFO]: Hyphenation successful :log finished in : 0.018646001815796
+2019-07-12 17:49:20,246810 [INFO]: Program started
+2019-07-12 17:49:32,932646 [INFO]: Hyphenation successful :net-work finished in : 0.030580043792725
+2019-07-12 17:50:13,072281 [INFO]: Program started
+2019-07-12 17:50:41,325145 [INFO]: Hyphenation successful :frame-work finished in : 0.035871028900146
+2019-07-12 17:51:56,525550 [INFO]: Program started
+2019-07-12 17:52:11,109110 [INFO]: Hyphenation successful :frame-work finished in : 0.00030183792114258
+2019-07-12 17:52:22,864488 [INFO]: Program started
+2019-07-12 17:52:37,105503 [INFO]: Hyphenation successful :net-work finished in : 0.00079798698425293
+2019-07-12 17:53:13,288264 [INFO]: Program started
+2019-07-12 17:53:30,749282 [INFO]: Hyphenation successful :mistranslate
+ log
+ network
+ framework
+ finished in : 0.00069284439086914
+2019-07-12 17:53:43,146168 [INFO]: Program started
+2019-07-12 17:53:53,718573 [INFO]: Hyphenation successful :frame-work finished in : 0.00044798851013184
+2019-07-12 17:53:56,603190 [INFO]: Program started
+2019-07-12 17:54:06,463419 [INFO]: Hyphenation successful :4 finished in : 0.00050687789916992
+2019-07-12 17:54:47,983280 [INFO]: Program started
+2019-07-12 17:54:59,901842 [INFO]: Hyphenation successful :mistranslate
+ log
+ network
+ framework
+ finished in : 0.0004119873046875
+2019-07-12 17:56:51,852400 [INFO]: Program started
+2019-07-12 17:56:59,259468 [INFO]: Hyphenation successful :mistranslate
+ log
+ network
+ framework
+ finished in : 0.00069999694824219
+2019-07-12 17:58:02,936259 [INFO]: Program started
+2019-07-12 17:58:15,409580 [INFO]: Hyphenation successful :mistranslate
+ log
+ network
+ framework
+ finished in : 0.0002598762512207
+2019-07-12 17:58:20,221843 [INFO]: Program started
+2019-07-12 17:58:30,289369 [INFO]: Hyphenation successful :4 finished in : 0.0005490779876709
+2019-07-12 17:58:37,445047 [INFO]: Program started
+2019-07-12 17:58:54,327217 [INFO]: Hyphenation successful :net-work finished in : 0.0003359317779541
+2019-07-12 17:59:51,773707 [INFO]: Program started
+2019-07-12 18:00:07,404006 [INFO]: Hyphenation successful :frame-work finished in : 0.00070905685424805
+2019-07-12 18:00:23,933826 [INFO]: Program started
+2019-07-12 18:00:42,255612 [INFO]: Hyphenation successful :4 finished in : 0.00066494941711426
+2019-07-12 18:00:55,934388 [INFO]: Program started
+2019-07-12 18:01:03,323015 [INFO]: Hyphenation successful :net-work finished in : 0.00049090385437012
+2019-07-12 18:01:30,813100 [INFO]: Program started
+2019-07-12 18:03:06,019679 [INFO]: Program started
+2019-07-12 18:03:11,708909 [INFO]: Hyphenation successful :cat finished in : 0.022140979766846
+2019-07-12 18:03:14,767236 [INFO]: Program started
+2019-07-12 18:03:57,637670 [INFO]: Program started
+2019-07-12 18:06:32,995879 [INFO]: Program started
+2019-07-12 18:06:42,434447 [INFO]: Hyphenation successful :log finished in : 0.014070987701416
+2019-07-12 18:06:53,701728 [INFO]: Program started
+2019-07-12 18:06:59,140998 [INFO]: Hyphenation successful :log finished in : 0.00077390670776367
+2019-07-12 18:08:37,228279 [INFO]: Program started
+2019-07-12 18:08:42,735104 [INFO]: Hyphenation successful :1 finished in : 0.00075387954711914
+2019-07-12 18:08:59,717418 [INFO]: Program started
+2019-07-12 18:09:04,907549 [INFO]: Hyphenation successful :log
+ finished in : 0.00060319900512695
+2019-07-12 18:09:23,181514 [INFO]: Program started
+2019-07-12 18:09:42,149136 [INFO]: Program started
+2019-07-12 18:09:47,836719 [INFO]: Hyphenation successful :log finished in : 0.00072193145751953
+2019-07-12 18:10:00,910560 [INFO]: Program started
+2019-07-12 18:10:13,070955 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.045486927032471
+2019-07-12 18:10:17,788035 [INFO]: Program started
+2019-07-12 18:10:51,687863 [INFO]: Program started
+2019-07-12 18:10:59,711381 [INFO]: Hyphenation successful :log finished in : 0.00070500373840332
+2019-07-12 18:11:14,481890 [INFO]: Program started
+2019-07-12 18:12:01,100037 [INFO]: Program started
+2019-07-12 18:12:11,034991 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.037479877471924
+2019-07-12 18:12:12,923841 [INFO]: Program started
+2019-07-12 18:12:29,472889 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.038321971893311
+2019-07-12 18:12:32,377833 [INFO]: Program started
+2019-07-12 18:12:47,344090 [INFO]: Program started
+2019-07-12 18:12:55,824693 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.00078678131103516
+2019-07-12 18:13:45,476813 [INFO]: Program started
+2019-07-12 18:14:00,359158 [INFO]: Hyphenation successful :net-work finished in : 0.034271955490112
+2019-07-12 18:18:35,342095 [INFO]: Program started
+2019-07-12 18:18:44,527692 [INFO]: Hyphenation successful :mis-trans-late finished in : 0.037696123123169
+2019-07-12 18:18:48,012486 [INFO]: Program started
+2019-07-12 18:18:55,429584 [INFO]: Hyphenation successful :mistranslate
+ finished in : 0.00064301490783691
