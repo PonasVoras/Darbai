@@ -5,25 +5,22 @@ namespace Main;
 use Log\Logger;
 use Config\Config;
 
-use Operations\UserInterface;
+use Operations\UserInteract;
 
 class Main
 {
+    private $userInteract;
     public function __construct()
     {
-        // Logger config
-        $config = new Config();
         $logger = new Logger();
-        $config->applyLoggerConfig($logger); //setts true to Log to file, and gives the logger object
-
+        $this->userInteract = new UserInteract();
         $logger->info('Program started');
     }
 
     public function main()
     {
         //User interface
-        $userInterface = new UserInterface();
-        $userInterface->userInterfaceCache();
+        $this->userInteract->begin();
     }
 
 }

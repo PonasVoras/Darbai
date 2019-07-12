@@ -6,11 +6,20 @@ namespace Operations;
 use Cache\CacheItem;
 use Log\Logger;
 
-class UserInterface
+class UserInteract
 {
-    public function userInterfaceCache(){
+    private $logger;
+    private $cache;
+    private $executionTime;
 
+    public function __construct()
+    {
+        $this->logger = new Logger();
+        $this->cache = new CacheItem();
+        $this->executionTime = new ExecutionCalculator();
+    }
 
+    public function begin(){
         //UI setup
         echo "Hyphenation\n";
         echo "To clear cache or not to clear cache ? -y/-n\n";
@@ -18,12 +27,11 @@ class UserInterface
         $clearCache = fgets($handle);
         switch (trim($clearCache)){
             case '-y':
-                $cache = new CacheItem();
-                $cache->clear();
-                $this->userInterfaceHyphenate();
+                 $this->cache->clear();
+                $this->hyphenationInput();
                 break;
             case '-n':
-                $this->userInterfaceHyphenate();
+                $this->hyphenationInput();
                 break;
             default:
                 echo "Welp... wrong input\n";
@@ -32,8 +40,7 @@ class UserInterface
 
     }
 
-    public function userInterfaceHyphenate(){
-        $logger = new Logger();
+    public function hyphenationInput(){
         echo "What would you like to hyphenate (-w/-p) :";
         $handle = fopen("php://stdin", "r");
         $line = fgets($handle);
@@ -42,14 +49,12 @@ class UserInterface
                 echo "Word for hyphenation Algorithm: ";
                 $handle = fopen("php://stdin", "r");
                 $word = fgets($handle);
-
-                $executionTime = new ExecutionCalculator();
-                $executionTime->start();
+                $this->executionTime->start();
                 $hyphenatedWord = InputHandler::wordHyphenation($word);
                 Output::outputToCli($hyphenatedWord);
-                $executionTime->end();
-                echo "\nExecution time : " . $executionTime->executionTime();
-                $logger->info("Hyphenation successful :" . $hyphenatedWord . " finished in : " . $executionTime->executionTime());
+                $this->executionTime->end();
+                echo "\nExecution time : " . $this->executionTime->executionTime();
+                $this->logger->info("Hyphenation successful :" . $hyphenatedWord . " finished in : " . $this->executionTime->executionTime());
                 exit;
             case '-p':
                 echo "Filename with paragraphs (must be inside Data/paragraph.txt directory) press Enter to hyphenate";
