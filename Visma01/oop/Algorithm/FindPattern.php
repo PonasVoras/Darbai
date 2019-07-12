@@ -13,16 +13,18 @@ class FindPattern
     protected $possiblePatterns = [];
     private $word;
 
-    public function __construct(string $word)
+    public function __construct()
     {
-        $this->word = $word;
         $this->allPatterns = File::readFromFile("oop/Data/Data.txt");
         $removeNumbers = new Remove();
         $this->allPatternsNumberless = $removeNumbers->removeNumbers($this->allPatterns); // nice array with no numbers, trimmed
-        $this->possiblePattern();
     }
 
-    private function possiblePattern()
+    public function setWord(string $word){
+        $this->word = $word;
+    }
+
+    public function possiblePattern()
     {
         $first_rev = substr($this->word, strlen($this->word) - 2, 1);
         $first = substr($this->word, 0, 1);

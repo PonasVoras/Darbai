@@ -9,17 +9,21 @@ class SortPattern
 {
     public $possiblePatterns = [];
     private $word;
+    private $remove;
 
-    public function __construct(string $word)
+    public function __construct()
     {
-        $this->possiblePatterns = File::readFromFile("oop/Output/possible_patterns.txt");
+        $this->remove = new Remove();
+    }
+
+    public function setWord(string $word){
         $this->word = $word;
-        $this->sortPattern();
     }
 
     public function sortPattern(): string
     {
-        $remove = new Remove();
+        $this->possiblePatterns = File::readFromFile("oop/Output/possible_patterns.txt");
+        $remove = $this->remove;
         $possiblePatternsModified = $remove->removeSpaces($this->possiblePatterns);
         $possiblePatternsModified = $remove->removeDots($possiblePatternsModified);
         $possiblePatternsModifiedNumberless = $remove->removeNumbers($possiblePatternsModified);
@@ -52,5 +56,6 @@ class SortPattern
 
         $result = implode('', $wordSplit) . "0";
         return $result;
+
     }
 }

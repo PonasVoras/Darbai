@@ -12,8 +12,8 @@ class HyphenateParagraph
     
     public function __construct()
     {
-        $this->extractWords();
-        $this->hyphenateParagraph();
+        //$this->extractWords();
+        //$this->hyphenateParagraph();
     }
 
     public function extractWords()

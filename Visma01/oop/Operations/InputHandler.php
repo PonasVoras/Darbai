@@ -5,38 +5,57 @@ namespace Operations;
 use Algorithm\Hyphenate;
 use Algorithm\HyphenateParagraph;
 use Cache\CacheItem;
+use Log\Logger;
 
 class InputHandler
 {
-    public static function wordHyphenation(string $word): string
+    private $hyphenateParagraph;
+    private $hyphenationAlgorithm;
+    private $cacheItem;
+    private $log;
+
+    public function __construct()
     {
-        $cache = new CacheItem();
-        if ($cache->has(1)){
-            $hyphenatedWords = explode(" ",$cache->get(1));
+        $this->hyphenationAlgorithm = new Hyphenate();
+        $this->hyphenateParagraph = new HyphenateParagraph();
+        $this->cacheItem = new CacheItem();
+        $this->log = new Logger();
+    }
+
+    public function wordHyphenation(string $word): string
+    {
+        if ($this->cacheItem->has(1)){
+            $hyphenatedWords = explode(" ",$this->cacheItem->get(1));
             //print_r($hyphenatedWords);
             $hyphenatedWordKey = array_search($word, $hyphenatedWords);
             //print_r($hyphenatedWordKey);
             if ($hyphenatedWordKey !== false){
-                $hyphenatedWord = $cache->get($hyphenatedWordKey + 1);
+                $hyphenatedWord = $this->cacheItem->get($hyphenatedWordKey + 1);
                 //print_r("Found it, loaded from cache \n");
             } else{
+                // TODO make it log
                 print_r("No match in cache");
-                $hyphenationAlgorithm = new Hyphenate($word);
-                $hyphenatedWord = $hyphenationAlgorithm->final();
+                $this->hyphenationAlgorithm->setHyphenationWord($word);
+                //$hyphenationAlgorithm = new Hyphenate($word);
+                $hyphenatedWord = $this->hyphenationAlgorithm->getHyphenatedWord();
+                //$hyphenatedWord = $hyphenationAlgorithm->final();
             }
         } else {
+            // TODO make it to log
             print_r("Cache empty");
-            $hyphenationAlgorithm = new Hyphenate($word);
-            $hyphenatedWord = $hyphenationAlgorithm->final();
+            $this->hyphenationAlgorithm->setHyphenationWord($word);
+            $hyphenatedWord = $this->hyphenationAlgorithm->getHyphenatedWord();
+            //$hyphenationAlgorithm = new Hyphenate($word);
+            //$hyphenatedWord = $hyphenationAlgorithm->final();
 
         }
         return $hyphenatedWord;
 
     }
 
-    public static function paragraphHyphenation(): array
+    public function paragraphHyphenation(): array
     {
-        $hyphenatedParagraph = new HyphenateParagraph();
-        return $hyphenatedParagraph->final();
+        //return $hyphenateParagraph->final();
+        return $this->hyphenateParagraph->final();
     }
 }

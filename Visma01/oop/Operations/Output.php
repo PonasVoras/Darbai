@@ -5,12 +5,12 @@ namespace Operations;
 class Output
 {
 
-    public static function outputToCli(string $hyphenatedWord)
+    public function outputToCli(string $hyphenatedWord)
     {
         print_r("\n Thy hyphenated word : " . $hyphenatedWord);
     }
 
-    public static function outputToFile(string $fileName, array $hyphenatedParagraph)
+    public function outputToFile(string $fileName, array $hyphenatedParagraph)
     {
         $fileOperation = File::writeToFile($fileName, $hyphenatedParagraph);
         if ($fileOperation !== 0) {

@@ -10,6 +10,7 @@ use Operations\UserInteract;
 class Main
 {
     private $userInteract;
+
     public function __construct()
     {
         $logger = new Logger();

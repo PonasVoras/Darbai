@@ -11,12 +11,16 @@ class UserInteract
     private $logger;
     private $cache;
     private $executionTime;
+    private $inputHandler;
+    private $output;
 
     public function __construct()
     {
         $this->logger = new Logger();
         $this->cache = new CacheItem();
         $this->executionTime = new ExecutionCalculator();
+        $this->output = new Output();
+        $this->inputHandler = new InputHandler();
     }
 
     public function begin(){
@@ -27,7 +31,7 @@ class UserInteract
         $clearCache = fgets($handle);
         switch (trim($clearCache)){
             case '-y':
-                 $this->cache->clear();
+                $this->cache->clear();
                 $this->hyphenationInput();
                 break;
             case '-n':
@@ -50,8 +54,8 @@ class UserInteract
                 $handle = fopen("php://stdin", "r");
                 $word = fgets($handle);
                 $this->executionTime->start();
-                $hyphenatedWord = InputHandler::wordHyphenation($word);
-                Output::outputToCli($hyphenatedWord);
+                $hyphenatedWord = $this->inputHandler->wordHyphenation($word);
+                $this->output->OutputToCli($hyphenatedWord);
                 $this->executionTime->end();
                 echo "\nExecution time : " . $this->executionTime->executionTime();
                 $this->logger->info("Hyphenation successful :" . $hyphenatedWord . " finished in : " . $this->executionTime->executionTime());
@@ -60,9 +64,9 @@ class UserInteract
                 echo "Filename with paragraphs (must be inside Data/paragraph.txt directory) press Enter to hyphenate";
                 $handle = fopen("php://stdin", "r");
                 fgets($handle);
-                $hyphenatedParagraph = InputHandler::paragraphHyphenation();
+                $hyphenatedParagraph = $this->inputHandler->paragraphHyphenation();
                 $outputFile = 'oop/Output/hyphenatedParagraph.txt';
-                Output::outputToFile($outputFile, $hyphenatedParagraph);
+                $this->output->outputToFile($outputFile, $hyphenatedParagraph);
                 exit;
             case '':
                 echo "Wrong input. Aborting.\n";
