@@ -46,7 +46,7 @@ class SortPatterns
             }
         }
 
-        // Sujungia raides su turimu skaicius masyvu
+        //Joins numbers and chars
         while ($j++ < (strlen($this->word) - 2)) {
             $wordSplit[$j] = $wordNumbersSplit[$j] . $wordSplit[$j];
         }

@@ -36,7 +36,7 @@ class Hyphenate
         $hyphenatedWord = str_replace($odds, '-', $wordWithNumbers);
         $hyphenatedWord = str_replace($evens, '', $hyphenatedWord);
 
-        $cache = new CacheItem("oop/Cache/CacheFiles/Patterns");
+        $cache = new CacheItem();
 
         // key 1 stores words with space
         // key 2 stores amount of numbers

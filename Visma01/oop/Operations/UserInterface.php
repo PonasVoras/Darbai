@@ -18,7 +18,7 @@ class UserInterface
         $clearCache = fgets($handle);
         switch (trim($clearCache)){
             case '-y':
-                $cache = new CacheItem("oop/Cache/CacheFiles/Patterns");
+                $cache = new CacheItem();
                 $cache->clear();
                 $this->userInterfaceHyphenate();
                 break;

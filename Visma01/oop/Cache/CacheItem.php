@@ -45,9 +45,10 @@ class CacheItem implements CacheItemInterface
      * @param int $dirMode permission mode for created dirs
      * @param int $fileMode permission mode for created files
      */
-    public function __construct(string $cachePath)
+    public function __construct()
     {
-        $this->cachePath = $cachePath;
+        $this->cachePath = "oop/Cache/CacheFiles/Patterns";
+        $cachePath = $this->cachePath;
         if (!file_exists($cachePath) && file_exists(dirname($cachePath))) {
             $this->mkdir($cachePath); // ensure that the parent path exists
             print_r("mkdir");

@@ -10,7 +10,7 @@ class InputHandler
 {
     public static function wordHyphenation(string $word): string
     {
-        $cache = new CacheItem("oop/Cache/CacheFiles/Patterns");
+        $cache = new CacheItem();
         if ($cache->has(1)){
             $hyphenatedWords = explode(" ",$cache->get(1));
             //print_r($hyphenatedWords);
