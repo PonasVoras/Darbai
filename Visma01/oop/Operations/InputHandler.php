@@ -6,7 +6,7 @@ use Algorithm\Hyphenate;
 use Algorithm\HyphenateParagraph;
 use Cache\CacheItem;
 
-class Input
+class InputHandler
 {
     public static function wordHyphenation(string $word): string
     {
