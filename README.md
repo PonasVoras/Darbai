@@ -1,5 +1,7 @@
 # Word or Paragraph hyphenation PHP CLI
 
+
+
 ``` sh
 start by : php start_up.php
 # there are going to be options provided

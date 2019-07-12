@@ -22,7 +22,7 @@ class Main
     {
         //User interface
         $userInterface = new UserInterface();
-        $userInterface->userInterface();
+        $userInterface->userInterfaceCache();
     }
 
 }

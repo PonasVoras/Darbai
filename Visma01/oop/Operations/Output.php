@@ -7,7 +7,7 @@ class Output
 
     public static function outputToCli(string $hyphenatedWord)
     {
-        print_r($hyphenatedWord);
+        print_r("\n Thy hyphenated word : " . $hyphenatedWord);
     }
 
     public static function outputToFile(string $fileName, array $hyphenatedParagraph)
