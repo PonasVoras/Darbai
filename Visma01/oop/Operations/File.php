@@ -4,18 +4,16 @@ namespace Operations;
 
 class File
 {
-    public static function writeToFile(string $fileName, array $data): bool
+    public static function writeToFile(string $fileName, array $data)
     {
         file_put_contents($fileName, $data);
-        return true;
     }
 
-    public static function writeToFileString(string $fileName, string $data): bool
+    public static function writeToFileString(string $fileName, string $data)
     {
         $current = file_get_contents($fileName);
         $current .= $data;
         file_put_contents($fileName, $current);
-        return true;
     }
 
     public static function readFromFile(string $fileName): array

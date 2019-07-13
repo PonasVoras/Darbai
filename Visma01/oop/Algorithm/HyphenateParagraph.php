@@ -9,11 +9,11 @@ class HyphenateParagraph
     private $words = [];
     private $hyphenatedWords = [];
     private $result = [];
-    
+    private $hyphenationAlgorithm;
+
     public function __construct()
     {
-        //$this->extractWords();
-        //$this->hyphenateParagraph();
+        $this->hyphenationAlgorithm = new Hyphenate();
     }
 
     public function extractWords()
@@ -23,21 +23,20 @@ class HyphenateParagraph
         $this->words = $paragraphSplit[0];
     }
 
-    public function hyphenateParagraph()
+    public function hyphenateParagraph():array
     {
+        $this->extractWords();
         foreach ($this->words as $key => $value) {
             if (!preg_match('/[^A-Za-z0-9]/', $value)) {
-                $hyphenationAlgorithm = new Hyphenate($value);
-                array_push($this->hyphenatedWords, $hyphenationAlgorithm->final());
+                $this->hyphenationAlgorithm->setHyphenationWord($value);
+                print_r("YAWORD, BOI" . $value);
+                array_push($this->hyphenatedWords, $this->hyphenationAlgorithm->getHyphenatedWord());
             } else {
                 array_push($this->hyphenatedWords, $value);
             }
         }
         $this->result[] = implode(" ", $this->hyphenatedWords);
-    }
 
-    public function final(): array
-    {
         return $this->result;
     }
 

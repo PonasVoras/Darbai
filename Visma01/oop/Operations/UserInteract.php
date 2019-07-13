@@ -30,6 +30,7 @@ class UserInteract
         $handle = fopen("php://stdin", "r");
         $clearCache = fgets($handle);
         switch (trim($clearCache)){
+            case '':
             case '-y':
                 $this->cache->clear();
                 $this->hyphenationInput();
@@ -49,6 +50,7 @@ class UserInteract
         $handle = fopen("php://stdin", "r");
         $line = fgets($handle);
         switch (trim($line)) {
+            //case '';
             case '-w':
                 echo "Word for hyphenation Algorithm: ";
                 $handle = fopen("php://stdin", "r");

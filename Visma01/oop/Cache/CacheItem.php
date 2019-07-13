@@ -187,12 +187,9 @@ class CacheItem implements CacheItemInterface
         if ($this->has(2)) {
             $cachedWords = $this->get(1);
             $cachedWordsCount = $this->get(2);
-            $this->set($cachedWordsCount + 1, $hyphenatedWord);
+            $this->set($cachedWordsCount + 3, $hyphenatedWord); // problema buvo indeksas...
             $this->set(1, $cachedWords . " " . $word); //appends
             $this->set(2, $cachedWordsCount + 1);
-            print_r("WORDSSS");
-            var_dump($cachedWords);
-            var_dump($cachedWordsCount + 1, $hyphenatedWord);
         } else {
             $this->clear();
             $this->set(1, $word);

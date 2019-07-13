@@ -14,7 +14,7 @@ class Hyphenate
 
     public function __construct()
     {
-        //$this->cache = new CacheItem();
+        $this->cache = new CacheItem();
         $this->managePattern = new ManagePattern();
     }
 
@@ -34,9 +34,7 @@ class Hyphenate
         $hyphenatedWord = str_replace($odds, '-', $wordWithNumbers);
         $hyphenatedWord = str_replace($evens, '', $hyphenatedWord);
 
-        $cache = new CacheItem();
-        //$this->cache->saveHyphenatedWordInCache($hyphenatedWord, $this->word);
-        $cache->saveHyphenatedWordInCache($hyphenatedWord, $this->word);
+        $this->cache->saveHyphenatedWordInCache($hyphenatedWord, $this->word);
         return $hyphenatedWord;
     }
 }

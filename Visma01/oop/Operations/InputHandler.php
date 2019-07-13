@@ -16,15 +16,15 @@ class InputHandler
 
     public function __construct()
     {
-        $this->hyphenationAlgorithm = new Hyphenate();
         $this->hyphenateParagraph = new HyphenateParagraph();
-
+        $this->cacheItem = new CacheItem();
         $this->log = new Logger();
+        $this->hyphenationAlgorithm = new Hyphenate();
     }
 
     public function wordHyphenation(string $word): string
     {
-        $this->cacheItem = new CacheItem();
+
         if ($this->cacheItem->has(1)){
             $hyphenatedWords = explode(" ",$this->cacheItem->get(1));
             //print_r($hyphenatedWords);
@@ -32,7 +32,7 @@ class InputHandler
             print_r($hyphenatedWordKey);
 
             if ($hyphenatedWordKey !== false){
-                $hyphenatedWord = $this->cacheItem->get($hyphenatedWordKey + 1);
+                $hyphenatedWord = $this->cacheItem->get($hyphenatedWordKey + 3);
                 print_r("Database thing :" . $hyphenatedWord);
                 //print_r("Found it, loaded from cache \n");
             } else{
@@ -59,7 +59,6 @@ class InputHandler
 
     public function paragraphHyphenation(): array
     {
-        //return $hyphenateParagraph->final();
-        return $this->hyphenateParagraph->final();
+        return $this->hyphenateParagraph->hyphenateParagraph();
     }
 }

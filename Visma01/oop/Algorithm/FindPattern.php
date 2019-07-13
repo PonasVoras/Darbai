@@ -15,9 +15,8 @@ class FindPattern
 
     public function __construct()
     {
-        $this->allPatterns = File::readFromFile("oop/Data/Data.txt");
-        $removeNumbers = new Remove();
-        $this->allPatternsNumberless = $removeNumbers->removeNumbers($this->allPatterns); // nice array with no numbers, trimmed
+
+
     }
 
     public function setWord(string $word){
@@ -26,6 +25,10 @@ class FindPattern
 
     public function possiblePattern()
     {
+        $this->allPatterns = File::readFromFile("oop/Data/Data.txt");
+        $removeNumbers = new Remove();
+        $this->allPatternsNumberless = $removeNumbers->removeNumbers($this->allPatterns); // nice array with no numbers, trimmed
+
         $first_rev = substr($this->word, strlen($this->word) - 2, 1);
         $first = substr($this->word, 0, 1);
         foreach ($this->allPatternsNumberless as $key => $value) {
