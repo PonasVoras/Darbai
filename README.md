@@ -4,6 +4,10 @@
 
 ``` sh
 start by : php HyphenationApp.php
+# there are going to be database options provided
+Options : 
+	-y, for using the database
+	-n, for not using the database
 # there are going to be cache options provided
 Options : 
 	-y, for cleaning the cache
