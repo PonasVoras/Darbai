@@ -6,6 +6,7 @@ use Algorithm\Hyphenate;
 use Algorithm\HyphenateParagraph;
 use Cache\CacheItem;
 use Log\Logger;
+use Database\Database;
 
 class InputHandler
 {
@@ -13,6 +14,7 @@ class InputHandler
     private $hyphenationAlgorithm;
     private $cacheItem;
     private $log;
+    private $database;
 
     public function __construct()
     {
@@ -20,6 +22,7 @@ class InputHandler
         $this->cacheItem = new CacheItem();
         $this->log = new Logger();
         $this->hyphenationAlgorithm = new Hyphenate();
+        $this->database = new Database();
     }
 
     public function wordHyphenation(string $word): string
@@ -33,7 +36,7 @@ class InputHandler
 
             if ($hyphenatedWordKey !== false){
                 $hyphenatedWord = $this->cacheItem->get($hyphenatedWordKey + 3);
-                print_r("Database thing :" . $hyphenatedWord);
+                print_r("Cache thing :" . $hyphenatedWord);
                 //print_r("Found it, loaded from cache \n");
             } else{
                 // TODO make it log
@@ -45,6 +48,7 @@ class InputHandler
             }
 
         } else {
+        //if (!$this->cacheItem->hasWord() && !$this->database->hasWord() ){ }
             // TODO make it to log
             print_r("Cache empty");
             $this->hyphenationAlgorithm->setHyphenationWord($word);
@@ -54,7 +58,6 @@ class InputHandler
 
         }
         return $hyphenatedWord;
-
     }
 
     public function paragraphHyphenation(): array
@@ -62,3 +65,26 @@ class InputHandler
         return $this->hyphenateParagraph->hyphenateParagraph();
     }
 }
+
+
+/*
+ *
+public function wordHyphenation(string $word): string
+{
+
+    if ($this->cacheItem->hasWord($this->word))
+    {
+        $hyphenatedWord = $this->cacheItem->findHyphenatedWord()
+    }
+    else if(this->database->hasWord($this->word)
+    {
+        $hyphenatedWord = $this->database->findHyphenatedWord();
+    }
+    else
+    {
+        $hyphenatedWord = $this->hyphenationAlgorithm->getHyphenatedWord();
+    }
+    return $hyphenatedWord;
+}
+
+*/

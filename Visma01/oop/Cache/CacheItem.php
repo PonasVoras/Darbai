@@ -3,17 +3,15 @@
 namespace Cache;
 
 use Cache\Interfaces\CacheItemInterface;
-use InvalidArgumentException;
-use Traversable;
-use function file_exists;
-
 use DateInterval;
 use FilesystemIterator;
 use Generator;
-use function gettype;
-use function is_int;
+use InvalidArgumentException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use function file_exists;
+use function gettype;
+use function is_int;
 
 class CacheItem implements CacheItemInterface
 {
@@ -25,11 +23,11 @@ class CacheItem implements CacheItemInterface
     /**
      * @var string
      */
-    private $cachePath ;
+    private $cachePath;
     /**
      * @var int
      */
-    private $defaultTtl=86400;
+    private $defaultTtl = 86400;
     /**
      * @var int
      */
@@ -89,7 +87,7 @@ class CacheItem implements CacheItemInterface
         return $value;
     }
 
-    public function set(string $key, $value, $ttl = null):bool
+    public function set(string $key, $value, $ttl = null): bool
     {
         $path = $this->getPath($key);
         $dir = dirname($path);
@@ -121,7 +119,7 @@ class CacheItem implements CacheItemInterface
         return false;
     }
 
-    public function delete(string $key):bool
+    public function delete(string $key): bool
     {
         $this->validateKey($key);
         $path = $this->getPath($key);
@@ -168,7 +166,7 @@ class CacheItem implements CacheItemInterface
         }
     }
 
-    public function clear():bool
+    public function clear(): bool
     {
         $success = true;
         $paths = $this->listPaths();
@@ -180,7 +178,8 @@ class CacheItem implements CacheItemInterface
         return $success;
     }
 
-    public function saveHyphenatedWordInCache(string $hyphenatedWord, string $word){
+    public function saveHyphenatedWordInCache(string $hyphenatedWord, string $word)
+    {
         // key 1 stores words with space
         // key 2 stores amount of numbers
         // key 3... in stores hyphenated words
@@ -199,9 +198,14 @@ class CacheItem implements CacheItemInterface
 
     }
 
-    public function has(string $key):bool
+    public function has(string $key): bool
     {
         return $this->get($key, $this) !== $this;
+    }
+
+    public function hasWord(string $word): bool
+    {
+        // TODO find word
     }
 
     /**
@@ -214,7 +218,7 @@ class CacheItem implements CacheItemInterface
      * @throws InvalidArgumentException if the specified key contains a character reserved by PSR-16
      */
 
-    protected function getPath(string $key):string
+    protected function getPath(string $key): string
     {
         $this->validateKey($key);
         $hash = hash("sha256", $key);
@@ -240,7 +244,7 @@ class CacheItem implements CacheItemInterface
     /**
      * @return int current timestamp
      */
-    protected function getTime():int
+    protected function getTime(): int
     {
         return time();
     }
@@ -254,7 +258,7 @@ class CacheItem implements CacheItemInterface
     protected function validateKey(string $key)
     {
         //print_r("Key for validation" . $key . "\n");
-        if (! is_string($key)) {
+        if (!is_string($key)) {
             $type = is_object($key) ? get_class($key) : gettype($key);
             throw new InvalidArgumentException("invalid key type: {$type} given");
         }
