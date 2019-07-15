@@ -43,7 +43,7 @@ class UserInteract
         switch (trim($clearCache)){
             case '':
             case '-y':
-                    $this->database->tryConnection();
+                    $this->database->importPatterns();
                 break;
             case '-n':
                 break;
