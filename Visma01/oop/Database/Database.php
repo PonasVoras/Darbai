@@ -22,16 +22,13 @@ class Database
     {
         $this->pdo = new PDO("mysql:host=localhost;dbname=" . $this->dbName, $this->user, $this->password, $this->options);
         $this->remove = new Remove();
+        $this->tryConnection();
     }
 
     private function tryConnection()
     {
-        /* Attempt MySQL server connection. Assuming you are running MySQL
-server with default setting (user 'root' with no password) */
         try {
-            // Set the PDO error mode to exception
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // Print host information
             echo "Connect Successfully. Host info: " .
                 $this->pdo->getAttribute(constant("PDO::ATTR_CONNECTION_STATUS"));
         } catch (PDOException $e) {
@@ -49,14 +46,12 @@ server with default setting (user 'root' with no password) */
 
     public function hasWord(string $word)
     {
-        $this->tryConnection();
         $this->checkIfPatternsArePresent();
         // TODO find word
     }
 
     public function importPatterns()
     {
-        $this->tryConnection();
         if (!empty($this->checkIfPatternsArePresent())) {
             $allPatterns = File::readFromFile("oop/Data/Data.txt");
             $allPatterns = $this->remove->removeSpaces($allPatterns);
@@ -76,6 +71,25 @@ server with default setting (user 'root' with no password) */
         } else {
             print_r("Database is not empty");
         }
+    }
+
+    public function insertToTable(string $value, string $table)
+    {
+        $column = substr($table, 0, -1);
+        $sql = "INSERT INTO " . $table . ' (' . $column . ')'. " VALUES ";
+        $sql .= "('" . $value . "')";
+        $sql = $this->pdo->prepare($sql);
+        try {
+            $sql->execute();
+            echo "Value :" . $value . " inserted successfully. \n";
+        } catch (PDOException $e) {
+            //call logger
+            die("ERROR: Could not able to execute. " . $e->getMessage());
+        }
+    }
+
+    public function patternsUsedInHyphenation()
+    {
 
     }
 

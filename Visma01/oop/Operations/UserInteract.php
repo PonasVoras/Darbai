@@ -43,7 +43,7 @@ class UserInteract
         switch (trim($clearCache)){
             case '':
             case '-y':
-                    $this->database->importPatterns();
+                    $this->database->insertToTable('mistranslate', 'words');
                 break;
             case '-n':
                 break;
