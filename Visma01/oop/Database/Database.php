@@ -40,21 +40,22 @@ class Database
     {
         $sql = $this->pdo->query("SELECT 1 FROM patterns");
         $result = $sql->fetch();
-        return empty($result);
+        return !empty($result);
     }
 
-    public function hasWord(string $word):bool
+    public function hasWord(string $word): bool
     {
-        $this->checkIfPatternsArePresent();
-        // TODO find word
-        // TODO
-        return true;
+        $sql = "SELECT word FROM words WHERE word = :word";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindParam(':word', $word);
+        $this->executeQuery($sql);
+        $word = $sql->fetch(PDO::FETCH_ASSOC);
+        return !empty($word);
     }
 
-    // TODO not safe, rewrite
-    public function importPatterns()
+    public function importPatterns()   // TODO not safe, rewrite
     {
-        if (!empty($this->checkIfPatternsArePresent())) {
+        if (empty($this->checkIfPatternsArePresent())) {
             $allPatterns = File::readFromFile("oop/Data/Data.txt");
             $allPatterns = $this->remove->removeSpaces($allPatterns);
 
@@ -72,8 +73,7 @@ class Database
         }
     }
 
-
-    public function saveWord(string $value):bool
+    public function saveWord(string $value): bool
     {
         // save word
         $message = "Insertion of word successful";
@@ -84,7 +84,7 @@ class Database
         return TRUE;
     }
 
-    public function saveHyphenatedWord(string $value, string $word):bool
+    public function saveHyphenatedWord(string $value, string $word): bool
     {
         // save hyphenatedWord
         $message = "Insertion of hyphenatedWords successful";
@@ -96,21 +96,22 @@ class Database
         return TRUE;
     }
 
-    public function insertPattern(string $pattern, string $word){
+    public function savePattern(string $pattern, string $word)
+    {
         $sql = "INSERT INTO patternsToWords (word_id, pattern_id) VALUES (";
         $sql .= "(SELECT word_id FROM words WHERE word = :word ),";
         $sql .= "(SELECT pattern_id FROM patterns WHERE pattern = :pattern));";
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':word', $word);
         $sql->bindParam(':pattern', $pattern);
-        var_dump($sql);
-
         $this->executeQuery($sql, $pattern);
     }
 
-    public function getPattern(string $word){
-        $sql = "SELECT patterns.pattern FROM patterns INNER JOIN patternsToWords ON patternsToWords.pattern_id = patterns.pattern_id
-         AND patternsToWords.word_id = (SELECT words.word_id FROM words WHERE word = :word)";
+    public function getPattern(string $word)
+    {
+        $sql = "SELECT patterns.pattern FROM patterns INNER JOIN patternsToWords ";
+        $sql .= "ON patternsToWords.pattern_id = patterns.pattern_id ";
+        $sql .= "AND patternsToWords.word_id = (SELECT words.word_id FROM words WHERE word = :word)";
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':word', $word);
         $this->executeQuery($sql, $word);
@@ -121,7 +122,8 @@ class Database
         }
     }
 
-    public function getHyphenatedWord(string $word){
+    public function getHyphenatedWord(string $word)
+    {
         $sql = "SELECT words.hyphenatedword FROM words WHERE word = :word";
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':word', $word);
@@ -130,10 +132,11 @@ class Database
         print_r($hyphenatedWord['hyphenatedword']);
     }
 
-    private function executeQuery(object $sql, string $value= null){
+    private function executeQuery(object $sql, string $message = null)
+    {
         try {
             $sql->execute();
-            echo "Value : " . $value . " inserted successfully. \n";
+            echo $message . "\n";
         } catch (PDOException $e) {
             //call logger
             die("ERROR: Could not able to execute " . $e->getMessage());

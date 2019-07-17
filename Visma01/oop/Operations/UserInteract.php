@@ -14,7 +14,7 @@ class UserInteract
     private $executionTime;
     private $inputHandler;
     private $output;
-    private $database;
+    private $useDatabase = FALSE;
 
     public function __construct()
     {
@@ -23,7 +23,6 @@ class UserInteract
         $this->executionTime = new ExecutionCalculator();
         $this->output = new Output();
         $this->inputHandler = new InputHandler();
-        $this->database = new Database();
     }
 
     public function begin(){
@@ -31,7 +30,7 @@ class UserInteract
         echo "Hyphenation\n";
         $this->databaseInquiry();
         //$this->cacheInquiry();
-        //$this->hyphenationInput();
+        $this->hyphenationInput();
 
     }
 
@@ -43,7 +42,7 @@ class UserInteract
         switch (trim($clearCache)){
             case '':
             case '-y':
-                $this->database->getHyphenatedWord("mistranslate");
+                $this->useDatabase = TRUE;
                 break;
             case '-n':
                 break;
@@ -81,7 +80,7 @@ class UserInteract
                 $handle = fopen("php://stdin", "r");
                 $word = fgets($handle);
                 $this->executionTime->start();
-                $hyphenatedWord = $this->inputHandler->wordHyphenation($word);
+                $hyphenatedWord = $this->inputHandler->wordHyphenation($word, $this->useDatabase);
                 $this->output->OutputToCli($hyphenatedWord);
                 $this->executionTime->end();
                 echo "\nExecution time : " . $this->executionTime->executionTime();

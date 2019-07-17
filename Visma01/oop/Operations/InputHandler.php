@@ -25,9 +25,9 @@ class InputHandler
         $this->database = new Database();
     }
 
-    public function wordHyphenation(string $word): string
+    public function wordHyphenation(string $word, bool $useDatabase): string
     {
-
+        
         if ($this->cacheItem->has(1)){
             $hyphenatedWords = explode(" ",$this->cacheItem->get(1));
             //print_r($hyphenatedWords);
@@ -58,6 +58,7 @@ class InputHandler
 
         }
         return $hyphenatedWord;
+
     }
 
     public function paragraphHyphenation(): array
