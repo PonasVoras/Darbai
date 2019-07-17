@@ -178,7 +178,7 @@ class CacheItem implements CacheItemInterface
         return $success;
     }
 
-    public function saveHyphenatedWordInCache(string $hyphenatedWord, string $word)
+    public function saveHyphenatedWord(string $hyphenatedWord, string $word)
     {
         // key 1 stores words with space
         // key 2 stores amount of numbers

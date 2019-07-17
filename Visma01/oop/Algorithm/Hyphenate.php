@@ -1,24 +1,26 @@
 <?php
 namespace Algorithm;
 use Cache\CacheItem;
+use Database\Database;
+
 class Hyphenate
 {
     public $wordWithNumbers;
-    private $word;
     private $cache;
     private $managePattern;
+    private $database;
+
     public function __construct()
     {
         $this->cache = new CacheItem();
         $this->managePattern = new ManagePattern();
+        $this->database = new Database();
     }
-    public function setHyphenationWord($word)
+
+    public function getHyphenatedWord(string $word): string
     {
-        $this->word = str_replace(' ', '', $word);
+        $word = str_replace(' ', '', $word);
         $this->managePattern->setWord($word);
-    }
-    public function getHyphenatedWord(): string
-    {
         $this->wordWithNumbers = $this->managePattern->getWordWithNumbers();
         $wordWithNumbers = $this->wordWithNumbers;
         //var_dump($wordWithNumbers);
@@ -26,7 +28,8 @@ class Hyphenate
         $evens = array("0", "2", "4");
         $hyphenatedWord = str_replace($odds, '-', $wordWithNumbers);
         $hyphenatedWord = str_replace($evens, '', $hyphenatedWord);
-        $this->cache->saveHyphenatedWordInCache($hyphenatedWord, $this->word);
+        $this->cache->saveHyphenatedWord($hyphenatedWord, $word);
+        $this->database->saveHyphenatedWord($hyphenatedWord, $word);
         return $hyphenatedWord;
     }
 }
