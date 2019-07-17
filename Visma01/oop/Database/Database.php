@@ -113,12 +113,21 @@ class Database
          AND patternsToWords.word_id = (SELECT words.word_id FROM words WHERE word = :word)";
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':word', $word);
-        //$this->executeQuery($sql, $word);
+        $this->executeQuery($sql, $word);
 
         print_r("Patterns used:");
         while ($row = $sql->fetch(PDO::FETCH_NUM)) {
             print "\n$row[0]";
         }
+    }
+
+    public function getHyphenatedWord(string $word){
+        $sql = "SELECT words.hyphenatedword FROM words WHERE word = :word";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindParam(':word', $word);
+        $this->executeQuery($sql, $word);
+        $hyphenatedWord = $sql->fetch(PDO::FETCH_ASSOC);
+        print_r($hyphenatedWord['hyphenatedword']);
     }
 
     private function executeQuery(object $sql, string $value= null){
@@ -134,19 +143,14 @@ class Database
     public function truncateTable(string $table)
     {
         $message = "Truncation of " . $table . " was successful";
-
         $sql = "SET FOREIGN_KEY_CHECKS=0";
         $sql = $this->pdo->prepare($sql);
         $this->executeQuery($sql);
-
         $sql = "TRUNCATE TABLE " . $table;
         $sql = $this->pdo->prepare($sql);
         $this->executeQuery($sql, $message);
-
         $sql = "SET FOREIGN_KEY_CHECKS=1";
         $sql = $this->pdo->prepare($sql);
         $this->executeQuery($sql);
     }
-
-
 }

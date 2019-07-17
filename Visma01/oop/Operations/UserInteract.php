@@ -43,18 +43,7 @@ class UserInteract
         switch (trim($clearCache)){
             case '':
             case '-y':
-                $word = 'mistranslate';
-                $hyphenatedWord = 'mis-trans-late';
-                //$this->database->truncateTable('words');
-                //$this->database->truncateTable('patterns');
-                //$this->database->saveHyphenatedWord($hyphenatedWord, $word);
-                //$this->database->insertToWords('mis-trans-late', 'words', 'hyphenatedword');
-                //$this->database->insertPatterns(".ach4", $word);
-                $this->database->insertPattern("ai2", $word);
-                //$this->database->insertPatterns(".ant4", $word);
-                ///$this->database->getPattern($word);
-                //$this->database->truncateTable('patterns');
-                $this->database->importPatterns();
+                $this->database->getHyphenatedWord("mistranslate");
                 break;
             case '-n':
                 break;
