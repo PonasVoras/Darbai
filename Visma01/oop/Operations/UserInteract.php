@@ -29,9 +29,8 @@ class UserInteract
         //UI setup
         echo "Hyphenation\n";
         $this->databaseInquiry();
-        $this->cacheInquiry();
+        //$this->cacheInquiry();
         $this->hyphenationInput();
-
     }
 
 
@@ -79,6 +78,7 @@ class UserInteract
                 echo "Word for hyphenation Algorithm: ";
                 $handle = fopen("php://stdin", "r");
                 $word = fgets($handle);
+                $word = trim($word);
                 $this->executionTime->start();
                 $hyphenatedWord = $this->inputHandler->wordHyphenation($word, $this->useDatabase);
                 $this->output->OutputToCli($hyphenatedWord);

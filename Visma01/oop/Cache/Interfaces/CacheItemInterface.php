@@ -52,20 +52,4 @@ interface CacheItemInterface
      */
     public function clear():bool;
 
-    /**
-     * Determines whether an item is present in the Cache.
-     *
-     * NOTE: It is recommended that has() is only to be used for Cache warming type purposes
-     * and not to be used within your live applications Operations for get/set, as this method
-     * is subject to a race condition where your has() will return true and immediately after,
-     * another script can remove it, making the state of your app out of date.
-     *
-     * @param string $key The Cache item key.
-     *
-     * @return bool
-     *
-     * @throws InvalidArgumentException
-     *   MUST be thrown if the $key string is not a legal value.
-     */
-    public function has(string $key):bool;
 }

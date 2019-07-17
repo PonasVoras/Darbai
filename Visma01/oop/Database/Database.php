@@ -43,14 +43,15 @@ class Database
         return !empty($result);
     }
 
-    public function hasWord(string $word): bool
+    public function findHyphenatedWord(string $word)
     {
-        $sql = "SELECT word FROM words WHERE word = :word";
+        $sql = "SELECT hyphenatedword FROM words WHERE word = :word";
         $sql = $this->pdo->prepare($sql);
-        $sql->bindParam(':word', $word);
+        $sql->bindParam(':word',$word);
         $this->executeQuery($sql);
         $word = $sql->fetch(PDO::FETCH_ASSOC);
-        return !empty($word);
+        $hyphenatedWord = $word['hyphenatedword'];
+        return $hyphenatedWord;
     }
 
     public function importPatterns()   // TODO not safe, rewrite

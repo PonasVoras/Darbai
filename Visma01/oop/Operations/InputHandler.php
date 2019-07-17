@@ -27,15 +27,13 @@ class InputHandler
 
     public function wordHyphenation(string $word, bool $useDatabase): string
     {
-        if ($this->cacheItem->hasWord($word)) {
-            $hyphenatedWord = $this->cacheItem->findHyphenatedWord();
-            print_r("Cache has word");
-        } /*else if ($this->database->hasWord($word)&& $useDatabase !== FALSE) {
-            $hyphenatedWord = $this->database->findHyphenatedWord();
-        } else {
+        $hyphenatedWord = $this->cacheItem->findHyphenatedWord($word);
+        if ($hyphenatedWord == "" && $useDatabase !== FALSE) {
+            $hyphenatedWord = $this->database->findHyphenatedWord($word);
+        } else if (empty($hyphenatedWord)) {
+            $this->hyphenationAlgorithm->setHyphenationWord($word);
             $hyphenatedWord = $this->hyphenationAlgorithm->getHyphenatedWord();
-        }*/
-
+        }
         return $hyphenatedWord;
     }
 
@@ -77,9 +75,12 @@ public function wordHyphenation(string $word): string
             print_r($hyphenatedWordKey);
 
             if ($hyphenatedWordKey !== false){
+
                 $hyphenatedWord = $this->cacheItem->get($hyphenatedWordKey + 3);
                 print_r("Cache thing :" . $hyphenatedWord);
                 //print_r("Found it, loaded from cache \n");
+
+
             } else{
                 // TODO make it log
                 print_r("No match in cache");

@@ -198,15 +198,25 @@ class CacheItem implements CacheItemInterface
 
     }
 
+    public function findHyphenatedWord(string $word): string
+    {
+        $hyphenatedWord = "";
+        $hyphenatedWords = explode(" ",$this->get(1));
+        if (!empty($hyphenatedWords)){
+            $hyphenatedWordKey = array_search($word, $hyphenatedWords);
+            if ($hyphenatedWordKey !== false){
+                $hyphenatedWord = $this->get($hyphenatedWordKey + 3);
+                print_r("Cache thing :" . $hyphenatedWord);
+            }
+        }
+        return $hyphenatedWord;
+    }
+
     public function has(string $key): bool
     {
         return $this->get($key, $this) !== $this;
     }
 
-    public function hasWord(string $word): bool
-    {
-        // TODO find word
-    }
 
     /**
      * For a given Cache key, obtain the absolute file path
