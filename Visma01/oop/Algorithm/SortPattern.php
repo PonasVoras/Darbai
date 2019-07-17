@@ -1,25 +1,19 @@
 <?php
-
 namespace Algorithm;
-
 use Algorithm\Utils\Remove;
 use Operations\File;
-
 class SortPattern
 {
     public $possiblePatterns = [];
     private $word;
     private $remove;
-
     public function __construct()
     {
         $this->remove = new Remove();
     }
-
     public function setWord(string $word){
         $this->word = $word;
     }
-
     public function sortPattern(): string
     {
         $this->possiblePatterns = File::readFromFile("oop/Output/possible_patterns.txt");
@@ -30,7 +24,6 @@ class SortPattern
         $wordNumbersSplit = array_fill(0, strlen($this->word), "0");
         $wordSplit = str_split(trim($this->word, "\n"));
         $j = 0;
-
         //var_dump($possiblePatternsModified);
         foreach ($possiblePatternsModified as $key => $value) {
             $patternNr = $key;
@@ -48,14 +41,11 @@ class SortPattern
                 }
             }
         }
-
         //Joins numbers and chars
         while ($j++ < (strlen($this->word) - 2)) {
             $wordSplit[$j] = $wordNumbersSplit[$j] . $wordSplit[$j];
         }
-
         $result = implode('', $wordSplit) . "0";
         return $result;
-
     }
 }

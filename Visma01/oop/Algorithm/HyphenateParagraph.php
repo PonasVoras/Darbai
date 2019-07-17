@@ -1,28 +1,22 @@
 <?php
-
 namespace Algorithm;
-
 use Operations\File;
-
 class HyphenateParagraph
 {
     private $words = [];
     private $hyphenatedWords = [];
     private $result = [];
     private $hyphenationAlgorithm;
-
     public function __construct()
     {
         $this->hyphenationAlgorithm = new Hyphenate();
     }
-
     public function extractWords()
     {
         $rawParagraph = File::readFromFile("oop/Data/paragraph.txt");
         $paragraphSplit[] = preg_split("/[\s,.]/", $rawParagraph[0]);
         $this->words = $paragraphSplit[0];
     }
-
     public function hyphenateParagraph():array
     {
         $this->extractWords();
@@ -36,8 +30,6 @@ class HyphenateParagraph
             }
         }
         $this->result[] = implode(" ", $this->hyphenatedWords);
-
         return $this->result;
     }
-
 }

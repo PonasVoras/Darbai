@@ -1,10 +1,7 @@
 <?php
-
 namespace Algorithm;
-
 use Algorithm\Utils\Remove;
 use Operations\File;
-
 class FindPattern
 {
     const MAX_PATTERN_LENGTH = 7;
@@ -12,23 +9,17 @@ class FindPattern
     public $allPatternsNumberless;
     protected $possiblePatterns = [];
     private $word;
-
     public function __construct()
     {
-
-
     }
-
     public function setWord(string $word){
         $this->word = $word;
     }
-
     public function possiblePattern()
     {
         $this->allPatterns = File::readFromFile("oop/Data/Data.txt");
         $removeNumbers = new Remove();
         $this->allPatternsNumberless = $removeNumbers->removeNumbers($this->allPatterns); // nice array with no numbers, trimmed
-
         $first_rev = substr($this->word, strlen($this->word) - 2, 1);
         $first = substr($this->word, 0, 1);
         foreach ($this->allPatternsNumberless as $key => $value) {
@@ -41,7 +32,6 @@ class FindPattern
                     if ($search_word == $value) {
                         array_push($this->possiblePatterns, $this->allPatterns[$key]);
                     }
-
                 }
             }
             if (($back_case === false) && ($front_case === false)) {
@@ -69,5 +59,3 @@ class FindPattern
         File::writeToFile("oop/Output/possible_patterns.txt", $this->possiblePatterns);
     }
 }
-
-

@@ -3,7 +3,6 @@
 namespace Main;
 
 use Log\Logger;
-use Config\Config;
 
 use Operations\UserInteract;
 

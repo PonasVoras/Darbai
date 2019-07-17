@@ -17,7 +17,6 @@ class Database
     private $pdo;
     private $remove;
 
-
     public function __construct()
     {
         $this->pdo = new PDO("mysql:host=localhost;dbname=" . $this->dbName, $this->user, $this->password, $this->options);
@@ -44,65 +43,109 @@ class Database
         return empty($result);
     }
 
-    public function hasWord(string $word)
+    public function hasWord(string $word):bool
     {
         $this->checkIfPatternsArePresent();
         // TODO find word
+        // TODO
+        return true;
     }
 
+    // TODO not safe, rewrite
     public function importPatterns()
     {
         if (!empty($this->checkIfPatternsArePresent())) {
             $allPatterns = File::readFromFile("oop/Data/Data.txt");
             $allPatterns = $this->remove->removeSpaces($allPatterns);
-            $sql = "REPLACE INTO patterns (pattern) VALUES ";
+
+            $sql = "INSERT INTO patterns (pattern) VALUES ";
             foreach ($allPatterns as $value) {
                 $value = "('" . $value . "'),";
                 $sql .= $value;
             }
             $sql = substr($sql, 0, -1);
-            //$sql .= ";";
-            try {
-                $this->pdo->exec($sql);
-                echo "Records inserted successfully.";
-            } catch (PDOException $e) {
-                die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-            }
+            $sql = $this->pdo->prepare($sql);
+            $this->executeQuery($sql, 'Patterns');
         } else {
+            // call logger
             print_r("Database is not empty");
         }
     }
 
-    public function insertToTable(string $value, string $table)
+
+    public function saveWord(string $value):bool
     {
-        $column = substr($table, 0, -1);
-        $sql = "INSERT INTO " . $table . ' (' . $column . ')'. " VALUES ";
-        $sql .= "('" . $value . "')";
+        // save word
+        $message = "Insertion of word successful";
+        $sql = "INSERT INTO words ( word ) VALUES ( :value )";
         $sql = $this->pdo->prepare($sql);
+        $sql->bindParam(':value', $value);
+        $this->executeQuery($sql, $message);
+        return TRUE;
+    }
+
+    public function saveHyphenatedWord(string $value, string $word):bool
+    {
+        // save hyphenatedWord
+        $message = "Insertion of hyphenatedWords successful";
+        $sql = "UPDATE words SET hyphenatedword = :value WHERE word = :word";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindParam(':value', $value);
+        $sql->bindParam(':word', $word);
+        $this->executeQuery($sql, $message);
+        return TRUE;
+    }
+
+    public function insertPattern(string $pattern, string $word){
+        $sql = "INSERT INTO patternsToWords (word_id, pattern_id) VALUES (";
+        $sql .= "(SELECT word_id FROM words WHERE word = :word ),";
+        $sql .= "(SELECT pattern_id FROM patterns WHERE pattern = :pattern));";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindParam(':word', $word);
+        $sql->bindParam(':pattern', $pattern);
+        var_dump($sql);
+
+        $this->executeQuery($sql, $pattern);
+    }
+
+    public function getPattern(string $word){
+        $sql = "SELECT patterns.pattern FROM patterns INNER JOIN patternsToWords ON patternsToWords.pattern_id = patterns.pattern_id
+         AND patternsToWords.word_id = (SELECT words.word_id FROM words WHERE word = :word)";
+        $sql = $this->pdo->prepare($sql);
+        $sql->bindParam(':word', $word);
+        //$this->executeQuery($sql, $word);
+
+        print_r("Patterns used:");
+        while ($row = $sql->fetch(PDO::FETCH_NUM)) {
+            print "\n$row[0]";
+        }
+    }
+
+    private function executeQuery(object $sql, string $value= null){
         try {
             $sql->execute();
-            echo "Value :" . $value . " inserted successfully. \n";
+            echo "Value : " . $value . " inserted successfully. \n";
         } catch (PDOException $e) {
             //call logger
-            die("ERROR: Could not able to execute. " . $e->getMessage());
+            die("ERROR: Could not able to execute " . $e->getMessage());
         }
     }
 
-    public function patternsUsedInHyphenation()
+    public function truncateTable(string $table)
     {
+        $message = "Truncation of " . $table . " was successful";
 
-    }
+        $sql = "SET FOREIGN_KEY_CHECKS=0";
+        $sql = $this->pdo->prepare($sql);
+        $this->executeQuery($sql);
 
-    private function erasePatterns()
-    {
-        $sql = "TRUNCATE TABLE patterns";
-        //$this->pdo->query($sql);
-        try {
-            $numberOfRows = $this->pdo->exec($sql);
-            echo "Records erased successfully." . $numberOfRows;
-        } catch (PDOException $e) {
-            die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-        }
+        $sql = "TRUNCATE TABLE " . $table;
+        $sql = $this->pdo->prepare($sql);
+        $this->executeQuery($sql, $message);
+
+        $sql = "SET FOREIGN_KEY_CHECKS=1";
+        $sql = $this->pdo->prepare($sql);
+        $this->executeQuery($sql);
     }
 
 

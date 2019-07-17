@@ -18,7 +18,7 @@ class InputHandler
 
     public function __construct()
     {
-        $this->hyphenateParagraph = new HyphenateParagraph();
+
         $this->cacheItem = new CacheItem();
         $this->log = new Logger();
         $this->hyphenationAlgorithm = new Hyphenate();
@@ -62,7 +62,9 @@ class InputHandler
 
     public function paragraphHyphenation(): array
     {
+        $this->hyphenateParagraph = new HyphenateParagraph();
         return $this->hyphenateParagraph->hyphenateParagraph();
+
     }
 }
 
