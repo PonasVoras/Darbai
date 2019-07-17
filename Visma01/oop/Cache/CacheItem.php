@@ -231,16 +231,6 @@ class CacheItem implements CacheItemInterface
             . substr($hash, 2);
     }
 
-//    protected function getPath(string $key):string
-//    {
-//        $this->validateKey($key);
-//        $returnPath = $this->cachePath
-//                . DIRECTORY_SEPARATOR
-//                . $key;
-//        print_r($returnPath);
-//        return $returnPath;
-//    }
-
     /**
      * @return int current timestamp
      */

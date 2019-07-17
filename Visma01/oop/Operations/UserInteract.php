@@ -29,7 +29,7 @@ class UserInteract
         //UI setup
         echo "Hyphenation\n";
         $this->databaseInquiry();
-        //$this->cacheInquiry();
+        $this->cacheInquiry();
         $this->hyphenationInput();
 
     }
