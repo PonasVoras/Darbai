@@ -1,15 +1,11 @@
 <?php
 
-namespace Server;
 
-use Server\API;
+include "FrontPage.php";
+include "../API/Index.php";
+require("../Config/AutoLoader.php");
+Config\AutoLoader::autoInclude();
+
+new API\Index();
 
 
-/*
- * Has some user interface, allows user to input words, toggle input
- */
-
-class Index
-{
-
-}
