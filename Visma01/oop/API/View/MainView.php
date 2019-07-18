@@ -1,8 +1,55 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-namespace API\View;
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-class MainView
-{
+    <title>Hyphenation DB testing</title>
+    <style>
+        html,body{
+            height: 80%;
+        }
+        .Request{
+            height: 20%;
+        }
+        .containerLeft{
+            height: inherit;
+        }
+    </style>
 
-}
+</head>
+<body>
+<h1 style="width: border-box; text-align: center;">Hyphenation API</h1>
+<div class="containerLeft" style="width: 50%; float: left;">
+    <div class="Request" style="width: 40%;">
+        <h2>Get element</h2>
+        <form action="../API/Index.php" method="GET">
+            Input an ID:<br>
+            <input type="number" name="id" value="1">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div class="Request">
+        <h2>Add new element</h2>
+        <form action="../API/Index.php" method="POST">
+            Input a new word:<br>
+            <input type="text" name="word" value="something">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+</div>
+<div class="containerRight">
+    <div class="Response" style="width: 50%; background-color: antiquewhite; float: right;">
+        <h2>Response</h2>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -3,14 +3,15 @@
 
 namespace API;
 
-//use API\Controller\WordController;
-//
-//new WordController();
+include "View/MainView.php";
+
+use API\Controller\WordController;
+use API\Model\WordModel;
 
 class Index
 {
     public function __construct()
     {
-        echo "Labas, veikia";
+        echo "Works";
     }
 }
