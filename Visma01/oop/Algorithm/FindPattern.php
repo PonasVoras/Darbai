@@ -1,6 +1,7 @@
 <?php
 namespace Algorithm;
 use Algorithm\Utils\Remove;
+use Database\Database;
 use Operations\File;
 class FindPattern
 {
@@ -9,8 +10,11 @@ class FindPattern
     public $allPatternsNumberless;
     protected $possiblePatterns = [];
     private $word;
+    private $database;
+
     public function __construct()
     {
+        $this->database = new Database();
     }
     public function setWord(string $word){
         $this->word = $word;
@@ -31,6 +35,7 @@ class FindPattern
                     $search_word = ("." . substr($this->word, 0, $i));
                     if ($search_word == $value) {
                         array_push($this->possiblePatterns, $this->allPatterns[$key]);
+                        $this->database->savePattern(trim($this->allPatterns[$key]), $this->word);
                     }
                 }
             }
@@ -42,6 +47,7 @@ class FindPattern
                         $search_word = (substr($this->word, $j, $i));
                         if ($search_word == $value) {
                             array_push($this->possiblePatterns, $this->allPatterns[$key]);
+                            $this->database->savePattern(trim($this->allPatterns[$key]), $this->word);
                         }
                     }
                 }
@@ -52,6 +58,7 @@ class FindPattern
                     $search_word = ("." . substr(trim(strrev($this->word), "\n"), 0, $i));
                     if ($search_word == strrev($value)) {
                         array_push($this->possiblePatterns, $this->allPatterns[$key]);
+                        $this->database->savePattern(trim($this->allPatterns[$key]), $this->word);
                     }
                 }
             }

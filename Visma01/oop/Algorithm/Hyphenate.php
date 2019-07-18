@@ -20,6 +20,7 @@ class Hyphenate
     public function getHyphenatedWord(string $word): string
     {
         $word = str_replace(' ', '', $word);
+        $this->database->saveWord($word);
         $this->managePattern->setWord($word);
         $this->wordWithNumbers = $this->managePattern->getWordWithNumbers();
         $wordWithNumbers = $this->wordWithNumbers;

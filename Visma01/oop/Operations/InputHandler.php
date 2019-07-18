@@ -30,9 +30,12 @@ class InputHandler
         $hyphenatedWord = $this->cacheItem->findHyphenatedWord($word);
         if ($hyphenatedWord == "" && $useDatabase !== FALSE) {
             $hyphenatedWord = $this->database->findHyphenatedWord($word);
-        } else if (empty($hyphenatedWord)) {
+        }
+        if ($hyphenatedWord == "") {
+            print_r("else if works");
             $hyphenatedWord = $this->hyphenationAlgorithm->getHyphenatedWord($word);
         }
+
         return $hyphenatedWord;
     }
 
