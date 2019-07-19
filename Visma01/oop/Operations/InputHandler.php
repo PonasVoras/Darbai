@@ -18,7 +18,6 @@ class InputHandler
 
     public function __construct()
     {
-
         $this->cacheItem = new CacheItem();
         $this->log = new Logger();
         $this->hyphenationAlgorithm = new Hyphenate();
@@ -32,7 +31,6 @@ class InputHandler
             $hyphenatedWord = $this->database->findHyphenatedWord($word);
         }
         if ($hyphenatedWord == "") {
-            print_r("else if works");
             $hyphenatedWord = $this->hyphenationAlgorithm->getHyphenatedWord($word);
         }
 

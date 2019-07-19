@@ -3,10 +3,9 @@
 namespace Main;
 
 use Log\Logger;
-
 use Operations\UserInteract;
 
-class Main
+class CLIApp
 {
     private $userInteract;
 

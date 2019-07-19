@@ -5,7 +5,6 @@ namespace Operations;
 
 use Cache\CacheItem;
 use Log\Logger;
-use Database\Database;
 
 class UserInteract
 {
@@ -25,7 +24,8 @@ class UserInteract
         $this->inputHandler = new InputHandler();
     }
 
-    public function begin(){
+    public function begin()
+    {
         //UI setup
         echo "Hyphenation\n";
         $this->databaseInquiry();
@@ -34,11 +34,12 @@ class UserInteract
     }
 
 
-    private function databaseInquiry(){
+    private function databaseInquiry()
+    {
         echo "To use database or not to use database ? -y/-n\n";
         $handle = fopen("php://stdin", "r");
         $clearCache = fgets($handle);
-        switch (trim($clearCache)){
+        switch (trim($clearCache)) {
             case '':
             case '-y':
                 $this->useDatabase = TRUE;
@@ -51,11 +52,12 @@ class UserInteract
         }
     }
 
-    private function cacheInquiry(){
+    private function cacheInquiry()
+    {
         echo "To clear cache or not to clear cache ? -y/-n\n";
         $handle = fopen("php://stdin", "r");
         $clearCache = fgets($handle);
-        switch (trim($clearCache)){
+        switch (trim($clearCache)) {
             case '':
             case '-y':
                 $this->cache->clear();
@@ -68,7 +70,8 @@ class UserInteract
         }
     }
 
-    private function hyphenationInput(){
+    private function hyphenationInput()
+    {
         echo "What would you like to hyphenate (-w/-p) :";
         $handle = fopen("php://stdin", "r");
         $line = fgets($handle);

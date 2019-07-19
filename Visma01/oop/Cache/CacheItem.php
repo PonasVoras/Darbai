@@ -15,34 +15,17 @@ use function is_int;
 
 class CacheItem implements CacheItemInterface
 {
-    /**
-     * @var string control characters for keys, reserved by PSR-16
-     */
+
     const PSR16_RESERVED = '/\{|\}|\(|\)|\/|\\\\|\@|\:/u';
 
-    /**
-     * @var string
-     */
     private $cachePath;
-    /**
-     * @var int
-     */
+
     private $defaultTtl = 86400;
-    /**
-     * @var int
-     */
+
     private $dirMode = 0775;
-    /**
-     * @var int
-     */
+
     private $fileMode = 0664;
 
-    /**
-     * @param string $cachePath absolute root path of Cache-file folder
-     * @param int $defaultTtl default time-to-live (in seconds)
-     * @param int $dirMode permission mode for created dirs
-     * @param int $fileMode permission mode for created files
-     */
     public function __construct()
     {
         $this->cachePath = "oop/Cache/CacheFiles/Patterns";
@@ -126,9 +109,6 @@ class CacheItem implements CacheItemInterface
         return !file_exists($path) || @unlink($path);
     }
 
-    /**
-     * @return Generator|string[]
-     */
     protected function listPaths()
     {
         $iterator = new RecursiveDirectoryIterator(
@@ -144,17 +124,6 @@ class CacheItem implements CacheItemInterface
         }
     }
 
-    /**
-     * Clean up expired cache-files.
-     *
-     * This method is outside the scope of the PSR-16 cache concept, and is specific to
-     * this implementation, being a file-cache.
-     *
-     * In scenarios with dynamic keys (such as Session IDs) you should call this method
-     * periodically - for example from a scheduled daily cron-job.
-     *
-     * @return void
-     */
     public function cleanExpired()
     {
         $now = $this->getTime();

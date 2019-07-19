@@ -14,7 +14,7 @@ class Database
     private $password = 'letsdothis';
 
     private $options;
-    private $pdo;
+    public $pdo;
     private $remove;
 
     public function __construct()
@@ -59,7 +59,6 @@ class Database
         if (empty($this->checkIfPatternsArePresent())) {
             $allPatterns = File::readFromFile("oop/Data/Data.txt");
             $allPatterns = $this->remove->removeSpaces($allPatterns);
-
             $sql = "INSERT INTO patterns (pattern) VALUES ";
             foreach ($allPatterns as $value) {
                 $value = "('" . $value . "'),";
@@ -74,7 +73,7 @@ class Database
         }
     }
 
-    public function saveWord(string $value): bool
+    public function saveWord(string $value)
     {
         // save word
         $message = "Insertion of word successful";
@@ -82,10 +81,9 @@ class Database
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':value', $value);
         $this->executeQuery($sql, $message);
-        return TRUE;
     }
 
-    public function saveHyphenatedWord(string $value, string $word): bool
+    public function saveHyphenatedWord(string $value, string $word)
     {
         // save hyphenatedWord
         $message = "Insertion of hyphenatedWords successful";
@@ -94,7 +92,6 @@ class Database
         $sql->bindParam(':value', $value);
         $sql->bindParam(':word', $word);
         $this->executeQuery($sql, $message);
-        return TRUE;
     }
 
     public function savePattern(string $pattern, string $word)
@@ -120,6 +117,7 @@ class Database
         print_r("Patterns used:");
         while ($row = $sql->fetch(PDO::FETCH_NUM)) {
             print "\n$row[0]";
+            // TODO atskirti duomenu atvaizdavima
         }
     }
 
@@ -133,7 +131,7 @@ class Database
         print_r($hyphenatedWord['hyphenatedword']);
     }
 
-    private function executeQuery(object $sql, string $message = null)
+    public function executeQuery(object $sql, string $message = null)
     {
         try {
             $sql->execute();

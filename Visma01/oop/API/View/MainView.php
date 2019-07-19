@@ -25,7 +25,7 @@
 <div class="containerLeft" style="width: 50%; float: left;">
     <div class="Request" style="width: 40%;">
         <h2>Get element</h2>
-        <form action="../API/Index.php" method="GET">
+        <form action="/words" method="GET">
             Input an ID:<br>
             <input type="number" name="id" value="1">
             <br>
@@ -35,7 +35,7 @@
 
     <div class="Request">
         <h2>Add new element</h2>
-        <form action="../API/Index.php" method="POST">
+        <form action="/words" method="POST">
             Input a new word:<br>
             <input type="text" name="word" value="something">
             <br>
