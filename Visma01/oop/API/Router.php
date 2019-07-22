@@ -2,10 +2,9 @@
 
 namespace API;
 
-use API\Controller\PatternController;
 use API\Controller\Controller;
 
-include "View/MainView.php";
+//include "View/MainView.php";
 
 class Router
 {
@@ -25,6 +24,7 @@ class Router
         $word = !empty(strrpos($requestURI, 'word')) ?? true;
         $hyphenatedWord = !empty(strrpos($requestURI, 'hyphenatedWord')) ?? true;
         $pattern = !empty(strrpos($requestURI, 'pattern')) ?? true;
+        //$value = !empty(strrpos($requestURI, 'pattern')) ?? ;
         $id = preg_replace('/[^0-9]/', '', $requestURI);
         $requestParameters = array(
             'method' => $method,
@@ -32,8 +32,6 @@ class Router
             'hyphenatedWord'=>$hyphenatedWord ,
             'pattern'=>$pattern,
             'id' => $id);
-        $requestParameters = json_encode($requestParameters);
         $this->controller->handleRequest($requestParameters);
     }
-
 }

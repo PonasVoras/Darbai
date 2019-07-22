@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,6 +50,8 @@
 <div class="containerRight">
     <div class="Response" style="width: 50%; background-color: antiquewhite; float: right;">
         <h2>Response</h2>
+
+
     </div>
 </div>
 
