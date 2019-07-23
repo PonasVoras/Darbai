@@ -17,12 +17,15 @@ class Database
     public $pdo;
     private $remove;
 
+    private $instance;
+
     public function __construct()
     {
         $this->pdo = new PDO("mysql:host=localhost;dbname=" . $this->dbName, $this->user, $this->password, $this->options);
         $this->remove = new Remove();
         $this->tryConnection();
     }
+
 
     private function tryConnection()
     {

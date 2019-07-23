@@ -13,7 +13,7 @@ class UserInteract
     private $executionTime;
     private $inputHandler;
     private $output;
-    private $useDatabase = FALSE;
+    private $useDatabase = TRUE;
 
     public function __construct()
     {
@@ -28,7 +28,7 @@ class UserInteract
     {
         //UI setup
         echo "Hyphenation\n";
-        $this->databaseInquiry();
+        //$this->databaseInquiry();
         //$this->cacheInquiry();
         $this->hyphenationInput();
     }
@@ -83,7 +83,7 @@ class UserInteract
                 $word = fgets($handle);
                 $word = trim($word);
                 $this->executionTime->start();
-                $hyphenatedWord = $this->inputHandler->wordHyphenation($word, $this->useDatabase);
+                $hyphenatedWord = $this->inputHandler->wordHyphenation($word);
                 $this->output->OutputToCli($hyphenatedWord);
                 $this->executionTime->end();
                 echo "\nExecution time : " . $this->executionTime->executionTime();

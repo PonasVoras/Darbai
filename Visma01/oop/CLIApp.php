@@ -18,7 +18,7 @@ class CLIApp
 
     public function main()
     {
-        //User interface
+        //User Interfaces
         $this->userInteract->begin();
     }
 
