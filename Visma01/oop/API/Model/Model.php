@@ -4,14 +4,15 @@ namespace API\Model;
 
 
 use Database\Database;
+use Database\QueryBuilder;
 use PDO;
 
 class Model
 {
     //DB stuff
-    private $table = 'words';
     private $pdo;
-    private $view;
+    private $database;
+    private $query;
 
     //Post properties
     public $word; // is being set by wordController
@@ -20,13 +21,18 @@ class Model
 
     public function __construct()
     {
+        $this->query = new QueryBuilder();
         $this->database = new Database();
         $this->pdo = $this->database->pdo;
     }
 
     public function postWord(string $word)
     {
-        $sql = "INSERT INTO words (word) VALUES (:word)";
+        //$sql = "INSERT INTO words (word) VALUES (:word)";
+        $sql = $this->query
+            ->insert('words (word)')
+            ->values('(:word)')
+            ->build();
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':word', $word);
         $this->database->executeQuery($sql, 'POST method executing word array retrieval :');
@@ -34,7 +40,11 @@ class Model
 
     public function getWordByID(string $id): string
     {
-        $sql = "SELECT words. word FROM words WHERE word_id = :word_id";
+        $sql = $this->query
+            ->select('word')
+            ->from('words')
+            ->where('word_id = :word_id')
+            ->build();
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':word_id', $id);
         $this->database->executeQuery($sql, 'GET method executing word retrieval :');
@@ -45,7 +55,10 @@ class Model
 
     public function getWords(): array
     {
-        $sql = "SELECT words. word FROM words";
+        $sql = $this->query
+            ->select('words.word')
+            ->from('words')
+            ->build();
         $sql = $this->pdo->prepare($sql);
         $this->database->executeQuery($sql, 'GET method executing word array retrieval :');
         $words = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -54,7 +67,12 @@ class Model
 
     public function updateWord(string $word, string $updateWord)
     {
-        $sql = "UPDATE words SET word = :value WHERE word = :word";
+        $sql = $this->query
+            ->update('words')
+            ->set('word = :value')
+            ->where('word = :word')
+            ->build();
+
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':value', $updateWord);
         $sql->bindParam(':word', $word);
@@ -63,7 +81,10 @@ class Model
 
     public function deleteWord(string $word)
     {
-        $sql = "DELETE FROM words WHERE word = :word";
+        $sql = $this->query
+            ->delete('words')
+            ->where('word = :word')
+            ->build();
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':word', $word);
         $this->database->executeQuery($sql, 'PUT method executing word array retrieval :');

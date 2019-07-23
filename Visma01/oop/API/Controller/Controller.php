@@ -24,7 +24,6 @@ class Controller
     {
         $this->model = new Model();
         $this->view = new View();
-
     }
 
     // true is needed for json object to be converted to an array
@@ -58,27 +57,27 @@ class Controller
 
     //add item : word, hyphenatedWord, pattern
     //$post = file_get_contents('php://input');
-/*{
-"statusCode": 200,
-"method": "GET",
-"data": [
-{
-"word": "frame"
-},
-{
-    "word": "framed"
-        },
-{
-    "word": "framework"
-        },
-{
-    "word": "hyphenate"
-        },
-{
-    "word": "mistranslate"
-        }
-]
-}*/
+    /*{
+    "statusCode": 200,
+    "method": "GET",
+    "data": [
+    {
+    "word": "frame"
+    },
+    {
+        "word": "framed"
+            },
+    {
+        "word": "framework"
+            },
+    {
+        "word": "hyphenate"
+            },
+    {
+        "word": "mistranslate"
+            }
+    ]
+    }*/
     public function postRequest(array $requestData)
     {
         $postData = file_get_contents('php://input');
@@ -133,6 +132,7 @@ class Controller
         } else {
             $this->view->returnError(400);
         }
+
     }
 
     //http://127.0.0.1:8888/words
