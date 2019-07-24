@@ -24,7 +24,6 @@ class Router
         $word = !empty(strrpos($requestURI, 'word')) ?? true;
         $hyphenatedWord = !empty(strrpos($requestURI, 'hyphenatedWord')) ?? true;
         $pattern = !empty(strrpos($requestURI, 'pattern')) ?? true;
-        //$value = !empty(strrpos($requestURI, 'pattern')) ?? ;
         $id = preg_replace('/[^0-9]/', '', $requestURI);
         $requestParameters = array(
             'method' => $method,

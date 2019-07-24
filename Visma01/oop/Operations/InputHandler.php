@@ -17,9 +17,9 @@ class InputHandler
         return $hyphenatedWord;
     }
 
-    public function paragraphHyphenation(): array
+    public function paragraphHyphenation(Hyphenate $hyphenate): array
     {
-        $this->hyphenateParagraph = new HyphenateParagraph();
+        $this->hyphenateParagraph = new HyphenateParagraph($hyphenate);
         return $this->hyphenateParagraph->hyphenateParagraph();
     }
 }

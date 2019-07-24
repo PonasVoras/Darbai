@@ -8,16 +8,17 @@ use Operations\File;
 
 class FindPattern
 {
-    const MAX_PATTERN_LENGTH = 7;
     public $allPatterns;
     public $allPatternsNumberless;
     protected $possiblePatterns = [];
     private $word;
     private $database;
+    private $removeNumbers;
 
     public function __construct()
     {
         $this->database = new Database();
+        $this->removeNumbers = new Remove();
     }
 
     public function setWord(string $word)
@@ -28,8 +29,7 @@ class FindPattern
     public function possiblePattern()
     {
         $this->allPatterns = File::readFromFile("oop/Data/Data.txt");
-        $removeNumbers = new Remove();
-        $this->allPatternsNumberless = $removeNumbers->removeNumbers($this->allPatterns); // nice array with no numbers, trimmed
+        $this->allPatternsNumberless = $this->removeNumbers->removeNumbers($this->allPatterns); // nice array with no numbers, trimmed
         $first_rev = substr($this->word, strlen($this->word) - 2, 1);
         $first = substr($this->word, 0, 1);
         foreach ($this->allPatternsNumberless as $key => $value) {
@@ -37,7 +37,7 @@ class FindPattern
             $back_case = (strrpos(strrev($value), "." . $first_rev));
             if ($front_case === 0) {
                 $i = 0;
-                while ($i++ < self::MAX_PATTERN_LENGTH) {
+                while ($i++ < strlen($this->word)) {
                     $search_word = ("." . substr($this->word, 0, $i));
                     if ($search_word == $value) {
                         array_push($this->possiblePatterns, $this->allPatterns[$key]);
@@ -47,11 +47,12 @@ class FindPattern
             }
             if (($back_case === false) && ($front_case === false)) {
                 $i = 0;
-                while ($i++ < self::MAX_PATTERN_LENGTH) {
+                while ($i++ < strlen($this->word)) {
                     $j = -1;
                     while ($j++ < strlen($this->word)) {
                         $search_word = (substr($this->word, $j, $i));
-                        if ($search_word == $value) {
+                        // TODO speed up, possible patterns thing
+                        if ($search_word == $value AND in_array($this->allPatterns[$key], $this->possiblePatterns)) {
                             array_push($this->possiblePatterns, $this->allPatterns[$key]);
                             $this->database->savePattern(trim($this->allPatterns[$key]), $this->word);
                         }
@@ -60,7 +61,7 @@ class FindPattern
             }
             if ($back_case === 0) {
                 $i = 0;
-                while ($i++ < self::MAX_PATTERN_LENGTH) {
+                while ($i++ < strlen($this->word)) {
                     $search_word = ("." . substr(trim(strrev($this->word), "\n"), 0, $i));
                     if ($search_word == strrev($value)) {
                         array_push($this->possiblePatterns, $this->allPatterns[$key]);

@@ -77,7 +77,7 @@ class UserInteract
                 echo "Filename with paragraphs (must be inside Data/paragraph.txt directory) press Enter to hyphenate";
                 $handle = fopen("php://stdin", "r");
                 fgets($handle);
-                $hyphenatedParagraph = $this->inputHandler->paragraphHyphenation();
+                $hyphenatedParagraph = $this->inputHandler->paragraphHyphenation($this->hyphenate);
                 $outputFile = 'oop/Output/hyphenatedParagraph.txt';
                 $this->output->outputToFile($outputFile, $hyphenatedParagraph);
                 exit;

@@ -11,9 +11,9 @@ class HyphenateParagraph
     private $result = [];
     private $hyphenationAlgorithm;
 
-    public function __construct()
+    public function __construct(Hyphenate $hyphenate)
     {
-        $this->hyphenationAlgorithm = new Hyphenate();
+        $this->hyphenationAlgorithm = $hyphenate;
     }
 
     public function extractWords()
@@ -28,9 +28,7 @@ class HyphenateParagraph
         $this->extractWords();
         foreach ($this->words as $key => $value) {
             if (!preg_match('/[^A-Za-z0-9]/', $value)) {
-                $this->hyphenationAlgorithm->setHyphenationWord($value);
-                print_r("YAWORD, BOI" . $value);
-                array_push($this->hyphenatedWords, $this->hyphenationAlgorithm->getHyphenatedWord());
+                array_push($this->hyphenatedWords, $this->hyphenationAlgorithm->getHyphenatedWord($value));
             } else {
                 array_push($this->hyphenatedWords, $value);
             }

@@ -1,3 +1,2 @@
-.in1
-4ind
-n1de
+.st4
+.th2
