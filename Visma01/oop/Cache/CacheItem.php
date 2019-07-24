@@ -3,9 +3,9 @@
 namespace Cache;
 
 use Cache\Interfaces\CacheItemInterface;
+use Operations\Interfaces\HyphenationSourceInterface;
 use DateInterval;
 use FilesystemIterator;
-use Generator;
 use InvalidArgumentException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -13,7 +13,7 @@ use function file_exists;
 use function gettype;
 use function is_int;
 
-class CacheItem implements CacheItemInterface
+class CacheItem //implements CacheItemInterface, HyphenationSourceInterface
 {
 
     const PSR16_RESERVED = '/\{|\}|\(|\)|\/|\\\\|\@|\:/u';
@@ -165,15 +165,16 @@ class CacheItem implements CacheItemInterface
             $this->set(3, $hyphenatedWord);
         }
 
+
     }
 
     public function findHyphenatedWord(string $word): string
     {
         $hyphenatedWord = "";
-        $hyphenatedWords = explode(" ",$this->get(1));
-        if (!empty($hyphenatedWords)){
+        $hyphenatedWords = explode(" ", $this->get(1));
+        if (!empty($hyphenatedWords)) {
             $hyphenatedWordKey = array_search($word, $hyphenatedWords);
-            if ($hyphenatedWordKey !== false){
+            if ($hyphenatedWordKey !== false) {
                 $hyphenatedWord = $this->get($hyphenatedWordKey + 3);
                 print_r("Cache thing :" . $hyphenatedWord);
             }

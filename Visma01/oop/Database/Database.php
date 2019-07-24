@@ -4,28 +4,23 @@ namespace Database;
 
 use Algorithm\Utils\Remove;
 use Operations\File;
+use Operations\Interfaces\HyphenationSourceInterface;
 use PDO;
 use PDOException;
 
-class Database
+class Database implements HyphenationSourceInterface
 {
     private $dbName = 'hyphenationdb';
     private $user = 'hyphenationuser';
     private $password = 'letsdothis';
-
     private $options;
     public $pdo;
-    private $remove;
-
-    private $instance;
 
     public function __construct()
     {
         $this->pdo = new PDO("mysql:host=localhost;dbname=" . $this->dbName, $this->user, $this->password, $this->options);
-        $this->remove = new Remove();
         $this->tryConnection();
     }
-
 
     private function tryConnection()
     {
@@ -50,18 +45,18 @@ class Database
     {
         $sql = "SELECT hyphenatedword FROM words WHERE word = :word";
         $sql = $this->pdo->prepare($sql);
-        $sql->bindParam(':word',$word);
+        $sql->bindParam(':word', $word);
         $this->executeQuery($sql);
         $word = $sql->fetch(PDO::FETCH_ASSOC);
         $hyphenatedWord = $word['hyphenatedword'];
         return $hyphenatedWord;
     }
 
-    public function importPatterns()   // TODO not safe, rewrite
+    public function importPatterns(Remove $remove)   // TODO not safe, rewrite
     {
         if (empty($this->checkIfPatternsArePresent())) {
             $allPatterns = File::readFromFile("oop/Data/Data.txt");
-            $allPatterns = $this->remove->removeSpaces($allPatterns);
+            $allPatterns = $remove->removeSpaces($allPatterns);
             $sql = "INSERT INTO patterns (pattern) VALUES ";
             foreach ($allPatterns as $value) {
                 $value = "('" . $value . "'),";

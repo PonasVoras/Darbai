@@ -2,8 +2,7 @@
 
 namespace Main;
 
-use Log\Logger;
-use Operations\UserInteract;
+use Dependencies\Container;
 
 class CLIApp
 {
@@ -11,14 +10,15 @@ class CLIApp
 
     public function __construct()
     {
-        $logger = new Logger();
-        $this->userInteract = new UserInteract();
+        $container = new Container();
+        $userInteract = $container->get('Operations\UserInteract');
+        $logger = $container->get('Log\Logger');
+        $this->userInteract = $userInteract;
         $logger->info('Program started');
     }
 
     public function main()
     {
-        //User Interfaces
         $this->userInteract->begin();
     }
 

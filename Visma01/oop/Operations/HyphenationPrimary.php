@@ -9,11 +9,16 @@ use Operations\Interfaces\HyphenationSourceInterface;
 
 class HyphenationPrimary implements HyphenationSourceInterface
 {
+    private $hyphenationAlgorithm;
+
+    public function __construct(Hyphenate $hyphenate)
+    {
+        $this->hyphenationAlgorithm = $hyphenate;
+    }
 
     public function findHyphenatedWord(string $word): string
     {
-        $hyphenationAlgorithm = new Hyphenate();
-        $hyphenatedWord = $hyphenationAlgorithm->getHyphenatedWord($word);
+        $hyphenatedWord = $this->hyphenationAlgorithm->getHyphenatedWord($word);
         return $hyphenatedWord;
     }
 }
