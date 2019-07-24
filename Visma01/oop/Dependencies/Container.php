@@ -2,10 +2,10 @@
 
 namespace Dependencies;
 
-use Dependencies\Interfaces\ContainerInterface;
-use ReflectionClass;
-use Exception;
 use Closure;
+use Dependencies\Interfaces\ContainerInterface;
+use Exception;
+use ReflectionClass;
 
 class Container implements ContainerInterface
 {
@@ -20,7 +20,9 @@ class Container implements ContainerInterface
         $this->instances[$abstract] = $concrete;
     }
 
-    public function has($id){}
+    public function has($id)
+    {
+    }
 
     public function get($abstract, $parameters = [])
     {
@@ -48,7 +50,7 @@ class Container implements ContainerInterface
             return $reflector->newInstance();
         }
         // get constructor params
-        $parameters   = $constructor->getParameters();
+        $parameters = $constructor->getParameters();
         $dependencies = $this->getDependencies($parameters);
         // get new instance with dependencies resolved
         return $reflector->newInstanceArgs($dependencies);

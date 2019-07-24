@@ -4,7 +4,6 @@ namespace API\Controller;
 
 use API\Model\Model;
 use API\View\View;
-use operations\Validation;
 
 class Controller
 {
@@ -97,7 +96,7 @@ class Controller
         $wordToUpdate = $putData['wordToUpdate'];
         $word = $putData['word'];
 
-        $this->model->updateWord($word ,$wordToUpdate);
+        $this->model->updateWord($word, $wordToUpdate);
         $requestData['word'] = true;
         $this->getRequestReturnMany($requestData);
     }

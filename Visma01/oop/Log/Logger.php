@@ -4,9 +4,9 @@
 namespace Log;
 
 use DateTime;
-use Operations\File;
-use Log\Interfaces\LoggerInterface;
 use InvalidArgumentException;
+use Log\Interfaces\LoggerInterface;
+use Operations\File;
 
 class Logger implements LoggerInterface
 {

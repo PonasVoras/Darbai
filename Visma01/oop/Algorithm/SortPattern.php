@@ -1,19 +1,26 @@
 <?php
+
 namespace Algorithm;
+
 use Algorithm\Utils\Remove;
 use Operations\File;
+
 class SortPattern
 {
     public $possiblePatterns = [];
     private $word;
     private $remove;
+
     public function __construct()
     {
         $this->remove = new Remove();
     }
-    public function setWord(string $word){
+
+    public function setWord(string $word)
+    {
         $this->word = $word;
     }
+
     public function sortPattern(): string
     {
         $this->possiblePatterns = File::readFromFile("oop/Output/possible_patterns.txt");

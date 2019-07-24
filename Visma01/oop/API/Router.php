@@ -12,7 +12,7 @@ class Router
 
     public function __construct()
     {
-       $this->controller = new Controller();
+        $this->controller = new Controller();
 
     }
 
@@ -29,8 +29,8 @@ class Router
         $requestParameters = array(
             'method' => $method,
             'word' => $word,
-            'hyphenatedWord'=>$hyphenatedWord ,
-            'pattern'=>$pattern,
+            'hyphenatedWord' => $hyphenatedWord,
+            'pattern' => $pattern,
             'id' => $id);
         $this->controller->handleRequest($requestParameters);
     }

@@ -1,8 +1,11 @@
 <?php
+
 namespace Algorithm;
+
 use Algorithm\Utils\Remove;
 use Database\Database;
 use Operations\File;
+
 class FindPattern
 {
     const MAX_PATTERN_LENGTH = 7;
@@ -16,9 +19,12 @@ class FindPattern
     {
         $this->database = new Database();
     }
-    public function setWord(string $word){
+
+    public function setWord(string $word)
+    {
         $this->word = $word;
     }
+
     public function possiblePattern()
     {
         $this->allPatterns = File::readFromFile("oop/Data/Data.txt");

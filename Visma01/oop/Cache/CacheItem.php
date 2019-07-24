@@ -2,8 +2,6 @@
 
 namespace Cache;
 
-use Cache\Interfaces\CacheItemInterface;
-use Operations\Interfaces\HyphenationSourceInterface;
 use DateInterval;
 use FilesystemIterator;
 use InvalidArgumentException;
@@ -164,8 +162,6 @@ class CacheItem //implements CacheItemInterface, HyphenationSourceInterface
             $this->set(2, 1);
             $this->set(3, $hyphenatedWord);
         }
-
-
     }
 
     public function findHyphenatedWord(string $word): string
@@ -187,17 +183,6 @@ class CacheItem //implements CacheItemInterface, HyphenationSourceInterface
         return $this->get($key, $this) !== $this;
     }
 
-
-    /**
-     * For a given Cache key, obtain the absolute file path
-     *
-     * @param string $key
-     *
-     * @return string absolute path to Cache-file
-     *
-     * @throws InvalidArgumentException if the specified key contains a character reserved by PSR-16
-     */
-
     protected function getPath(string $key): string
     {
         $this->validateKey($key);
@@ -211,20 +196,11 @@ class CacheItem //implements CacheItemInterface, HyphenationSourceInterface
             . substr($hash, 2);
     }
 
-    /**
-     * @return int current timestamp
-     */
     protected function getTime(): int
     {
         return time();
     }
 
-
-    /**
-     * @param string $key
-     *
-     * @throws InvalidArgumentException
-     */
     protected function validateKey(string $key)
     {
         //print_r("Key for validation" . $key . "\n");
@@ -243,12 +219,6 @@ class CacheItem //implements CacheItemInterface, HyphenationSourceInterface
         }
     }
 
-
-    /**
-     * Recursively create directories and apply permission mask
-     *
-     * @param string $path absolute directory path
-     */
     private function mkdir($path)
     {
         $parentPath = dirname($path);

@@ -13,6 +13,7 @@ class CLIApp
         $container = new Container();
         $userInteract = $container->get('Operations\UserInteract');
         $logger = $container->get('Log\Logger');
+
         $this->userInteract = $userInteract;
         $logger->info('Program started');
     }

@@ -8,13 +8,15 @@
 
     <title>Hyphenation DB testing</title>
     <style>
-        html,body{
+        html, body {
             height: 80%;
         }
-        .Request{
+
+        .Request {
             height: 20%;
         }
-        .containerLeft{
+
+        .containerLeft {
             height: inherit;
         }
     </style>
