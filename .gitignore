@@ -1,5 +1,5 @@
 *.log
 **/CacheFiles
-**/Vendor
-*.lock
-*.xml
+/Vendor/*
+/*.lock
+/*.xml
