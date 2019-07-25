@@ -3,3 +3,4 @@
 /Vendor/*
 /*.lock
 /*.xml
+/.phpunit.result.cache
