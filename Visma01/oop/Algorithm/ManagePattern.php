@@ -3,7 +3,6 @@
 namespace Algorithm;
 class ManagePattern
 {
-    private $word;
     private $findPattern;
     private $sortPattern;
 
@@ -14,22 +13,17 @@ class ManagePattern
         $this->sortPattern = $sortPattern;
     }
 
-    public function setWord($word)
+    private function makeWordWithNumbers(string $word): string
     {
-        $this->word = $word;
-    }
-
-    private function makeWordWithNumbers(): string
-    {
-        $this->findPattern->setWord($this->word);
+        $this->findPattern->setWord($word);
         $this->findPattern->possiblePattern();
-        $this->sortPattern->setWord($this->word);
+        $this->sortPattern->setWord($word);
         $wordWithNumbers = $this->sortPattern->sortPattern();
         return $wordWithNumbers;
     }
 
-    public function getWordWithNumbers(): string
+    public function getWordWithNumbers(string $word): string
     {
-        return $this->makeWordWithNumbers();
+        return $this->makeWordWithNumbers($word);
     }
 }

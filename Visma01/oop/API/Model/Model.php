@@ -28,7 +28,6 @@ class Model
 
     public function postWord(string $word)
     {
-        //$sql = "INSERT INTO words (word) VALUES (:word)";
         $sql = $this->query
             ->insert('words (word)')
             ->values('(:word)')

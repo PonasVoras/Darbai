@@ -16,7 +16,6 @@ class Router
 
     }
 
-    //picks the right controller and provides data to them
     public function useController()
     {
         $method = $_SERVER['REQUEST_METHOD'];

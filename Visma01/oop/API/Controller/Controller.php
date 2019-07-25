@@ -11,7 +11,6 @@ class Controller
     private $model;
     private $view;
 
-
     //response view json
     private $responseData = array(
         'statusCode' => 200,
@@ -61,16 +60,7 @@ class Controller
     "method": "GET",
     "data": [
     {
-    "word": "frame"
-    },
-    {
-        "word": "framed"
-            },
-    {
         "word": "framework"
-            },
-    {
-        "word": "hyphenate"
             },
     {
         "word": "mistranslate"

@@ -15,9 +15,9 @@ class FindPattern
     private $database;
     private $removeNumbers;
 
-    public function __construct()
+    public function __construct(Database $database)
     {
-        $this->database = new Database();
+        $this->database = $database;
         $this->removeNumbers = new Remove();
     }
 
@@ -51,8 +51,7 @@ class FindPattern
                     $j = -1;
                     while ($j++ < strlen($this->word)) {
                         $search_word = (substr($this->word, $j, $i));
-                        // TODO speed up, possible patterns thing
-                        if ($search_word == $value AND in_array($this->allPatterns[$key], $this->possiblePatterns)) {
+                        if ($search_word == $value AND !in_array($this->allPatterns[$key], $this->possiblePatterns)) {
                             array_push($this->possiblePatterns, $this->allPatterns[$key]);
                             $this->database->savePattern(trim($this->allPatterns[$key]), $this->word);
                         }

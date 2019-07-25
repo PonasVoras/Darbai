@@ -13,26 +13,6 @@ class Logger implements LoggerInterface
 
     private $fileName = "oop/Log/Log.log";
     private $logToFile = true;
-    private $colorFormats = array(
-        // foreground colors
-        'black' => "\033[30m%s\033[0m",
-        'red' => "\033[31m%s\033[0m",
-        'green' => "\033[32m%s\033[0m",
-        'yellow' => "\033[33m%s\033[0m",
-        'blue' => "\033[34m%s\033[0m",
-        'magenta' => "\033[35m%s\033[0m",
-        'cyan' => "\033[36m%s\033[0m",
-        'white' => "\033[37m%s\033[0m",
-        // background colors
-        'bg_black' => "\033[40m%s\033[0m",
-        'bg_red' => "\033[41m%s\033[0m",
-        'bg_green' => "\033[42m%s\033[0m",
-        'bg_yellow' => "\033[43m%s\033[0m",
-        'bg_blue' => "\033[44m%s\033[0m",
-        'bg_magenta' => "\033[45m%s\033[0m",
-        'bg_cyan' => "\033[46m%s\033[0m",
-        'bg_white' => "\033[47m%s\033[0m",
-    );
 
     public function setLogToFile(bool $logToFile)
     {

@@ -4,7 +4,7 @@ namespace Operations;
 
 class Output
 {
-
+    //TODO rewrite, add interface and all
     public function outputToCli(string $hyphenatedWord)
     {
         print_r("\n Thy hyphenated word : " . $hyphenatedWord);

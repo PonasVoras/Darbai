@@ -16,9 +16,15 @@ class HyphenationPrimary implements HyphenationSourceInterface
         $this->hyphenationAlgorithm = $hyphenate;
     }
 
+    private function saveInDatabase(string $word){
+
+    }
+
     public function findHyphenatedWord(string $word): string
     {
+        $this->saveInDatabase($word);
         $hyphenatedWord = $this->hyphenationAlgorithm->getHyphenatedWord($word);
         return $hyphenatedWord;
     }
+
 }

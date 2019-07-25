@@ -21,12 +21,13 @@ class Hyphenate
         $this->cache = $cacheItem;
     }
 
+
     public function getHyphenatedWord(string $word): string
     {
         $word = str_replace(' ', '', $word);
+        // TODO HandleData
         $this->database->saveWord($word);
-        $this->managePattern->setWord($word);
-        $this->wordWithNumbers = $this->managePattern->getWordWithNumbers();
+        $this->wordWithNumbers = $this->managePattern->getWordWithNumbers($word);
         $wordWithNumbers = $this->wordWithNumbers;
         $odds = array("1", "3", "5");
         $evens = array("0", "2", "4");
@@ -34,6 +35,7 @@ class Hyphenate
         $hyphenatedWord = str_replace($evens, '', $hyphenatedWord);
         $this->cache->saveHyphenatedWord($hyphenatedWord, $word);
         $this->database->saveHyphenatedWord($hyphenatedWord, $word);
+        // $this->manageSaving->
         return $hyphenatedWord;
     }
 }
