@@ -1,4 +1,9 @@
 {
+    "autoload": {
+        "classmap": [
+            "oop/"
+    ]
+},
     "require": {
         "phpunit/phpunit": "^8.2"
     }

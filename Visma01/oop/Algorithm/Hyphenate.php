@@ -33,9 +33,12 @@ class Hyphenate
         $evens = array("0", "2", "4");
         $hyphenatedWord = str_replace($odds, '-', $wordWithNumbers);
         $hyphenatedWord = str_replace($evens, '', $hyphenatedWord);
+        $this->saveHyphenatedWord($hyphenatedWord, $word);
+        return $hyphenatedWord;
+    }
+
+    public function saveHyphenatedWord ($hyphenatedWord, $word){
         $this->cache->saveHyphenatedWord($hyphenatedWord, $word);
         $this->database->saveHyphenatedWord($hyphenatedWord, $word);
-        // $this->manageSaving->
-        return $hyphenatedWord;
     }
 }

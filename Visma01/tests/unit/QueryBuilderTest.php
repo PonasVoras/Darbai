@@ -1,7 +1,10 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 
-class QueryBuilderTest
+//TODO make a data provider, expects
+
+class QueryBuilderTest extends TestCase
 {
 
 }

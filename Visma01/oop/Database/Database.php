@@ -22,7 +22,7 @@ class Database implements HyphenationSourceInterface
         $this->tryConnection();
     }
 
-    private function tryConnection()
+    public function tryConnection()
     {
         try {
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

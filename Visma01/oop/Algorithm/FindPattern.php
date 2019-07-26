@@ -15,10 +15,10 @@ class FindPattern
     private $database;
     private $removeNumbers;
 
-    public function __construct(Database $database)
+    public function __construct(Database $database, Remove $remove)
     {
         $this->database = $database;
-        $this->removeNumbers = new Remove();
+        $this->removeNumbers = $remove;
     }
 
     public function setWord(string $word)

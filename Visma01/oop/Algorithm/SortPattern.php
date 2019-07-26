@@ -12,9 +12,9 @@ class SortPattern
     private $word;
     private $remove;
 
-    public function __construct()
+    public function __construct(Remove $remove)
     {
-        $this->remove = new Remove();
+        $this->remove = $remove;
     }
 
     public function setWord(string $word)
