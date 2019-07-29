@@ -19,6 +19,7 @@ class HyphenateTest extends TestCase
     protected $databaseStub;
     protected $manageStub;
     protected $cacheStub;
+    protected $hyphenate;
 
     protected function setUp(): void
     {
@@ -33,18 +34,26 @@ class HyphenateTest extends TestCase
      */
     public function testWordWithNumbersToHyphenatedWord(string $word, string $hyphenatedWord)
     {
-        $hyphenate = new Hyphenate($this->manageStub, $this->databaseStub, $this->cacheStub);
-        $hyphenate->wordWithNumbers = $word;
-        $this->assertSame($hyphenate->getHyphenatedWord($word), $hyphenatedWord);
+        $this->hyphenate = new Hyphenate($this->manageStub, $this->databaseStub, $this->cacheStub);
+        $this->hyphenate->wordWithNumbers = $word;
+        $this->assertSame($this->hyphenate->getHyphenatedWord($word), $hyphenatedWord);
 
     }
 
 
     public function dataProvider()
     {
-        return[
-            'mistranslate' =>['m0i2s1t2r2a2n2s1l2a2t2e', 'mis-trans-late'],
-            'network' =>['n2e2t1w2o2r2k', 'net-work']
+        return [
+            'mistranslate' => ['m0i2s1t2r2a2n2s1l2a2t2e', 'mis-trans-late'],
+            'network' => ['n2e2t1w2o2r2k', 'net-work']
         ];
+    }
+
+    protected function tearDown(): void
+    {
+        unset($this->manageStub);
+        unset($this->cacheStub);
+        unset($this->databaseStub);
+        unset($this->hyphenate);
     }
 }

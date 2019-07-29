@@ -26,14 +26,16 @@ class Hyphenate
     {
         $word = str_replace(' ', '', $word);
         // TODO HandleData
-        //$this->database->saveWord($word);
-        //$this->wordWithNumbers = $this->managePattern->getWordWithNumbers($word);
+        $this->database->saveWord($word);
+        if (empty($this->wordWithNumbers)){
+            $this->wordWithNumbers = $this->managePattern->getWordWithNumbers($word);
+        }
         $wordWithNumbers = $this->wordWithNumbers;
         $odds = array("1", "3", "5");
         $evens = array("0", "2", "4");
         $hyphenatedWord = str_replace($odds, '-', $wordWithNumbers);
         $hyphenatedWord = str_replace($evens, '', $hyphenatedWord);
-        //$this->saveHyphenatedWord($hyphenatedWord, $word);
+        $this->saveHyphenatedWord($hyphenatedWord, $word);
         return $hyphenatedWord;
     }
 
