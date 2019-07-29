@@ -26,7 +26,7 @@ class Database implements HyphenationSourceInterface
     {
         try {
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connect Successfully. Host info: " .
+            //echo "Connect Successfully. Host info: " .
                 $this->pdo->getAttribute(constant("PDO::ATTR_CONNECTION_STATUS"));
         } catch (PDOException $e) {
             die("ERROR: Could not connect. " . $e->getMessage());
@@ -133,7 +133,7 @@ class Database implements HyphenationSourceInterface
     {
         try {
             $sql->execute();
-            echo $message . "\n";
+            //echo $message . "\n";
         } catch (PDOException $e) {
             //call logger
             die("ERROR: Could not able to execute " . $e->getMessage());

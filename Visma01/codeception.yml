@@ -6,7 +6,7 @@ suites:
         modules:
             enabled:
                 - REST:
-                    url: http://127.0.0.1:8888/words
+                    url: http://127.0.0.1:8888
                     depends: PhpBrowser
 
 paths:
@@ -18,3 +18,6 @@ paths:
 settings:
     shuffle: false
     lint: true
+
+coverage:
+    enabled: true
