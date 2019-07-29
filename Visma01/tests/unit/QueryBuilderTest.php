@@ -2,12 +2,29 @@
 
 use PHPUnit\Framework\TestCase;
 
-//TODO make a data provider, expects
+use Database\QueryBuilder;
 
 class QueryBuilderTest extends TestCase
 {
-    public function testBuilder()
+    protected $queryBuilder;
+
+    protected function setUp(): void
     {
-        $this->assertTrue(true);
+        $this->queryBuilder = new QueryBuilder();
     }
+
+    public function testQueries()
+    {
+        $this->assertSame($this->queryBuilder
+             ->insert('patterns (pattern)')
+             ->values('( :value )')
+             ->build(),
+            'INSERT INTO patterns (pattern) VALUES ( :value )');
+    }
+
+    public function tearDown(): void
+    {
+        unset($this->queryBuilder);
+    }
+
 }

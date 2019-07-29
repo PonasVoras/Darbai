@@ -27,6 +27,7 @@ class HyphenateTest extends TestCase
         $this->databaseStub = $this->createMock(Database::class);
         $this->cacheStub = $this->createMock(CacheItem::class);
         $this->manageStub = $this->createMock(ManagePattern::class);
+        $this->hyphenate = new Hyphenate($this->manageStub, $this->databaseStub, $this->cacheStub);
     }
 
     /**
@@ -34,10 +35,8 @@ class HyphenateTest extends TestCase
      */
     public function testWordWithNumbersToHyphenatedWord(string $word, string $hyphenatedWord)
     {
-        $this->hyphenate = new Hyphenate($this->manageStub, $this->databaseStub, $this->cacheStub);
         $this->hyphenate->wordWithNumbers = $word;
         $this->assertSame($this->hyphenate->getHyphenatedWord($word), $hyphenatedWord);
-
     }
 
 
