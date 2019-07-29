@@ -31,6 +31,9 @@ class HyphenateTest extends TestCase
     }
 
     /**
+     * @param $word
+     * @param $hyphenatedWord
+     *
      * @dataProvider dataProvider
      */
     public function testWordWithNumbersToHyphenatedWord(string $word, string $hyphenatedWord)

@@ -3,7 +3,6 @@
 namespace Algorithm;
 
 use Algorithm\Utils\Remove;
-use Log\Logger;
 use Operations\File;
 
 class SortPattern
@@ -24,7 +23,9 @@ class SortPattern
 
     public function sortPattern(): string
     {
-        $this->possiblePatterns = File::readFromFile("oop/Output/possible_patterns.txt");
+        if (empty($this->possiblePatterns)){
+            $this->possiblePatterns = File::readFromFile("oop/Output/possible_patterns.txt");
+        }
         $remove = $this->remove;
         $possiblePatternsModified = $remove->removeSpaces($this->possiblePatterns);
         $possiblePatternsModified = $remove->removeDots($possiblePatternsModified);
