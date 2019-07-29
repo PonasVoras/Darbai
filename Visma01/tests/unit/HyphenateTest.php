@@ -1,29 +1,28 @@
 <?php
 declare(strict_types=1);
 
+use Algorithm\Hyphenate;
+use Algorithm\ManagePattern;
+use Cache\CacheItem;
+use Database\Database;
 use PHPUnit\Framework\TestCase;
 
 //Class to test
-use Algorithm\Hyphenate;
 
 //Classes to mock
-use Database\Database;
-use Cache\CacheItem;
-use Algorithm\ManagePattern;
 
 // TODO make a provider, assert things
 
 class HyphenateTest extends TestCase
 {
 
-    private $databaseStub;
-    private $manageStub;
-    private $cacheStub;
-    private $hyphenate;
+    protected $databaseStub;
+    protected $manageStub;
+    protected $cacheStub;
 
-    public function mocking()
+    protected function setUp(): void
     {
-        //Mock database
+        //Mocking
         $this->databaseStub = $this->createMock(Database::class);
         $this->cacheStub = $this->createMock(CacheItem::class);
         $this->manageStub = $this->createMock(ManagePattern::class);
@@ -32,18 +31,20 @@ class HyphenateTest extends TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testHyphenate(){
-        $this->hyphenate = new Hyphenate($this->manageStub, $this->databaseStub, $this->cacheStub);
-        $this->assertTrue(true);
+    public function testWordWithNumbersToHyphenatedWord(string $word, string $hyphenatedWord)
+    {
+        $hyphenate = new Hyphenate($this->manageStub, $this->databaseStub, $this->cacheStub);
+        $hyphenate->wordWithNumbers = $word;
+        $this->assertSame($hyphenate->getHyphenatedWord($word), $hyphenatedWord);
 
     }
 
 
     public function dataProvider()
     {
-        return array(
-            array('m0i2s1t2r2a2n2s1l2a2t2e', 'mis-trans-late'),
-            array('n2e2t1w2o2r2k', 'net-work'),
-        );
+        return[
+            'mistranslate' =>['m0i2s1t2r2a2n2s1l2a2t2e', 'mis-trans-late'],
+            'network' =>['n2e2t1w2o2r2k', 'net-work']
+        ];
     }
 }

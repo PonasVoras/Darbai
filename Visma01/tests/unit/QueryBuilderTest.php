@@ -6,5 +6,8 @@ use PHPUnit\Framework\TestCase;
 
 class QueryBuilderTest extends TestCase
 {
-
+    public function testBuilder()
+    {
+        $this->assertTrue(true);
+    }
 }

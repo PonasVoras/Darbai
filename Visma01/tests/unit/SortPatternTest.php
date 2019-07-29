@@ -6,5 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class SortPatternTest extends TestCase
 {
-
+    public function testSortPattern(){
+        $this->assertTrue(true);
+    }
 }
