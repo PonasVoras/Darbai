@@ -24,8 +24,6 @@ class Controller
         $this->view = new View();
     }
 
-    // true is needed for json object to be converted to an array
-    // {"method":"GET","word":true,"hyphenatedWord":false,"pattern":false,"id":"1"}
     public function handleRequest(array $requestData)
     {
         $id = $requestData['id'];
@@ -38,73 +36,47 @@ class Controller
                 }
                 break;
             case 'PUT':
-                $this->putRequest($requestData);
+                $this->putRequest($id,$requestData);
                 break;
             case 'POST':
                 $this->postRequest($requestData);
                 break;
             case 'DELETE':
-                $this->deleteRequest($id, $requestData);
+                $this->deleteRequest($id);
                 break;
             default :
-                //405 - method not allowed
                 $this->view->returnError(405);
                 break;
         }
     }
 
-    //add item : word, hyphenatedWord, pattern
-    //$post = file_get_contents('php://input');
-    /*{
-    "statusCode": 200,
-    "method": "GET",
-    "data": [
-    {
-        "word": "framework"
-            },
-    {
-        "word": "mistranslate"
-            }
-    ]
-    }*/
     public function postRequest(array $requestData)
     {
         $postData = file_get_contents('php://input');
         $postData = json_decode($postData, true);
         $wordToInsert = $postData['word'];
-
         $this->model->postWord($wordToInsert);
         $requestData['word'] = true;
         $this->getRequestReturnMany($requestData);
     }
 
-    //update item : word
-    public function putRequest(array $requestData)
+    public function putRequest(string $id,array $requestData)
     {
-        $putData = file_get_contents('php://input');
-        $putData = json_decode($putData, true);
-        $wordToUpdate = $putData['wordToUpdate'];
-        $word = $putData['word'];
-
-        $this->model->updateWord($word, $wordToUpdate);
+        $data = file_get_contents('php://input');
+        $data = json_decode($data, true);
+        $word = $data['word'];
+        $this->model->updateWordById($id, $word);
         $requestData['word'] = true;
         $this->getRequestReturnMany($requestData);
     }
 
-    //erase an item : word, hyphenatedWord
-    public function deleteRequest(string $id, array $requestData)
+    public function deleteRequest(string $id)
     {
-        $deleteData = file_get_contents('php://input');
-        $deleteData = json_decode($deleteData, true);
-        $wordToDelete = $deleteData['word'];
-
-        $this->model->deleteWord($wordToDelete);
+        $this->model->deleteWordById($id);
         $requestData['word'] = true;
         $this->getRequestReturnMany($requestData);
     }
 
-    //http://127.0.0.1:8888/words?id=19
-    //display an item : word, hyphenatedWord, pattern
     public function getRequestReturnSingle(string $id, array $requestData)
     {
         if (!empty($requestData['word'])) {
@@ -121,11 +93,8 @@ class Controller
         } else {
             $this->view->returnError(400);
         }
-
     }
 
-    //http://127.0.0.1:8888/words
-    //display an item : word, hyphenatedWord, pattern
     public function getRequestReturnMany(array $requestData)
     {
         if (!empty($requestData['word'])) {

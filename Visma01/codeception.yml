@@ -18,6 +18,3 @@ paths:
 settings:
     shuffle: false
     lint: true
-
-coverage:
-    enabled: true

@@ -5,11 +5,12 @@ use Codeception\Util\HttpCode;
 class ApiCest
 {
 
+    // TODO real status code is 201
     public function postNewWord(ApiTester $I)
     {
         $I->wantToTest('Add new word and get all words');
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPOST('/', ['word' => 'testcase']);
+        $I->sendPOST('/words', ['word' => 'testcase']);
         $I->seeResponseCodeIs(HttpCode::OK); // 200
         $I->seeResponseIsJson();
         $I->seeResponseContains('{"word":"testcase"}');
@@ -23,16 +24,18 @@ class ApiCest
         $I->seeResponseIsJson();
     }
 
-    public function putUpdateWord(ApiTester $I)
+    // TODO url has to be up until ID
+    public function updateWord(ApiTester $I)
     {
        $I->wantToTest('Update word and get all words');
         $I->haveHttpHeader('Content-Type', 'application/json');
         $I->sendPUT('/', ['word' => 'testcase', 'wordToUpdate' => 'testcases']);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(200);
-        $I->seeResponseContains('{"word":"testcases"}');
+        $I->seeResponseContains('{"word": "testcases"}');
     }
 
+    // TODO status code is 204
     public function deleteDeleteWord(ApiTester $I)
     {
         $I->wantToTest('Delete word and get all words');
@@ -46,7 +49,7 @@ class ApiCest
     {
         $I->wantToTest('Bad request');
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendGET('/words?id=9999');
+        $I->sendGET('/word/9999');
         $I->seeResponseCodeIs(404);
     }
 }

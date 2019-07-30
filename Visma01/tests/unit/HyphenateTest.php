@@ -1,5 +1,5 @@
-<?php
-declare(strict_types=1);
+<?php namespace HyphenateTest;
+
 
 use Algorithm\Hyphenate;
 use Algorithm\ManagePattern;

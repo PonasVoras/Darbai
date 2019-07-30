@@ -1,4 +1,4 @@
-<?php
+<?php namespace SortPatternTest;
 
 use PHPUnit\Framework\TestCase;
 

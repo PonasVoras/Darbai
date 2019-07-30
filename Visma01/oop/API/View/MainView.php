@@ -28,10 +28,9 @@
     <div class="Request" style="width: 40%;">
         <h2>Get element</h2>
         <form action="/words" method="GET">
-            Input an ID:<br>
-            <input type="number" name="id" value="1">
+            View:<br>
             <br>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Get data">
         </form>
     </div>
 
@@ -44,13 +43,13 @@
             <input type="submit" value="Submit">
         </form>
     </div>
-
 </div>
 <div class="containerRight">
     <div class="Response" style="width: 50%; background-color: antiquewhite; float: right;">
         <h2>Response</h2>
+        <p class="ResponseBox">
 
-
+        </p>
     </div>
 </div>
 

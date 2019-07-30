@@ -1,4 +1,4 @@
-<?php
+<?php namespace QueryBuilderTest;
 
 use PHPUnit\Framework\TestCase;
 

@@ -34,7 +34,7 @@ class Model
             ->build();
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':word', $word);
-        $this->database->executeQuery($sql, 'POST method executing word array retrieval :');
+        $this->database->executeQuery($sql);
     }
 
     public function getWordByID(string $id): string
@@ -46,7 +46,7 @@ class Model
             ->build();
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':word_id', $id);
-        $this->database->executeQuery($sql, 'GET method executing word retrieval :');
+        $this->database->executeQuery($sql);
         $word = $sql->fetch(PDO::FETCH_ASSOC);
         $result = !empty($word['word']) ? $word['word'] : 404;
         return $result;
@@ -59,33 +59,33 @@ class Model
             ->from('words')
             ->build();
         $sql = $this->pdo->prepare($sql);
-        $this->database->executeQuery($sql, 'GET method executing word array retrieval :');
+        $this->database->executeQuery($sql);
         $words = $sql->fetchAll(PDO::FETCH_ASSOC);
         return $words;
     }
 
-    public function updateWord(string $word, string $updateWord)
+    public function updateWordById(string $id, string $updateWord)
     {
         $sql = $this->query
             ->update('words')
             ->set('word = :value')
-            ->where('word = :word')
+            ->where('word_id = :word_id')
             ->build();
 
         $sql = $this->pdo->prepare($sql);
         $sql->bindParam(':value', $updateWord);
-        $sql->bindParam(':word', $word);
-        $this->database->executeQuery($sql, 'PUT method executing word array retrieval :');
+        $sql->bindParam(':word_id', $id);
+        $this->database->executeQuery($sql);
     }
 
-    public function deleteWord(string $word)
+    public function deleteWordById(string $id)
     {
         $sql = $this->query
             ->delete('words')
-            ->where('word = :word')
+            ->where('word_id = :word_id')
             ->build();
         $sql = $this->pdo->prepare($sql);
-        $sql->bindParam(':word', $word);
-        $this->database->executeQuery($sql, 'PUT method executing word array retrieval :');
+        $sql->bindParam(':word_id', $id);
+        $this->database->executeQuery($sql);
     }
 }
