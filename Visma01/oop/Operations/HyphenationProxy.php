@@ -7,7 +7,7 @@ use Cache\CacheItem;
 use Database\Database;
 use Operations\Interfaces\HyphenationSourceInterface;
 
-class HyphenationSource implements HyphenationSourceInterface
+class HyphenationProxy implements HyphenationSourceInterface
 {
     private $hyphenationPrimary;
     private $database;

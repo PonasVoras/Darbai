@@ -52,11 +52,14 @@ class Controller
 
     public function postRequest(array $requestData)
     {
-        $postData = file_get_contents('php://input');
-        $postData = json_decode($postData, true);
-        $wordToInsert = $postData['word'];
-        $this->model->postWord($wordToInsert);
+        $data = file_get_contents('php://input');
+        $data = json_decode($data, true);
+        $word = $data['word'];
+
+        $this->model->postWord($word);
         $requestData['word'] = true;
+        $this->responseData['method'] = 'POST';
+        $this->responseData['data'] = $word;
         $this->getRequestReturnMany($requestData);
     }
 
@@ -97,14 +100,9 @@ class Controller
 
     public function getRequestReturnMany(array $requestData)
     {
-        if (!empty($requestData['word'])) {
-            $this->responseData['method'] = 'GET';
-            $this->responseData['data'] = $this->model->getWords();
-            $this->returnToView();
-        } else {
-            $this->view->returnError(400);
-        }
-        echo "\n";
+        $this->responseData['method'] = 'GET';
+        $this->responseData['data'] = $this->model->getWords();
+        $this->returnToView();
     }
 
     private function returnToView()

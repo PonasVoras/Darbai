@@ -12,7 +12,7 @@ class InputHandler
     public function wordHyphenation(string $word, Hyphenate $hyphenate): string
     {
         $hyphenationPrimary = new HyphenationPrimary($hyphenate);
-        $proxy = new HyphenationSource($hyphenationPrimary);
+        $proxy = new HyphenationProxy($hyphenationPrimary);
         $hyphenatedWord = $proxy->findHyphenatedWord($word);
         return $hyphenatedWord;
     }
