@@ -5,6 +5,7 @@ namespace Operations;
 
 use Cache\CacheItem;
 use Database\Database;
+use Log\Logger;
 use Operations\Interfaces\HyphenationSourceInterface;
 
 class HyphenationProxy implements HyphenationSourceInterface

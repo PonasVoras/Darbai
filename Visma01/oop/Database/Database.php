@@ -3,6 +3,7 @@
 namespace Database;
 
 use Algorithm\Utils\Remove;
+use Log\Logger;
 use Operations\File;
 use Operations\Interfaces\HyphenationSourceInterface;
 use PDO;
@@ -15,9 +16,11 @@ class Database implements HyphenationSourceInterface
     private $password = 'letsdothis';
     private $options;
     public $pdo;
+    private $logger;
 
     public function __construct()
     {
+        $this->logger = new Logger();
         $this->pdo = new PDO("mysql:host=localhost;dbname=" . $this->dbName, $this->user, $this->password, $this->options);
         $this->tryConnection();
     }
@@ -29,8 +32,8 @@ class Database implements HyphenationSourceInterface
             //echo "Connect Successfully. Host info: " .
                 $this->pdo->getAttribute(constant("PDO::ATTR_CONNECTION_STATUS"));
         } catch (PDOException $e) {
-            die("ERROR: Could not connect. " . $e->getMessage());
-            //call logger
+            //$this->logger->error("ERROR: Could not connect. " . $e->getMessage());
+            echo "Database failure";
         }
     }
 
@@ -65,9 +68,6 @@ class Database implements HyphenationSourceInterface
             $sql = substr($sql, 0, -1);
             $sql = $this->pdo->prepare($sql);
             $this->executeQuery($sql, 'Patterns');
-        } else {
-            // call logger
-            print_r("Database is not empty");
         }
     }
 
@@ -135,8 +135,7 @@ class Database implements HyphenationSourceInterface
             $sql->execute();
             //echo $message . "\n";
         } catch (PDOException $e) {
-            //call logger
-            die("ERROR: Could not able to execute " . $e->getMessage());
+            //$this->logger->error("ERROR: Could not able to execute " . $e->getMessage());
         }
     }
 

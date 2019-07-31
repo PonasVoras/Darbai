@@ -3,9 +3,19 @@
 
 namespace API\View;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class View
 {
+    private $twig;
+
+    public function __construct()
+    {
+        $loader = new FilesystemLoader(__DIR__ . '/templates');
+        $this->twig = new Environment($loader);
+    }
+
     public function returnError(int $statusCode = 404)
     {
         header('X-PHP-Response-Code: 404', true, $statusCode);
@@ -13,12 +23,17 @@ class View
 
     public function returnResponse(array $responseData, int $statusCode = 202)
     {
-        header("Access-Control-Allow-Origin: *");
-        header("Content-Type: application/json; charset=UTF-8");
-        header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
-        header("Access-Control-Max-Age: 3600");
-        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        header('Content-Type: text/json;charset=utf-8', true);
-        echo json_encode($responseData);
+        //return json_encode($responseData);
+        $this->wordsView($responseData);
+
+    }
+
+    public function wordsView(array $data){
+        echo $this->twig->render('words.html.twig', array('Words' => $data));
+    }
+
+
+    public function mainView(){
+        echo $this->twig->render('main.html.twig');
     }
 }

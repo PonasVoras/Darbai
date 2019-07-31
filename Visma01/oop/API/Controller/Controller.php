@@ -27,16 +27,22 @@ class Controller
     public function handleRequest(array $requestData)
     {
         $id = $requestData['id'];
+        $word = $requestData['word'];
         switch ($requestData['method']) {
             case 'GET':
-                if (empty($id)) {
-                    $this->getRequestReturnMany($requestData);
+                if (empty($word)) {
+                    $this->view->mainView();
                 } else {
-                    $this->getRequestReturnSingle($id, $requestData);
+                    if (empty($id)) {
+                        $this->getRequestReturnMany($requestData);
+                    } else {
+                        $this->getRequestReturnSingle($id, $requestData);
+                    }
                 }
                 break;
             case 'PUT':
-                $this->putRequest($id,$requestData);
+                $this->putRequest($id, $requestData);
+
                 break;
             case 'POST':
                 $this->postRequest($requestData);
@@ -52,10 +58,8 @@ class Controller
 
     public function postRequest(array $requestData)
     {
-        $data = file_get_contents('php://input');
-        $data = json_decode($data, true);
-        $word = $data['word'];
 
+        $word = $this->retrieveMethodData('word');
         $this->model->postWord($word);
         $requestData['word'] = true;
         $this->responseData['method'] = 'POST';
@@ -63,11 +67,16 @@ class Controller
         $this->getRequestReturnMany($requestData);
     }
 
-    public function putRequest(string $id,array $requestData)
+    private function retrieveMethodData(string $name): string
     {
         $data = file_get_contents('php://input');
-        $data = json_decode($data, true);
-        $word = $data['word'];
+        $data = json_decode($data, true) ?? $_POST[$name];
+        return $data;
+    }
+
+    public function putRequest(string $id, array $requestData)
+    {
+        $word = $this->retrieveMethodData('word');
         $this->model->updateWordById($id, $word);
         $requestData['word'] = true;
         $this->getRequestReturnMany($requestData);
@@ -82,19 +91,14 @@ class Controller
 
     public function getRequestReturnSingle(string $id, array $requestData)
     {
-        if (!empty($requestData['word'])) {
-            $this->responseData['method'] = 'GET';
-            $dbData = $this->model->getWordByID($id);
+        $this->responseData['method'] = 'GET';
+        $dbData = $this->model->getWordByID($id);
 
-            // Validation can be a different method
-            if ($dbData !== '404') {
-                $this->responseData['data'] = $dbData;
-                $this->returnToView();
-            } else {
-                $this->view->returnError($dbData);
-            }
+        if ($dbData !== '404') {
+            $this->responseData['data'] = $dbData;
+            $this->returnToView();
         } else {
-            $this->view->returnError(400);
+            $this->view->returnError($dbData);
         }
     }
 

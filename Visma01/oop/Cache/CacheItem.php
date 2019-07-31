@@ -24,6 +24,11 @@ class CacheItem //implements CacheItemInterface, HyphenationSourceInterface
 
     private $fileMode = 0664;
 
+    const RESERVED_FOR_WORDS = 1;
+    const RESERVED_FOR_WORD_COUNT = 2;
+    const RESERVED_OFFSET = 3;
+
+
     public function __construct()
     {
         $this->cachePath = "oop/Cache/CacheFiles/Patterns";
@@ -147,20 +152,17 @@ class CacheItem //implements CacheItemInterface, HyphenationSourceInterface
 
     public function saveHyphenatedWord(string $hyphenatedWord, string $word)
     {
-        // key 1 stores words with space
-        // key 2 stores amount of numbers
-        // key 3... in stores hyphenated words
-        if ($this->has(2)) {
-            $cachedWords = $this->get(1);
-            $cachedWordsCount = $this->get(2);
-            $this->set($cachedWordsCount + 3, $hyphenatedWord); // problema buvo indeksas...
-            $this->set(1, $cachedWords . " " . $word); //appends
-            $this->set(2, $cachedWordsCount + 1);
+        if ($this->has(self::RESERVED_FOR_WORD_COUNT)) {
+            $cachedWords = $this->get(self::RESERVED_FOR_WORDS);
+            $cachedWordsCount = $this->get(self::RESERVED_FOR_WORD_COUNT);
+            $this->set($cachedWordsCount + self::RESERVED_OFFSET, $hyphenatedWord);
+            $this->set(self::RESERVED_FOR_WORDS, $cachedWords . " " . $word);
+            $this->set(self::RESERVED_FOR_WORD_COUNT, $cachedWordsCount + self::RESERVED_FOR_WORDS);
         } else {
             $this->clear();
-            $this->set(1, $word);
-            $this->set(2, 1);
-            $this->set(3, $hyphenatedWord);
+            $this->set(self::RESERVED_FOR_WORDS, $word);
+            $this->set(self::RESERVED_FOR_WORD_COUNT, 1);
+            $this->set(self::RESERVED_OFFSET, $hyphenatedWord);
         }
     }
 
@@ -171,7 +173,7 @@ class CacheItem //implements CacheItemInterface, HyphenationSourceInterface
         if (!empty($hyphenatedWords)) {
             $hyphenatedWordKey = array_search($word, $hyphenatedWords);
             if ($hyphenatedWordKey !== false) {
-                $hyphenatedWord = $this->get($hyphenatedWordKey + 3);
+                $hyphenatedWord = $this->get($hyphenatedWordKey + self::RESERVED_OFFSET);
                 print_r("Cache thing :" . $hyphenatedWord);
             }
         }

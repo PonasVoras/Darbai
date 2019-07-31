@@ -5,6 +5,7 @@ namespace API\Model;
 
 use Database\Database;
 use Database\QueryBuilder;
+use Log\Logger;
 use PDO;
 
 class Model

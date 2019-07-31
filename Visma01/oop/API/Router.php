@@ -4,8 +4,6 @@ namespace API;
 
 use API\Controller\Controller;
 
-//include "View/MainView.php";
-
 class Router
 {
     private $controller;
@@ -13,11 +11,11 @@ class Router
     public function __construct()
     {
         $this->controller = new Controller();
-
     }
 
     public function useController()
     {
+        //todo rewrite
         $method = $_SERVER['REQUEST_METHOD'];
         $requestURI = $_SERVER['REQUEST_URI'];
         $word = !empty(strrpos($requestURI, 'word')) ?? true;
